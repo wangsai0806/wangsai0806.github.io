@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="代码,测试," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、介绍1：Sonar官网地址： https://www.sonarqube.org/downloads/ 一般有两个推荐版本：带星的属于稳定版 二、环境配置Sonar需要一些辅助配置软件，需要自己装一下 1、  jdk的安装，版本要求要1.8,注意1.7版本的不支持； 2、  数据库的安装，我本地用的MySQL，5.6或者5.7两个版本都可以，我装的是5.6版本； 三、创建数据库sonar需要j">
+<meta name="keywords" content="代码,测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="window安装sonar代码检测">
+<meta property="og:url" content="http://yoursite.com/2018/01/12/window安装sonar代码检测/index.html">
+<meta property="og:site_name" content="王赛的博客">
+<meta property="og:description" content="一、介绍1：Sonar官网地址： https://www.sonarqube.org/downloads/ 一般有两个推荐版本：带星的属于稳定版 二、环境配置Sonar需要一些辅助配置软件，需要自己装一下 1、  jdk的安装，版本要求要1.8,注意1.7版本的不支持； 2、  数据库的安装，我本地用的MySQL，5.6或者5.7两个版本都可以，我装的是5.6版本； 三、创建数据库sonar需要j">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/F0CwRQK.png">
+<meta property="og:updated_time" content="2018-02-07T01:55:35.257Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="window安装sonar代码检测">
+<meta name="twitter:description" content="一、介绍1：Sonar官网地址： https://www.sonarqube.org/downloads/ 一般有两个推荐版本：带星的属于稳定版 二、环境配置Sonar需要一些辅助配置软件，需要自己装一下 1、  jdk的安装，版本要求要1.8,注意1.7版本的不支持； 2、  数据库的安装，我本地用的MySQL，5.6或者5.7两个版本都可以，我装的是5.6版本； 三、创建数据库sonar需要j">
+<meta name="twitter:image" content="https://i.imgur.com/F0CwRQK.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/12/window安装sonar代码检测/"/>
+
+
+
+
+
+  <title>window安装sonar代码检测 | 王赛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王赛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/12/window安装sonar代码检测/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sai Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王赛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">window安装sonar代码检测</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-12T12:17:12+08:00">
+                2018-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/12/window安装sonar代码检测/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/01/12/window安装sonar代码检测/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+			
+			
+			  <span id="busuanzi_container_page_pv">&nbsp;&nbsp;|&nbsp;&nbsp;阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+			
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、介绍"><a href="#一、介绍" class="headerlink" title="一、介绍"></a>一、介绍</h1><p>1：Sonar官网地址：</p>
+<pre><code>https://www.sonarqube.org/downloads/
+</code></pre><p>一般有两个推荐版本：带星的属于稳定版</p>
+<h1 id="二、环境配置"><a href="#二、环境配置" class="headerlink" title="二、环境配置"></a>二、环境配置</h1><p>Sonar需要一些辅助配置软件，需要自己装一下</p>
+<pre><code>1、  jdk的安装，版本要求要1.8,注意1.7版本的不支持；
+2、  数据库的安装，我本地用的MySQL，5.6或者5.7两个版本都可以，我装的是5.6版本；
+</code></pre><h1 id="三、创建数据库"><a href="#三、创建数据库" class="headerlink" title="三、创建数据库"></a>三、创建数据库</h1><p>sonar需要java环境的支持，分析数据会保存到保存到数据库。支持mysql,oracle，PostgreSQL，SQLServer</p>
+<h2 id="1：mysql"><a href="#1：mysql" class="headerlink" title="1：mysql"></a>1：mysql</h2><pre><code>CREATE DATABASE sonar CHARACTER SET utf8 COLLATE utf8_general_ci;   
+
+CREATE USER &apos;sonar&apos; IDENTIFIED BY &apos;sonar&apos;;  
+
+GRANT ALL ON sonar.* TO&apos;sonar&apos;@&apos;%&apos; IDENTIFIED BY &apos;sonar&apos;;  
+
+GRANT ALL ON sonar.* TO&apos;sonar&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;sonar&apos;;  
+</code></pre><h1 id="四、sonar下载及配置"><a href="#四、sonar下载及配置" class="headerlink" title="四、sonar下载及配置"></a>四、sonar下载及配置</h1><p><strong>1：下载</strong></p>
+<p>打开浏览器，搜索sonarqube，进入官网，找到download按钮，下载安装包。下载之后，解压到任意目录。</p>
+<p><strong>2：启动</strong></p>
+<p>解压后，如果是 windows 64位系统，进入windows-x86-64  目录，双击InstallNTService.bat，成功之后，双击StartSonar.bat 启动。然后打开浏览器输入：<a href="http://127.0.0.1:9000/。可以看到一个界面。" target="_blank" rel="noopener">http://127.0.0.1:9000/。可以看到一个界面。</a><br><img src="https://i.imgur.com/F0CwRQK.png" alt=""><br><strong>3：配置sonar.properties</strong></p>
+<p>打开 sonar  解压目录的，conf,可以看到sonar.properties 文件中修改如下配置</p>
+<pre><code>sonar.jdbc.username=sonar
+sonar.jdbc.password=sonar
+
+#----- MySQL 5.6 or greater
+# Only InnoDB storage engine is supported (not myISAM).
+# Only the bundled driver is supported. It can not be changed.
+sonar.jdbc.url=jdbc:mysql://121.42.37.157:3306/sonar?useUnicode=true&amp;characterEncoding=utf8&amp;rewriteBatchedStatements=true&amp;useConfigs=maxPerformance&amp;useSSL=false
+</code></pre><p>数据库弄好之后，同时需要复制一个数据库驱动放到安装目录的：extensions\jdbc-driver\mysql  下面。比如我用的是：mysql-connector-java-6.0.4.jar</p>
+<h1 id="五：下载SonarQube-Scanner"><a href="#五：下载SonarQube-Scanner" class="headerlink" title="五：下载SonarQube Scanner"></a>五：下载SonarQube Scanner</h1><p><strong>1：下载</strong></p>
+<pre><code>下载地址：
+https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-2.8.zip
+</code></pre><p>下载之后，解压到随意目录。假设目录是：D:\sonar-scanner-2.8;将目录D:\sonar-scanner-2.8\bin 配置到环境变了path中。;</p>
+<p><strong>2:配置sonar-scanner.properties</strong></p>
+<p>打开D:\sonar-scanner-2.8\conf 下的sonar-scanner.properties 文件，进行如下配置：</p>
+<pre><code>#----- Default SonarQube server
+sonar.host.url=http://localhost:9000
+
+#----- Default source code encoding
+#sonar.sourceEncoding=UTF-8
+
+#----- Global database settings (not used for SonarQube 5.2+)
+sonar.jdbc.username=sonar
+sonar.jdbc.password=sonar
+
+#----- PostgreSQL
+#sonar.jdbc.url=jdbc:postgresql://localhost/sonar
+
+#----- MySQL
+sonar.jdbc.url=jdbc:mysql://121.42.37.157:3306/sonar?useUnicode=true&amp;amp;characterEncoding=utf8
+
+#----- Oracle
+#sonar.jdbc.url=jdbc:oracle:thin:@localhost/XE
+
+#----- Microsoft SQLServer
+#sonar.jdbc.url=jdbc:jtds:sqlserver://localhost/sonar;SelectMethod=Cursor
+</code></pre><p><strong>3：运行代码分析</strong><br>启动了SonarQube,进入到项目的根目录创建一个文件sonar-project.properties</p>
+<pre><code># must be unique in a given SonarQube instance
+sonar.projectKey=my:project        #项目唯一key(自己设置)    
+# this is the name and version displayed in the SonarQube UI. Was mandatory prior to SonarQube 6.1.
+sonar.projectName=ws            #项目名称
+sonar.projectVersion=1.0
+
+# Path is relative to the sonar-project.properties file. Replace &quot;\&quot; by &quot;/&quot; on Windows.
+# This property is optional if sonar.modules is set. 
+sonar.sources=.
+
+# Encoding of the source code. Default is default system encoding
+#sonar.sourceEncoding=UTF-8
+</code></pre><p>执行命令：</p>
+<pre><code>sonar-scanner           #普通项目
+mvn sonar:sonar            #maven项目
+</code></pre><p>然后就是等待执行结果，大概几分钟吧。成功之后，进入：<a href="http://127.0.0.1:9000/" target="_blank" rel="noopener">http://127.0.0.1:9000/</a></p>
+<h1 id="故障排除"><a href="#故障排除" class="headerlink" title="故障排除"></a>故障排除</h1><p>Java堆空间错误或者java.lang.OutOfMemoryError，<br>通过SONAR_SCANNER_OPTS环境变量增加内存：</p>
+<pre><code>export SONAR_SCANNER_OPTS=&quot;-Xmx512m&quot;
+</code></pre><p>在Windows环境中，请避免使用双引号，因为它们会被误解，并将两个参数合并为一个。</p>
+<pre><code>set SONAR_SCANNER_OPTS=-Xmx512m
+</code></pre><p>帐号密码：</p>
+<pre><code>admin admin
+</code></pre><p>MAVEN配置seting.xml<br>    <!--配置sonar--><br>    <profile><br>        <id>sonar</id><br>        <activation><br>            <activebydefault>true</activebydefault><br>        </activation><br>        <properties><br>          <sonar.jdbc.url>jdbc:mysql://121.42.37.157:3306/sonar?useUnicode=true&amp;characterEncoding=utf8&amp;rewriteBatchedStatements=true</sonar.jdbc.url><br>          <sonar.jdbc.username>sonar</sonar.jdbc.username><br>          <sonar.jdbc.password>sonar</sonar.jdbc.password><br>           <sonar.host.url><a href="http://localhost:9000" target="_blank" rel="noopener">http://localhost:9000</a></sonar.host.url><br>        </properties><br>    </profile></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Sai Wang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Sai Wang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/代码/" rel="tag"># 代码</a>
+          
+            <a href="/tags/测试/" rel="tag"># 测试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/11/eclipse-安装-findbugs/" rel="next" title="eclipse 安装 findbugs">
+                <i class="fa fa-chevron-left"></i> eclipse 安装 findbugs
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/02/windows安装yourls短链接/" rel="prev" title="windows安装yourls短链接">
+                windows安装yourls短链接 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Sai Wang" />
+            
+              <p class="site-author-name" itemprop="name">Sai Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wangsai0806" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Github</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1069531172@qq.com" target="_blank" title="Email">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Email</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、介绍"><span class="nav-number">1.</span> <span class="nav-text">一、介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、环境配置"><span class="nav-number">2.</span> <span class="nav-text">二、环境配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、创建数据库"><span class="nav-number">3.</span> <span class="nav-text">三、创建数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1：mysql"><span class="nav-number">3.1.</span> <span class="nav-text">1：mysql</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、sonar下载及配置"><span class="nav-number">4.</span> <span class="nav-text">四、sonar下载及配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五：下载SonarQube-Scanner"><span class="nav-number">5.</span> <span class="nav-text">五：下载SonarQube Scanner</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#故障排除"><span class="nav-number">6.</span> <span class="nav-text">故障排除</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="/js/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sai Wang</span>
+
+  
+</div>
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="http://wangsaisai.cn">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="http://wangsaisai.cn">NexT.Gemini</a> v5.1.4</div>
+
+
+-->
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共15.8k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="180" height="600"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 180px;
+    height: 600px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    var trElement = document.getElementById('hexo-helper-live2d');
+    trElement.parentNode.removeChild(trElement);
+    return;
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/hibiki.model.json", 0.5);});
+})();
+</script>
+
+</body>
+</html>

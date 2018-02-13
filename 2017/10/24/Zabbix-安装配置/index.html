@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="运维，技术," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Zabbix 安装本文是参考 《Zabbix 教程从入门到精通v1.0》 所作的实验。 大纲： 一、LNMP 环境配置 二、zabbix 服务端安装 三、zabbix 客户端安装配置 四、zabbix 管理网站配置 系统环境 CentOS 6.8 使用的软件版本： MySQL 5.6 Nginx 1.10.1 PHP 5.6 一、LNMP 环境配置1.1 Nginx 安装 1.2 PHP 安装及">
+<meta name="keywords" content="运维，技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Zabbix-安装配置">
+<meta property="og:url" content="http://yoursite.com/2017/10/24/Zabbix-安装配置/index.html">
+<meta property="og:site_name" content="王赛的博客">
+<meta property="og:description" content="Zabbix 安装本文是参考 《Zabbix 教程从入门到精通v1.0》 所作的实验。 大纲： 一、LNMP 环境配置 二、zabbix 服务端安装 三、zabbix 客户端安装配置 四、zabbix 管理网站配置 系统环境 CentOS 6.8 使用的软件版本： MySQL 5.6 Nginx 1.10.1 PHP 5.6 一、LNMP 环境配置1.1 Nginx 安装 1.2 PHP 安装及">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/TIUchnF.png">
+<meta property="og:image" content="https://i.imgur.com/xBzzch9.png">
+<meta property="og:image" content="https://i.imgur.com/9ennEoN.png">
+<meta property="og:image" content="https://i.imgur.com/0RuudeK.png">
+<meta property="og:image" content="https://i.imgur.com/Q5yB0Y3.png">
+<meta property="og:image" content="https://i.imgur.com/Y4d7rFj.png">
+<meta property="og:image" content="https://i.imgur.com/dyVJyfd.png">
+<meta property="og:image" content="https://i.imgur.com/UopV4UV.png">
+<meta property="og:image" content="https://i.imgur.com/mW12AAn.png">
+<meta property="og:image" content="https://i.imgur.com/c5ZafPA.png">
+<meta property="og:image" content="https://i.imgur.com/GF1V9FO.png">
+<meta property="og:image" content="https://i.imgur.com/11FcfJH.png">
+<meta property="og:image" content="https://i.imgur.com/Rp0eLyI.png">
+<meta property="og:image" content="https://i.imgur.com/RUyO4bZ.png">
+<meta property="og:image" content="https://i.imgur.com/MFyRM7w.png">
+<meta property="og:image" content="https://i.imgur.com/M5dQBPr.png">
+<meta property="og:image" content="https://i.imgur.com/WSa20jA.png">
+<meta property="og:image" content="https://i.imgur.com/MhuZK57.png">
+<meta property="og:image" content="https://i.imgur.com/tKH32E8.png">
+<meta property="og:image" content="https://i.imgur.com/Z7ZG9fb.png">
+<meta property="og:image" content="https://i.imgur.com/9bzD7zx.png">
+<meta property="og:image" content="https://i.imgur.com/63s1cBE.png">
+<meta property="og:image" content="https://i.imgur.com/IkM8L1m.png">
+<meta property="og:image" content="https://i.imgur.com/JGmrBXM.png">
+<meta property="og:image" content="https://i.imgur.com/m2ojsVZ.png">
+<meta property="og:image" content="https://i.imgur.com/FrCmSBw.png">
+<meta property="og:image" content="https://i.imgur.com/jO0YoSt.png">
+<meta property="og:updated_time" content="2017-10-26T10:00:38.967Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zabbix-安装配置">
+<meta name="twitter:description" content="Zabbix 安装本文是参考 《Zabbix 教程从入门到精通v1.0》 所作的实验。 大纲： 一、LNMP 环境配置 二、zabbix 服务端安装 三、zabbix 客户端安装配置 四、zabbix 管理网站配置 系统环境 CentOS 6.8 使用的软件版本： MySQL 5.6 Nginx 1.10.1 PHP 5.6 一、LNMP 环境配置1.1 Nginx 安装 1.2 PHP 安装及">
+<meta name="twitter:image" content="https://i.imgur.com/TIUchnF.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/24/Zabbix-安装配置/"/>
+
+
+
+
+
+  <title>Zabbix-安装配置 | 王赛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王赛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/24/Zabbix-安装配置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sai Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王赛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Zabbix-安装配置</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-24T19:30:35+08:00">
+                2017-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/24/Zabbix-安装配置/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2017/10/24/Zabbix-安装配置/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+			
+			
+			  <span id="busuanzi_container_page_pv">&nbsp;&nbsp;|&nbsp;&nbsp;阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+			
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Zabbix-安装"><a href="#Zabbix-安装" class="headerlink" title="Zabbix 安装"></a>Zabbix 安装</h1><p>本文是参考 《<a href="http://www.ttlsa.com/" target="_blank" rel="noopener">Zabbix 教程从入门到精通v1.0</a>》 所作的实验。</p>
+<p>大纲：</p>
+<p><strong>一、LNMP 环境配置</strong></p>
+<p><strong>二、zabbix 服务端安装</strong></p>
+<p><strong>三、zabbix 客户端安装配置</strong></p>
+<p><strong>四、zabbix 管理网站配置</strong></p>
+<p>系统环境 CentOS 6.8</p>
+<p>使用的软件版本：</p>
+<p><strong>MySQL 5.6</strong></p>
+<p><strong>Nginx 1.10.1</strong></p>
+<p><strong>PHP 5.6</strong></p>
+<h1 id="一、LNMP-环境配置"><a href="#一、LNMP-环境配置" class="headerlink" title="一、LNMP 环境配置"></a>一、LNMP 环境配置</h1><p><strong>1.1 Nginx 安装</strong></p>
+<p><strong>1.2 PHP 安装及 Nginx 配置</strong></p>
+<p><strong>1.3 MySQL 安装</strong></p>
+<h2 id="1-1-Nginx-安装"><a href="#1-1-Nginx-安装" class="headerlink" title="1.1 Nginx 安装"></a>1.1 Nginx 安装</h2><p><strong>1.1.1:环境准备：</strong></p>
+<p>安装开发工具包（源码安装软件就需要安装这个）：</p>
+<pre><code>yum -y groupinstall &quot;Development Tools&quot; &quot;Server Platform Development&quot; &quot;Development Libraries&quot;
+</code></pre><p>注：Development Tools：开发工具包;Server Platform Development:服务器开发包;Development Libraries：开发库。</p>
+<p>安装openSSL库、正则表达式库：</p>
+<pre><code>yum -y install openssl-devel pcre-devel
+</code></pre><p>注：pcre-devel：正则表达式库<nginx需要使用></nginx需要使用></p>
+<p>添加用户组：</p>
+<pre><code>groupadd -r nginx
+</code></pre><p>添加用户到用户组：</p>
+<pre><code>useradd -r -g nginx nginx
+</code></pre><p><img src="https://i.imgur.com/TIUchnF.png" alt=""></p>
+<p><strong>1.1.2:nginx 下载：</strong></p>
+<pre><code>wget http://nginx.org/download/nginx-1.10.1.tar.gz
+</code></pre><p><img src="https://i.imgur.com/xBzzch9.png" alt=""></p>
+<p><strong>1.1.3:解压安装：</strong></p>
+<pre><code>tar -zxvf nginx-1.10.1.tar.gz         //解压文件
+cd nginx-1.10.1                        //进入文件件
+
+./configure --prefix=/etc/nginx \    //开始配置config文件
+--sbin-path=/usr/sbin/nginx \        //启动脚本地址
+--conf-path=/etc/nginx/nginx.conf \    //配置文件地址
+--error-log-path=/home/zabbix/tools/nginx/nginx-1.10.1/log/error.log \        //错误日志地址    
+--http-log-path=/home/zabbix/tools/nginx/nginx-1.10.1/log/access.log \        //http日志地址
+--pid-path=/var/run/nginx.pid \        //pid地址
+--lock-path=/var/run/nginx.lock \    //lock锁地址
+--user=nginx \                        //配置用户
+--group=nginx \                        //配置用户组
+--with-http_ssl_module \            //配置ssl模块
+--with-http_stub_status_module \    //配置http模块
+
+make &amp;&amp; make install                //编译、安装
+</code></pre><p><img src="https://i.imgur.com/9ennEoN.png" alt=""></p>
+<p><strong>1.1.4：测试启动：</strong></p>
+<pre><code>nginx            //启动nginx
+ss  -nlt        //查看端口
+</code></pre><p><img src="https://i.imgur.com/0RuudeK.png" alt=""><br><strong>1.1.5：测试访问：</strong></p>
+<pre><code>curl -I 127.0.0.1        //测试访问
+</code></pre><p><img src="https://i.imgur.com/Q5yB0Y3.png" alt=""><br><strong>1.1.6：脚本</strong> </p>
+<p>/etc/init.d/nginx 脚本，方便调用:</p>
+<pre><code>vi /etc/init.d/nginx    //创建脚本
+</code></pre><p>脚本内容：</p>
+<pre><code>#!/bin/sh
+#
+# nginx        Startup script for nginx
+#
+# chkconfig: - 85 15
+# processname: nginx
+# sbin-path: /usr/sbin/nginx
+# config: /etc/nginx/nginx.conf
+# conf-path: /etc/nginx/nginx.conf
+# config: /etc/sysconfig/nginx
+# pidfile: /var/run/nginx.pid
+# error-log-path: /home/zabbix/tools/nginx/nginx-1.10.1/log/error.log
+# http-log-path: /home/zabbix/tools/nginx/nginx-1.10.1/log/access.log
+# lock-path: /var/run/nginx.lock
+# user: nginx
+# group: nginx
+# description: nginx is an HTTP and reverse proxy server
+#
+### BEGIN INIT INFO
+# Provides: nginx
+# Required-Start: $local_fs $remote_fs $network
+# Required-Stop: $local_fs $remote_fs $network
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: start and stop nginx
+### END INIT INFO
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+if [ -L $0 ]; then
+    initscript=`/bin/readlink -f $0`
+else
+    initscript=$0
+fi
+
+sysconfig=`/bin/basename $initscript`
+
+if [ -f /etc/sysconfig/$sysconfig ]; then
+    . /etc/sysconfig/$sysconfig
+fi
+
+nginx=${NGINX-/usr/sbin/nginx}
+prog=`/bin/basename $nginx`
+conffile=${CONFFILE-/etc/nginx/nginx.conf}
+lockfile=${LOCKFILE-/var/lock/subsys/nginx}
+pidfile=${PIDFILE-/var/run/nginx.pid}
+SLEEPMSEC=${SLEEPMSEC-200000}
+UPGRADEWAITLOOPS=${UPGRADEWAITLOOPS-5}
+RETVAL=0
+
+start() {
+    echo -n $&quot;Starting $prog: &quot;
+
+    daemon --pidfile=${pidfile} ${nginx} -c ${conffile}
+    RETVAL=$?
+    echo
+    [ $RETVAL = 0 ] &amp;&amp; touch ${lockfile}
+    return $RETVAL
+}
+
+stop() {
+    echo -n $&quot;Stopping $prog: &quot;
+    killproc -p ${pidfile} ${prog}
+    RETVAL=$?
+    echo
+    [ $RETVAL = 0 ] &amp;&amp; rm -f ${lockfile} ${pidfile}
+}
+
+reload() {
+    echo -n $&quot;Reloading $prog: &quot;
+    killproc -p ${pidfile} ${prog} -HUP
+    RETVAL=$?
+    echo
+}
+
+upgrade() {
+    oldbinpidfile=${pidfile}.oldbin
+
+    configtest -q || return
+    echo -n $&quot;Starting new master $prog: &quot;
+    killproc -p ${pidfile} ${prog} -USR2
+    echo
+
+    for i in `/usr/bin/seq $UPGRADEWAITLOOPS`; do
+        /bin/usleep $SLEEPMSEC
+        if [ -f ${oldbinpidfile} -a -f ${pidfile} ]; then
+            echo -n $&quot;Graceful shutdown of old $prog: &quot;
+            killproc -p ${oldbinpidfile} ${prog} -QUIT
+            RETVAL=$?
+            echo
+            return
+        fi
+    done
+
+    echo $&quot;Upgrade failed!&quot;
+    RETVAL=1
+}
+
+configtest() {
+    if [ &quot;$#&quot; -ne 0 ] ; then
+        case &quot;$1&quot; in
+            -q)
+                FLAG=$1
+                ;;
+            *)
+                ;;
+        esac
+        shift
+    fi
+    ${nginx} -t -c ${conffile} $FLAG
+    RETVAL=$?
+    return $RETVAL
+}
+
+rh_status() {
+    status -p ${pidfile} -b ${nginx} ${nginx}
+}
+
+# See how we were called.
+case &quot;$1&quot; in
+    start)
+        rh_status &gt;/dev/null 2&gt;&amp;1 &amp;&amp; exit 0
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        rh_status
+        RETVAL=$?
+        ;;
+    restart)
+        configtest -q || exit $RETVAL
+        stop
+        start
+        ;;
+    upgrade)
+        rh_status &gt;/dev/null 2&gt;&amp;1 || exit 0
+        upgrade
+        ;;
+    condrestart|try-restart)
+        if rh_status &gt;/dev/null 2&gt;&amp;1; then
+            stop
+            start
+        fi
+        ;;
+    force-reload|reload)
+        reload
+        ;;
+    configtest)
+        configtest
+        ;;
+    *)
+        echo $&quot;Usage: $prog {start|stop|restart|condrestart|try-restart|force-reload|upgrade|reload|status|help|configtest}&quot;
+        RETVAL=2
+esac
+
+exit $RETVAL
+</code></pre><p><strong>1.1.7：脚本赋予执行权限：</strong></p>
+<pre><code>chmod +x /etc/rc.d/init.d/nginx
+</code></pre><p><img src="https://i.imgur.com/Y4d7rFj.png" alt=""><br><strong>1.1.8：启动、关闭、查看状态</strong></p>
+<pre><code>./nginx start   或    nginx                //启动
+./nginx stop    或    kill -9 pid            //关闭
+./nginx status     或    ps -ef|grep nginx    //查看状态
+</code></pre><p><img src="https://i.imgur.com/dyVJyfd.png" alt=""></p>
+<h2 id="1-2-PHP-安装及Nginx-配置"><a href="#1-2-PHP-安装及Nginx-配置" class="headerlink" title="1.2 PHP 安装及Nginx 配置"></a>1.2 PHP 安装及Nginx 配置</h2><p><strong>1.2.1:sohu镜像下载</strong></p>
+<pre><code>wget http://mirrors.sohu.com/php/php-5.6.10.tar.gz
+</code></pre><p><img src="https://i.imgur.com/UopV4UV.png" alt=""><br><strong>1.2.2:安装依赖包</strong></p>
+<p>确保安装之前有安装gd,png,curl,xml等等lib开发库。如果不确定，执行以下命令：</p>
+<pre><code>yum install gcc make gd-devel libjpeg-devel libpng-devel libxml2-devel bzip2-devel libcurl-devel -y
+</code></pre><p><img src="https://i.imgur.com/mW12AAn.png" alt=""><br><strong>1.2.3:编译安装PHP 5.6.10</strong></p>
+<p>PHP 安装参数：对于 zabbix，下面的模块要特别留意加上：</p>
+<pre><code>extend        parameter
+bcmath        --enable-bcmath
+mbstring    --enable-mbstring
+sockets        --enable-sockets
+gd            --with-gd
+libxml        --with-libxml=/usr/local
+xmlwriter    同上
+xmlreader    同上
+ctype        默认支持
+session        默认支持
+gettext        默认支持
+</code></pre><p><img src="https://i.imgur.com/c5ZafPA.png" alt=""><br>以下参数支持,ftp,图片函数,pdo等支持,因为使用了php自带的mysqlnd，所以不需要额外安装mysql的lib库了.如果你是64位系统，参数后面加上–with-libdir=lib64，如果不是可以跳过。</p>
+<p>可参考以下参数：</p>
+<pre><code>./configure --prefix=/usr/local/php-5.6.10 \
+--with-config-file-path=/usr/local/php-5.6.10/etc --with-bz2 --with-curl \
+--enable-ftp --enable-sockets --disable-ipv6 --with-gd \
+--with-jpeg-dir=/usr/local --with-png-dir=/usr/local \
+--with-freetype-dir=/usr/local --enable-gd-native-ttf \
+--with-iconv-dir=/usr/local --enable-mbstring --enable-calendar \
+--with-gettext --with-libxml-dir=/usr/local --with-zlib \
+--with-pdo-mysql=mysqlnd --with-mysqli=mysqlnd --with-mysql=mysqlnd \
+--enable-dom --enable-xml --enable-fpm --with-libdir=lib64 --enable-bcmath
+
+make &amp;&amp; make install
+</code></pre><p><img src="https://i.imgur.com/GF1V9FO.png" alt=""><br><strong>1.2.4:配置php</strong></p>
+<p>为php提供配置文件：</p>
+<pre><code>[root@zabbix php-5.6.10]# cp php.ini-production /usr/local/php-5.6.10/etc/php.ini
+</code></pre><p><strong>1.2.5:修改配置文件</strong></p>
+<p>打开 php.ini 配置文件,修改如下参数为如下值,否则 zabbix 安装不了。</p>
+<pre><code>max_execution_time = 300
+memory_limit = 128M
+post_max_size = 16M
+upload_max_filesize = 2M
+max_input_time = 300
+date.timezone = PRC
+</code></pre><p><strong>1.2.6:为php-fpm提供配置文件：</strong></p>
+<pre><code>[root@zabbix php-5.6.10]# cp /usr/local/php-5.6.10/etc/php-fpm.conf.default /usr/local/php-5.6.10/etc/php-fpm.conf
+</code></pre><p><strong>1.2.7:为php-fpm提供SysV init脚本</strong></p>
+<pre><code>[root@zabbix php-5.6.10]# cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+[root@zabbix php-5.6.10]# chmod +x /etc/init.d/php-fpm
+</code></pre><p><strong>1.2.8:编辑php-fpm的配置文件：</strong></p>
+<pre><code>vi /usr/local/php-5.6.10/etc/php-fpm.conf
+</code></pre><p><strong>1.2.9:配置fpm的相关选项</strong></p>
+<p>为你所需要的值，并启用pid文件（如下最后一行）</p>
+<pre><code>pm.max_children = 50
+pm.start_servers = 5
+pm.min_spare_servers = 2
+pm.max_spare_servers = 8
+pid = /usr/local/php-5.6.10/var/run/php-fpm.pid
+</code></pre><p><strong>1.2.10:启动php-fpm：</strong></p>
+<pre><code>service php-fpm start
+</code></pre><p><strong>1.2.11:验证启动</strong></p>
+<p>使用如下命令来验正（如果此命令输出有中几个php-fpm进程就说明启动成功了）：</p>
+<pre><code>ps aux | grep php-fpm
+</code></pre><p><img src="https://i.imgur.com/11FcfJH.png" alt=""><br><strong>1.2.12:验证套接字</strong></p>
+<p>默认情况下，fpm监听在127.0.0.1的9000端口，也可以使用如下命令验正其是否已经监听在相应的套接字。</p>
+<pre><code>netstat -tnlp | grep php-fpm
+</code></pre><p><img src="https://i.imgur.com/Rp0eLyI.png" alt=""></p>
+<h2 id="1-3-MySQL-安装"><a href="#1-3-MySQL-安装" class="headerlink" title="1.3 MySQL 安装"></a>1.3 MySQL 安装</h2><p><strong>1.3.1：安装 mysql-5.1</strong></p>
+<pre><code>//下载mysql的repo源
+yun https://repo.mysql.com//mysql57-community-release-el6-11.noarch.rpm
+
+//安装mymysql57-community-release-el6-11.noarch.rpm包，安装这个包后，会获得两个mysql的yum repo源：/etc/yum.repos.d/mysql-community.repo，/etc/yum.repos.d/mysql-community-source.repo
+rpm -ivh mysql57-community-release-el6-11.noarch.rpm
+
+//安装mysql
+yum install mysql-server mysql-client
+
+//启动mysql
+service mysqld start                    
+</code></pre><p><img src="https://i.imgur.com/RUyO4bZ.png" alt=""><br><strong>1.3.2：修改root密码</strong></p>
+<pre><code>$ mysql -uroot
+//mysql5.6版本修改密码sql
+mysql&gt;set password for &apos;root&apos;@&apos;localhost&apos; = password(&apos;root123456&apos;);
+//mysql5.7版本修改密码sql
+mysql&gt;set password for &apos;root&apos;@&apos;localhost&apos; = password(&apos;root123456&apos;);
+mysql&gt; exit;
+</code></pre><p><img src="https://i.imgur.com/MFyRM7w.png" alt=""></p>
+<p><strong>1.3.3:登录mysql</strong></p>
+<pre><code>mysql -u root -p
+</code></pre><p>注：如果报ERROR 1045 (28000)，参考《CentOS安装MySql遇到的问题》</p>
+<h1 id="二、zabbix-服务端安装"><a href="#二、zabbix-服务端安装" class="headerlink" title="二、zabbix 服务端安装"></a>二、zabbix 服务端安装</h1><h2 id="zabbix-进程构成"><a href="#zabbix-进程构成" class="headerlink" title="zabbix 进程构成"></a>zabbix 进程构成</h2><p>默认情况下 zabbix 包含 5 个程序:zabbix_agentd、zabbix_get、zabbix_proxy、zabbix_s ender、zabbix_server,另外一个 zabbix_java_gateway 是可选,这个需要另外安装。下面来分别介绍下他们各自的作用。</p>
+<p><strong>zabbix_agentd</strong></p>
+<p>客户端守护进程,此进程收集客户端数据,例如 cpu 负载、内存、硬盘使用情况等</p>
+<p><strong>zabbix_get</strong></p>
+<p>zabbix 工具,单独使用的命令,通常在 server 或者 proxy 端执行获取远程客户端信息的命令。通常用户排错。例如在 server 端获取不到客户端的内存数据,我们可以使用 zabbix_get 获取客户端的内容的方式来做故障 排查。</p>
+<p><strong>zabbix_sender</strong></p>
+<p>zabbix 工具,用于发送数据给 server 或者 proxy,通常用于耗时比较长的检查。很多检查非常耗时间,导致zabbix 超时。于是我们在脚本执行完毕之后,使用 sender 主动提交数据。</p>
+<p><strong>zabbix_server</strong></p>
+<p>zabbix 服务端守护进程。zabbix_agentd、zabbix_get、zabbix_sender、zabbix_proxy、zabbix_jav a_gateway 的数据最终都是提交到 server</p>
+<p>备注:当然不是数据都是主动提交给 zabbix_server,也有的是 server 主动去取数据。</p>
+<p><strong>zabbix_proxy</strong></p>
+<p>zabbix 代理守护进程。功能类似 server,唯一不同的是它只是一个中转站,它需要把收集到的数据提交/被提交到 server 里。</p>
+<p><strong>zabbix_java_gateway</strong></p>
+<p>zabbix2.0 之后引入的一个功能。顾名思义:Java 网关,类似 agentd,但是只用于 Java 方面。需要特别注 意的是,它只能主动去获取数据,而不能被动获取数据。它的数据最终会给到 server 或者 proxy。</p>
+<h2 id="2-1-下载安装-zabbix"><a href="#2-1-下载安装-zabbix" class="headerlink" title="2.1 下载安装 zabbix"></a>2.1 下载安装 zabbix</h2><p>所有版本下载地址:<a href="http://www.zabbix.com/download.php" target="_blank" rel="noopener">http://www.zabbix.com/download.php</a></p>
+<pre><code>[root@zabbix ~]# wget https://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/3.4.3/zabbix-3.4.3.tar.gz
+# tar -xzvf zabbix-3.4.3.tar.gz
+# cd zabbix-3.4.3
+# ./configure --prefix=/usr/local/zabbix-3.4.3/ --enable-server \
+--enable-agent --with-mysql --with-net-snmp --with-libcurl --with-libxml2
+# make
+# make install
+</code></pre><p>注，这里没有指定配置文件的位置，默认是 PREFIX/etc，在这里即是 /usr/local/zabbix-3.4.3/etc/zabbix_server.conf，如果要指定其他位置，使用 –sysconfdir=DIR 进行指定</p>
+<p>在 zabbix server 一般充当两个角色:server、angent,所以上面的配置参数也同时加上了–enable-agent。 备注:请安装好 MySQL,snmp,curl 开发库。</p>
+<pre><code>yum install mysql-devel net-snmp-devel libcurl-devel
+</code></pre><h2 id="2-2-创建用户"><a href="#2-2-创建用户" class="headerlink" title="2.2 创建用户"></a>2.2 创建用户</h2><p>为了安全考虑 zabbix 只使用普通用户运行,假如你当前用户叫 ws ,那么你运行他,他便使用 ws 身份运行。 但是如果你在 root 环境下运行 zabbix,那么 zabbix 将会主动使用 zabbix 用户来运行。但是如果你的系统没有 名叫 zabbix 的用户,你需要创建一个用户,如下:</p>
+<pre><code># groupadd zabbix
+# useradd -g zabbix zabbix
+</code></pre><h2 id="2-3-初始化数据库"><a href="#2-3-初始化数据库" class="headerlink" title="2.3 初始化数据库"></a>2.3 初始化数据库</h2><p>zabbix server 与 proxy 需要数据库,angent 不需要。尤其要注意的是 proxy 只需要导入一个 sql 文件,而 server 一共要导入 3 个 sql 文件。</p>
+<pre><code># mysql -uroot -proot123456        //登录数据库
+
+mysql&gt; CREATE DATABASE zabbix DEFAULT CHARSET utf8;    //创建zabbix数据库
+
+//将sql导入到zabbix数据库（/home/zabbix/tools/zabbix/zabbix-3.4.3为zabbix解压地址；zabbix：数据库；）
+# mysql -uroot -proot123456 -D zabbix &lt; /home/zabbix/tools/zabbix/zabbix-3.4.3/database/mysql/schema.sql
+
+# mysql -uroot -proot123456
+mysql&gt; use zabbix;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql&gt; show tables;
++-----------------------+
+| Tables_in_zabbix      |
++-----------------------+
+| acknowledges          |
+| actions               |
+| alerts                |
+
+...
+
+| valuemaps             |
++-----------------------+
+108 rows in set (0.00 sec)
+</code></pre><p>备注:创建数据库请别忘记加 default charset utf8,有可能会导致你出现中文乱码问题,具体问题请查看《zabbix 中文乱码解决方法》</p>
+<p>如果你仅仅是初始化 proxy 的数据库,那么够了。如果初始化 server,那么接着导入下面两个 sql</p>
+<pre><code># mysql -uroot -proot123456 -D zabbix &lt; /home/zabbix/tools/zabbix/zabbix-3.4.3/database/mysql/images.sql
+# mysql -uroot -proot123456 -D zabbix &lt; /home/zabbix/tools/zabbix/zabbix-3.4.3/database/mysql/data.sql
+</code></pre><p>为 zabbix 创建一个专用的账户：</p>
+<pre><code>mysql&gt; grant all privileges on zabbix.* to zabbix@localhost identified by &apos;zabbix&apos;;        //创建zabbix用户，密码为zabbix，并且授权到zabbix.*
+mysql&gt; FLUSH PRIVILEGES;    //刷新权限相关表
+</code></pre><p>注：如果创建用户并授权报错</p>
+<pre><code>ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.
+</code></pre><p>解决方法：</p>
+<pre><code>mysql&gt; SET PASSWORD = PASSWORD(&apos;root&apos;);
+</code></pre><h2 id="2-4-配置-zabbix"><a href="#2-4-配置-zabbix" class="headerlink" title="2.4 配置 zabbix"></a>2.4 配置 zabbix</h2><p><strong>2.4.1：配置 zabbix_server 配置文件：</strong></p>
+<pre><code># vi /usr/local/zabbix-3.4.3/etc/zabbix_server.conf
+DBHost=localhost
+DBUser=zabbix
+DBPassword=zabbix
+DBPort=3306
+</code></pre><p>注，zabbix 日志文件位置也在该文件中配置，默认为 LogFile=/tmp/zabbix_server.log。启动出错时可查看该日志。</p>
+<p><strong>2.4.2：启动 zabbix server</strong></p>
+<pre><code># /usr/local/zabbix-3.4.3/sbin/zabbix_server
+</code></pre><p>默认端口 10051</p>
+<pre><code># ss -nlt
+</code></pre><p><img src="https://i.imgur.com/M5dQBPr.png" alt=""></p>
+<h1 id="三、zabbix-客户端安装配置"><a href="#三、zabbix-客户端安装配置" class="headerlink" title="三、zabbix 客户端安装配置"></a>三、zabbix 客户端安装配置</h1><h2 id="3-1-下载安装客户端"><a href="#3-1-下载安装客户端" class="headerlink" title="3.1 下载安装客户端"></a>3.1 下载安装客户端</h2><p>所有版本下载地址:<a href="http://www.zabbix.com/download.php,可以直接下载已经编译好的二进制文件,或者" target="_blank" rel="noopener">http://www.zabbix.com/download.php,可以直接下载已经编译好的二进制文件,或者</a><br>也可以源码安装。</p>
+<p>刚才安装 zabbix 服务端的时候已经使用 –enable-agent 选项同时安装了客户端，这里就不用再安装了。</p>
+<p>只编译安装 zabbix 客户端：</p>
+<pre><code>./configure --enable-agent
+</code></pre><p>在上面的下载页中官方也提供编译好的 zabbix agents，解压后可以直接使用，可以选择对应平台的、对应版本直接下载。</p>
+<p>比如下载 zabbix-3.4.3 版，Linux 2.6 amd64 的版本：</p>
+<pre><code>wget https://www.zabbix.com/downloads/3.4.0/zabbix_agents_3.4.0.aix7_1.power.tar.gz
+</code></pre><p>解压：</p>
+<pre><code># mkdir /usr/local/zabbix_agents
+# tar -xf zabbix_agents_3.4.3.linux2_6.amd64.tar.gz -C /usr/local/zabbix_agents/
+
+# ls /usr/local/zabbix_agents
+bin  conf  sbin
+</code></pre><p><img src="https://i.imgur.com/WSa20jA.png" alt=""><br>这种方式安装的 zabbix agents 要求把配置文件 zabbix_agentd.conf 放到 /usr/local/etc 目录下。</p>
+<h2 id="3-2-客户端配置"><a href="#3-2-客户端配置" class="headerlink" title="3.2 客户端配置"></a>3.2 客户端配置</h2><p>客户端配置文件为：/usr/local/zabbix-3.4.3/etc/zabbix_agentd.conf</p>
+<pre><code># vi /usr/local/zabbix-3.4.3/etc/zabbix_agentd.conf
+Server=127.0.0.1
+ServerActive=127.0.0.1
+Hostname=Zabbix server
+</code></pre><p>其中 Server 和 ServerActive 都指定 zabbixserver 的 IP 地址,不同的是,前者是被动后者是主动。也就是说 S erver 这个配置是用来允许 127.0.0.1 这个 ip 来我这取数据。而 serverActive 的 127.0.0.1 的意思是,客户端 主动提交数据给他。</p>
+<p>其他主机安装客户端记得添加 zabbix 用户。</p>
+<h2 id="3-3-启动客户端"><a href="#3-3-启动客户端" class="headerlink" title="3.3 启动客户端"></a>3.3 启动客户端</h2><pre><code>[root@zabbix etc]# /usr/local/zabbix-3.4.3/sbin/zabbix_agentd
+</code></pre><p>默认端口 10050<br><img src="https://i.imgur.com/MhuZK57.png" alt=""></p>
+<h1 id="四、zabbix-管理网站配置"><a href="#四、zabbix-管理网站配置" class="headerlink" title="四、zabbix 管理网站配置"></a>四、zabbix 管理网站配置</h1><h2 id="4-1-拷贝前端文件"><a href="#4-1-拷贝前端文件" class="headerlink" title="4.1 拷贝前端文件"></a>4.1 拷贝前端文件</h2><pre><code>[root@zabbix etc]# mkdir -pv /data/logs/nginx
+mkdir: created directory `/data&apos;
+mkdir: created directory `/data/logs&apos;
+mkdir: created directory `/data/logs/nginx&apos;
+[root@zabbix etc]# mkdir -pv /data/site/llj.ws.com/zabbix
+mkdir: created directory `/data/site&apos;
+mkdir: created directory `/data/site/llj.ws.com&apos;
+mkdir: created directory `/data/site/llj.ws/zabbix&apos;
+//复制文件,将frontends/php/*复制到/data/site/llj.ws.com/zabbix/（/home/zabbix/tools/zabbix/zabbix-3.4.3为zabbix解压目录）
+[root@zabbix etc]# cp -r /home/zabbix/tools/zabbix/zabbix-3.4.3/frontends/php/* /data/site/llj.ws.com/zabbix/
+[root@zabbix etc]# chown -R zabbix.zabbix /data/site/llj.ws.com/zabbix/
+</code></pre><h2 id="4-2-配置虚拟主机"><a href="#4-2-配置虚拟主机" class="headerlink" title="4.2 配置虚拟主机"></a>4.2 配置虚拟主机</h2><pre><code>[root@zabbix zabbix]# cat /etc/nginx/nginx.conf
+
+worker_processes  1;
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;
+                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;
+                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;
+
+    sendfile        on;
+    keepalive_timeout  65;
+
+    server {
+        listen 80;
+        server_name localhost;
+        access_log /data/logs/nginx/llj.ws.com.access.log main;
+        index index.html index.php index.html;
+        root /data/site/llj.ws.com;
+
+        location / {
+            try_files $uri $uri/ /index.php?$args;
+        }
+
+        location ~ ^(.+.php)(.*)$ {
+            fastcgi_split_path_info ^(.+.php)(.*)$;
+            include fastcgi.conf;
+            fastcgi_pass 127.0.0.1:9000;
+            fastcgi_index index.php;
+            fastcgi_param PATH_INFO $fastcgi_path_info;
+        }
+    }
+}
+</code></pre><h2 id="4-3-在线配置-zabbix"><a href="#4-3-在线配置-zabbix" class="headerlink" title="4.3 在线配置 zabbix"></a>4.3 在线配置 zabbix</h2><p>访问浏览器测试：</p>
+<pre><code>http://192.168.209.130/zabbix
+</code></pre><p><strong>4.3.1 欢迎界面</strong><br><img src="https://i.imgur.com/tKH32E8.png" alt=""><br><strong>4.3.2 php 需求检查</strong><br><img src="https://i.imgur.com/Z7ZG9fb.png" alt=""><br><strong>4.3.3 MySQL 配置</strong><br><img src="https://i.imgur.com/9bzD7zx.png" alt=""><br><strong>4.3.4 zabbix 服务端详细信息</strong><br><img src="https://i.imgur.com/63s1cBE.png" alt=""><br><strong>4.3.5 zabbix 安装前信息列表</strong><br><img src="https://i.imgur.com/IkM8L1m.png" alt=""><br><strong>4.3.6 安装完成</strong></p>
+<p>错误页面：<br><img src="https://i.imgur.com/JGmrBXM.png" alt=""><br>手动下载配置文件，放到 /data/site/llj.ws.com/zabbix/conf/ 目录下，Retry 一下</p>
+<p>成功页面：</p>
+<p><img src="https://i.imgur.com/m2ojsVZ.png" alt=""><br><img src="https://i.imgur.com/FrCmSBw.png" alt=""><br><strong>4.3.7 登陆 zabbix</strong><br><img src="https://i.imgur.com/jO0YoSt.png" alt=""></p>
+<h2 id="五、启动服务"><a href="#五、启动服务" class="headerlink" title="五、启动服务"></a>五、启动服务</h2><p><strong>启动nginx</strong></p>
+<pre><code>./nginx start   或    nginx    
+</code></pre><p><strong>启动php</strong></p>
+<pre><code>service php-fpm start    
+</code></pre><p><strong>启动mysql</strong></p>
+<pre><code>service mysqld start
+</code></pre><p><strong>启动zabbix_server</strong></p>
+<pre><code>/usr/local/zabbix-3.4.3/sbin/zabbix_server
+</code></pre><p><strong>启动zabbix_agentd</strong></p>
+<pre><code>/usr/local/zabbix-3.4.3/sbin/zabbix_agentd
+</code></pre><p><strong>禁止防火墙</strong></p>
+<pre><code>service iptables stop
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Sai Wang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Sai Wang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/运维，技术/" rel="tag"># 运维，技术</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/20/yum基础/" rel="next" title="yum基础">
+                <i class="fa fa-chevron-left"></i> yum基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/25/CentOS安装MySql遇到的问题/" rel="prev" title="CentOS安装MySql遇到的问题">
+                CentOS安装MySql遇到的问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Sai Wang" />
+            
+              <p class="site-author-name" itemprop="name">Sai Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wangsai0806" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Github</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1069531172@qq.com" target="_blank" title="Email">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Email</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Zabbix-安装"><span class="nav-number">1.</span> <span class="nav-text">Zabbix 安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一、LNMP-环境配置"><span class="nav-number">2.</span> <span class="nav-text">一、LNMP 环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Nginx-安装"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 Nginx 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-PHP-安装及Nginx-配置"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 PHP 安装及Nginx 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-MySQL-安装"><span class="nav-number">2.3.</span> <span class="nav-text">1.3 MySQL 安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、zabbix-服务端安装"><span class="nav-number">3.</span> <span class="nav-text">二、zabbix 服务端安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zabbix-进程构成"><span class="nav-number">3.1.</span> <span class="nav-text">zabbix 进程构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-下载安装-zabbix"><span class="nav-number">3.2.</span> <span class="nav-text">2.1 下载安装 zabbix</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-创建用户"><span class="nav-number">3.3.</span> <span class="nav-text">2.2 创建用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-初始化数据库"><span class="nav-number">3.4.</span> <span class="nav-text">2.3 初始化数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-配置-zabbix"><span class="nav-number">3.5.</span> <span class="nav-text">2.4 配置 zabbix</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、zabbix-客户端安装配置"><span class="nav-number">4.</span> <span class="nav-text">三、zabbix 客户端安装配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-下载安装客户端"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 下载安装客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-客户端配置"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 客户端配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-启动客户端"><span class="nav-number">4.3.</span> <span class="nav-text">3.3 启动客户端</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、zabbix-管理网站配置"><span class="nav-number">5.</span> <span class="nav-text">四、zabbix 管理网站配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-拷贝前端文件"><span class="nav-number">5.1.</span> <span class="nav-text">4.1 拷贝前端文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-配置虚拟主机"><span class="nav-number">5.2.</span> <span class="nav-text">4.2 配置虚拟主机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-在线配置-zabbix"><span class="nav-number">5.3.</span> <span class="nav-text">4.3 在线配置 zabbix</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、启动服务"><span class="nav-number">5.4.</span> <span class="nav-text">五、启动服务</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="/js/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sai Wang</span>
+
+  
+</div>
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="http://wangsaisai.cn">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="http://wangsaisai.cn">NexT.Gemini</a> v5.1.4</div>
+
+
+-->
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共15.8k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="180" height="600"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 180px;
+    height: 600px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    var trElement = document.getElementById('hexo-helper-live2d');
+    trElement.parentNode.removeChild(trElement);
+    return;
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/hibiki.model.json", 0.5);});
+})();
+</script>
+
+</body>
+</html>

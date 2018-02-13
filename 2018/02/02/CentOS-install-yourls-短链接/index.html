@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Install Apache web serveryum install httpd -y Remove the Apache welcome page: sudo sed -i &amp;apos;s/^/#&amp;amp;/g&amp;apos; /etc/httpd/conf.d/welcome.conf Prevent Apache from exposing files in visitors’ web br">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS install yourls 短链接">
+<meta property="og:url" content="http://yoursite.com/2018/02/02/CentOS-install-yourls-短链接/index.html">
+<meta property="og:site_name" content="王赛的博客">
+<meta property="og:description" content="Install Apache web serveryum install httpd -y Remove the Apache welcome page: sudo sed -i &amp;apos;s/^/#&amp;amp;/g&amp;apos; /etc/httpd/conf.d/welcome.conf Prevent Apache from exposing files in visitors’ web br">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-02T06:39:02.252Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CentOS install yourls 短链接">
+<meta name="twitter:description" content="Install Apache web serveryum install httpd -y Remove the Apache welcome page: sudo sed -i &amp;apos;s/^/#&amp;amp;/g&amp;apos; /etc/httpd/conf.d/welcome.conf Prevent Apache from exposing files in visitors’ web br">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/02/CentOS-install-yourls-短链接/"/>
+
+
+
+
+
+  <title>CentOS install yourls 短链接 | 王赛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王赛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/02/CentOS-install-yourls-短链接/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sai Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王赛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CentOS install yourls 短链接</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-02T10:07:22+08:00">
+                2018-02-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/02/CentOS-install-yourls-短链接/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/02/02/CentOS-install-yourls-短链接/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+			
+			
+			  <span id="busuanzi_container_page_pv">&nbsp;&nbsp;|&nbsp;&nbsp;阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+			
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Install-Apache-web-server"><a href="#Install-Apache-web-server" class="headerlink" title="Install Apache web server"></a>Install Apache web server</h2><pre><code>yum install httpd -y
+</code></pre><p>Remove the Apache welcome page:</p>
+<pre><code>sudo sed -i &apos;s/^/#&amp;/g&apos; /etc/httpd/conf.d/welcome.conf
+</code></pre><p>Prevent Apache from exposing files in visitors’ web browser:</p>
+<pre><code>sudo sed -i &quot;s/Options Indexes FollowSymLinks/Options FollowSymLinks/&quot; /etc/httpd/conf/httpd.conf
+</code></pre><p>Once installed, start the web server and enable it to start at system boot</p>
+<pre><code>systemctl start httpd.service
+systemctl enable httpd.service
+</code></pre><p>注:Apache httpd默认端口为80,因本人的服务器80端口已占用,现修改端口为9386</p>
+<pre><code>#查询httpd.conf
+find / -name httpd.conf
+#修改httpd.conf配置
+vi /etc/httpd/conf/httpd.conf
+
+# Listen: Allows you to bind Apache to specific IP addresses and/or
+# ports, instead of the default. See also the &lt;VirtualHost&gt;
+# directive.
+# Change this to Listen on specific IP addresses as shown below to
+# prevent Apache from glomming onto all bound IP addresses.
+#Listen 12.34.56.78:80
+Listen 9386
+
+#查询服务是否启动
+systemctl status httpd.service
+</code></pre><h2 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h2><p>请参考我安装mysql的文章</p>
+<pre><code>#创建数据库
+CREATE DATABASE yourls;
+</code></pre><h2 id="Install-PHP-7-1-and-necessary-PHP-7-1-extensions"><a href="#Install-PHP-7-1-and-necessary-PHP-7-1-extensions" class="headerlink" title="Install PHP 7.1 and necessary PHP 7.1 extensions"></a>Install PHP 7.1 and necessary PHP 7.1 extensions</h2><p>Install PHP 7.1 and several PHP 7.1 extensions as follows:</p>
+<pre><code>sudo rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+sudo yum install -y mod_php71w  php71w-mysqlnd php71w-common
+</code></pre><h2 id="Install-and-configure-YOURLS"><a href="#Install-and-configure-YOURLS" class="headerlink" title="Install and configure YOURLS"></a>Install and configure YOURLS</h2><p>We have to download YOURLS from their official GitHub repository, so make sure that git is installed on your server</p>
+<pre><code>yum install git -y
+</code></pre><p>Get YOURLS from GitHub</p>
+<pre><code>cd /var/www/html/
+git clone https://github.com/YOURLS/YOURLS.git
+</code></pre><p>Change the ownership of YOURLS files</p>
+<pre><code>chown -R apache:apache YOURLS/
+</code></pre><p>Copy the sample YOURLS configuration file</p>
+<pre><code>cd YOURLS/
+cp user/config-sample.php user/config.php
+chown apache:apache user/config.php
+</code></pre><p>Open the configuration file and update the following lines</p>
+<pre><code>vi user/config.php
+
+define( &apos;YOURLS_DB_USER&apos;, &apos;yourlsuser&apos; );
+define( &apos;YOURLS_DB_PASS&apos;, &apos;YOUR_PASSWORD&apos; );
+define( &apos;YOURLS_DB_NAME&apos;, &apos;yourlsdb&apos; );
+define( &apos;YOURLS_DB_HOST&apos;, &apos;localhost&apos; );
+define( &apos;YOURLS_SITE&apos;, &apos;http://yourdomain.com&apos; );
+define( &apos;YOURLS_COOKIEKEY&apos;, &apos;modify this text with something random&apos; );
+$yourls_user_passwords = array(
+    &apos;user&apos; =&gt; &apos;password&apos;, // Use your actual username and password
+</code></pre><h2 id="Create-Apache-virtual-host"><a href="#Create-Apache-virtual-host" class="headerlink" title="Create Apache virtual host"></a>Create Apache virtual host</h2><p>Create a virtual host directive, so you can access YOURLS with your domain name.</p>
+<pre><code>vi /etc/httpd/conf.d/yourls.conf
+
+ServerAdmin admin@yourdomain.com
+DocumentRoot /var/www/html/YOURLS/
+ServerName yourdomain.com
+ServerAlias www.yourdomain.com
+
+Options FollowSymLinks
+AllowOverride All
+Order allow,deny
+allow from all
+
+ErrorLog /var/log/httpd/yourdomain.com-error_log
+CustomLog /var/log/httpd/yourdomain.com-access_log common
+</code></pre><p>Save the file and restart Apache for the changes to take effect.</p>
+<p>Now, go to <a href="http://yourdomain.com" target="_blank" rel="noopener">http://yourdomain.com</a> and follow the on-screen instructions to complete the YOURLS installation.</p>
+<h2 id="How-to-Install-YOURLS-on-CentOS-7"><a href="#How-to-Install-YOURLS-on-CentOS-7" class="headerlink" title="How to Install YOURLS on CentOS 7"></a>How to Install YOURLS on CentOS 7</h2><p>Published on: Fri, Feb 10, 2017 at 12:13 pm EST<br>CentOS Linux Guides Server Apps System Admin Web Servers<br>YOURLS (Your Own URL Shortener) is an open source URL shortening and data analytics application.</p>
+<p>In this article, we will cover the process of installing YOURLS on a CentOS 7 server.</p>
+<h2 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites"></a>Prerequisites</h2><p>A CentOS 7 x64 server instance.<br>A sudo user.<br>A domain example.com that points to your server’s IP address.</p>
+<h2 id="Step-1-Update-the-system"><a href="#Step-1-Update-the-system" class="headerlink" title="Step 1: Update the system"></a>Step 1: Update the system</h2><p>Log in as a sudo user, and then use the below commands to update the system:</p>
+<pre><code>sudo yum install epel-release -y
+sudo yum clean all &amp;&amp; sudo yum update -y &amp;&amp; sudo shutdown -r now
+</code></pre><p>After the reboot, log back into the server using the same sudo user.</p>
+<h2 id="Step-2-Install-a-web-server—Apache"><a href="#Step-2-Install-a-web-server—Apache" class="headerlink" title="Step 2: Install a web server—Apache"></a>Step 2: Install a web server—Apache</h2><p>Install the Apache web server using YUM:</p>
+<pre><code>sudo yum install httpd -y
+</code></pre><p>Remove the Apache welcome page:</p>
+<pre><code>sudo sed -i &apos;s/^/#&amp;/g&apos; /etc/httpd/conf.d/welcome.conf
+</code></pre><p>Prevent Apache from exposing files in visitors’ web browser:</p>
+<pre><code>sudo sed -i &quot;s/Options Indexes FollowSymLinks/Options FollowSymLinks/&quot; /etc/httpd/conf/httpd.conf
+</code></pre><p>Start the Apache service and set it to auto-start on system boot:</p>
+<pre><code>sudo systemctl start httpd.service
+sudo systemctl enable httpd.service
+</code></pre><h2 id="Step-3-Install-MariaDB-10-x"><a href="#Step-3-Install-MariaDB-10-x" class="headerlink" title="Step 3: Install MariaDB 10.x"></a>Step 3: Install MariaDB 10.x</h2><p>Install the latest stable release of MariaDB, MariaDB 10.1 as below:</p>
+<p><strong>3.1 Create the MariaDB 10.1 YUM repo file</strong></p>
+<pre><code>cat &lt;&lt;EOF | sudo tee -a /etc/yum.repos.d/MariaDB.repo
+# MariaDB 10.1 CentOS repository list - created 2017-01-14 03:11 UTC
+# http://downloads.mariadb.org/mariadb/repositories/
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.1/centos7-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+EOF
+</code></pre><p><strong>3.2 Install MariaDB 10.1 using YUM</strong></p>
+<pre><code>sudo yum install MariaDB-server MariaDB-client -y
+</code></pre><p><strong>3.3 Start the MariaDB service and set it as running at system startup</strong></p>
+<pre><code>sudo systemctl start mariadb.service
+sudo systemctl enable mariadb.service
+</code></pre><p><strong>3.4 Secure the installation of MariaDB</strong></p>
+<pre><code>sudo /usr/bin/mysql_secure_installation
+</code></pre><p>Answer questions as below, and ensure that you will use your own MariaDB root password:</p>
+<pre><code>这里有可能会提示没有密码,直接回车就行
+
+Enter current password for root (enter for none): Just press the Enter button
+Set root password? [Y/n]: Y
+New password: your-root-password
+Re-enter new password: your-root-password
+Remove anonymous users? [Y/n]: Y
+Disallow root login remotely? [Y/n]: Y
+Remove test database and access to it? [Y/n]: Y
+Reload privilege tables now? [Y/n]: Y
+</code></pre><p><strong>3.5 Create a MariaDB database for YOURLS</strong></p>
+<p>Log into the MySQL shell as root:</p>
+<pre><code>mysql -u root -p
+</code></pre><p>Type your own MariaDB root password and then press Enter.</p>
+<p>In the MySQL shell, create a database yourls, a database user yourlsuser, and the database user’s password yourpassword as follows.</p>
+<p>Note: For security purposes, you should use your own user password instead of the sample password yourpassword.</p>
+<pre><code>CREATE DATABASE yourls DEFAULT CHARACTER SET UTF8 COLLATE utf8_unicode_ci;
+CREATE USER &apos;yourlsuser&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;yourpassword&apos;;
+GRANT ALL PRIVILEGES ON yourls.* TO &apos;yourlsuser&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;yourpassword&apos; WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+EXIT;
+</code></pre><h2 id="Step-4-Install-PHP-7-1-and-necessary-PHP-7-1-extensions"><a href="#Step-4-Install-PHP-7-1-and-necessary-PHP-7-1-extensions" class="headerlink" title="Step 4: Install PHP 7.1 and necessary PHP 7.1 extensions"></a>Step 4: Install PHP 7.1 and necessary PHP 7.1 extensions</h2><p>Install PHP 7.1 and several PHP 7.1 extensions as follows:</p>
+<pre><code>sudo rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+sudo yum install -y mod_php71w  php71w-mysqlnd php71w-common
+</code></pre><h2 id="Step-5-Install-YOURLS"><a href="#Step-5-Install-YOURLS" class="headerlink" title="Step 5: Install YOURLS"></a>Step 5: Install YOURLS</h2><p>5.1 Get the latest YOURLS code from YOURLS GitHub repo:</p>
+<pre><code>sudo yum install git -y
+cd /var/www/html/
+sudo git clone https://github.com/YOURLS/YOURLS.git
+sudo chown -R apache:apache /var/www/html/YOURLS
+cd YOURLS
+</code></pre><p>5.2 Configure YOURLS:</p>
+<pre><code>sudo cp user/config-sample.php user/config.php
+sudo chown apache:apache user/config.php
+</code></pre><p>Use the vi text editor to open the /var/www/html/YOURLS/user/config.php file:</p>
+<p>sudo vi user/config.php<br>Find the below lines:</p>
+<pre><code>define( &apos;YOURLS_DB_USER&apos;, &apos;your db user name&apos; );
+define( &apos;YOURLS_DB_PASS&apos;, &apos;your db password&apos; );
+define( &apos;YOURLS_DB_NAME&apos;, &apos;yourls&apos; );
+define( &apos;YOURLS_SITE&apos;, &apos;http://your-own-domain-here.com&apos; );
+define( &apos;YOURLS_COOKIEKEY&apos;, &apos;modify this text with something random&apos; );
+$yourls_user_passwords = array(
+        &apos;username&apos; =&gt; &apos;password&apos;,
+</code></pre><p>Replace them one by one as follows:</p>
+<pre><code>define( &apos;YOURLS_DB_USER&apos;, &apos;yourlsuser&apos; );
+define( &apos;YOURLS_DB_PASS&apos;, &apos;yourpassword&apos; );
+define( &apos;YOURLS_DB_NAME&apos;, &apos;yourls&apos; );
+define( &apos;YOURLS_SITE&apos;, &apos;http://example.com&apos; );
+define( &apos;YOURLS_COOKIEKEY&apos;, &apos;fmoi4jfsjfasfjlkfjalfgcggjkihdgfjjgdfolsfmwemlgjhgigjgitjaaewesfsdfsdogmbnsin&apos; ); // Use a long string consists of random characters.
+$yourls_user_passwords = array(
+        &apos;username1&apos; =&gt; &apos;password1&apos;, // Use your own username and password.
+</code></pre><p>Save and quit:</p>
+<pre><code>:wq!
+</code></pre><p>5.3 Create a virtual host for YOURLS:</p>
+<pre><code>cat &lt;&lt;EOF | sudo tee -a /etc/httpd/conf.d/yourls.conf
+&lt;VirtualHost *:80&gt;
+ServerAdmin admin@example.com
+DocumentRoot /var/www/html/YOURLS/
+ServerName yourls.example.com
+ServerAlias www.yourls.example.com
+&lt;Directory /var/www/html/YOURLS/&gt;
+Options FollowSymLinks
+AllowOverride All
+Order allow,deny
+allow from all
+&lt;/Directory&gt;
+ErrorLog /var/log/httpd/yourls.example.com-error_log
+CustomLog /var/log/httpd/yourls.example.com-access_log common
+&lt;/VirtualHost&gt;
+EOF
+</code></pre><p>5.4 Apply your settings:</p>
+<pre><code>sudo systemctl restart httpd.service
+</code></pre><p>5.5 Modify firewall rules:</p>
+<pre><code>sudo firewall-cmd --zone=public --permanent --add-service=http
+sudo firewall-cmd --reload
+</code></pre><p>5.6 Web access:</p>
+<p>Point your web browser to <a href="http://example.com/admin" target="_blank" rel="noopener">http://example.com/admin</a>, and then click the Install YOURLS link to finish the installation.</p>
+<p>Having YOURLS successfully installed, click the YOURLS Administration Page link to visit the YOURLS Admin interface, and then use the username username1 and password password1 to log in.</p>
+<p>5.7 Post-installation security measures</p>
+<p>For security purposes, you should restrict permissions to YOURLS after the installation:</p>
+<pre><code>sudo chown -R root:root /var/www/html/YOURLS
+</code></pre><p>When you need to upgrade the program or install a plug-in, you can revert the strict permissions for that purpose as follows:</p>
+<pre><code>sudo chown -R apache:apache /var/www/html/YOURLS
+</code></pre><p>That concludes our tutorial. Thanks for reading.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Sai Wang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Sai Wang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/02/windows安装yourls短链接/" rel="next" title="windows安装yourls短链接">
+                <i class="fa fa-chevron-left"></i> windows安装yourls短链接
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/06/CentOS安装ngrok内网穿透/" rel="prev" title="CentOS安装ngrok内网穿透">
+                CentOS安装ngrok内网穿透 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Sai Wang" />
+            
+              <p class="site-author-name" itemprop="name">Sai Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wangsai0806" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Github</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1069531172@qq.com" target="_blank" title="Email">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Email</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-Apache-web-server"><span class="nav-number">1.</span> <span class="nav-text">Install Apache web server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装mysql"><span class="nav-number">2.</span> <span class="nav-text">安装mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-PHP-7-1-and-necessary-PHP-7-1-extensions"><span class="nav-number">3.</span> <span class="nav-text">Install PHP 7.1 and necessary PHP 7.1 extensions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-and-configure-YOURLS"><span class="nav-number">4.</span> <span class="nav-text">Install and configure YOURLS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-Apache-virtual-host"><span class="nav-number">5.</span> <span class="nav-text">Create Apache virtual host</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-Install-YOURLS-on-CentOS-7"><span class="nav-number">6.</span> <span class="nav-text">How to Install YOURLS on CentOS 7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prerequisites"><span class="nav-number">7.</span> <span class="nav-text">Prerequisites</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-1-Update-the-system"><span class="nav-number">8.</span> <span class="nav-text">Step 1: Update the system</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-2-Install-a-web-server—Apache"><span class="nav-number">9.</span> <span class="nav-text">Step 2: Install a web server—Apache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-3-Install-MariaDB-10-x"><span class="nav-number">10.</span> <span class="nav-text">Step 3: Install MariaDB 10.x</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-4-Install-PHP-7-1-and-necessary-PHP-7-1-extensions"><span class="nav-number">11.</span> <span class="nav-text">Step 4: Install PHP 7.1 and necessary PHP 7.1 extensions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-5-Install-YOURLS"><span class="nav-number">12.</span> <span class="nav-text">Step 5: Install YOURLS</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="/js/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sai Wang</span>
+
+  
+</div>
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="http://wangsaisai.cn">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="http://wangsaisai.cn">NexT.Gemini</a> v5.1.4</div>
+
+
+-->
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共15.8k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="180" height="600"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 180px;
+    height: 600px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    var trElement = document.getElementById('hexo-helper-live2d');
+    trElement.parentNode.removeChild(trElement);
+    return;
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/hibiki.model.json", 0.5);});
+})();
+</script>
+
+</body>
+</html>
