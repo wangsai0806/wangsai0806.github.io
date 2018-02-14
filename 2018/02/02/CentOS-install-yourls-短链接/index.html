@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="王赛的博客">
 <meta property="og:description" content="Install Apache web serveryum install httpd -y Remove the Apache welcome page: sudo sed -i &amp;apos;s/^/#&amp;amp;/g&amp;apos; /etc/httpd/conf.d/welcome.conf Prevent Apache from exposing files in visitors’ web br">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-02T06:39:02.252Z">
+<meta property="og:updated_time" content="2018-02-14T03:18:46.777Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS install yourls 短链接">
 <meta name="twitter:description" content="Install Apache web serveryum install httpd -y Remove the Apache welcome page: sudo sed -i &amp;apos;s/^/#&amp;amp;/g&amp;apos; /etc/httpd/conf.d/welcome.conf Prevent Apache from exposing files in visitors’ web br">
@@ -339,7 +339,11 @@ Listen 9386
 systemctl status httpd.service
 </code></pre><h2 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h2><p>请参考我安装mysql的文章</p>
 <pre><code>#创建数据库
-CREATE DATABASE yourls;
+CREATE DATABASE yourls DEFAULT CHARACTER SET UTF8 COLLATE utf8_unicode_ci;
+CREATE USER &apos;yourlsuser&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;yourpassword&apos;;
+GRANT ALL PRIVILEGES ON yourls.* TO &apos;yourlsuser&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;yourpassword&apos; WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+EXIT;
 </code></pre><h2 id="Install-PHP-7-1-and-necessary-PHP-7-1-extensions"><a href="#Install-PHP-7-1-and-necessary-PHP-7-1-extensions" class="headerlink" title="Install PHP 7.1 and necessary PHP 7.1 extensions"></a>Install PHP 7.1 and necessary PHP 7.1 extensions</h2><p>Install PHP 7.1 and several PHP 7.1 extensions as follows:</p>
 <pre><code>sudo rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 sudo yum install -y mod_php71w  php71w-mysqlnd php71w-common
@@ -362,16 +366,17 @@ define( &apos;YOURLS_DB_PASS&apos;, &apos;YOUR_PASSWORD&apos; );
 define( &apos;YOURLS_DB_NAME&apos;, &apos;yourlsdb&apos; );
 define( &apos;YOURLS_DB_HOST&apos;, &apos;localhost&apos; );
 define( &apos;YOURLS_SITE&apos;, &apos;http://yourdomain.com&apos; );
+#define( &apos;YOURLS_SITE&apos;, &apos;http://52wss.com:9386&apos; );#如果你的端口不是80、443,在域名后面加上你的端口号
 define( &apos;YOURLS_COOKIEKEY&apos;, &apos;modify this text with something random&apos; );
 $yourls_user_passwords = array(
     &apos;user&apos; =&gt; &apos;password&apos;, // Use your actual username and password
 </code></pre><h2 id="Create-Apache-virtual-host"><a href="#Create-Apache-virtual-host" class="headerlink" title="Create Apache virtual host"></a>Create Apache virtual host</h2><p>Create a virtual host directive, so you can access YOURLS with your domain name.</p>
 <pre><code>vi /etc/httpd/conf.d/yourls.conf
 
-ServerAdmin admin@yourdomain.com
+ServerAdmin admin@52wss.com
 DocumentRoot /var/www/html/YOURLS/
-ServerName yourdomain.com
-ServerAlias www.yourdomain.com
+ServerName 52wss.com
+ServerAlias www.52wss.com
 
 Options FollowSymLinks
 AllowOverride All
@@ -464,6 +469,7 @@ $yourls_user_passwords = array(
 define( &apos;YOURLS_DB_PASS&apos;, &apos;yourpassword&apos; );
 define( &apos;YOURLS_DB_NAME&apos;, &apos;yourls&apos; );
 define( &apos;YOURLS_SITE&apos;, &apos;http://example.com&apos; );
+#define( &apos;YOURLS_SITE&apos;, &apos;http://52wss.com:9386&apos; );#如果你的端口不是80、443,在域名后面加上你的端口号
 define( &apos;YOURLS_COOKIEKEY&apos;, &apos;fmoi4jfsjfasfjlkfjalfgcggjkihdgfjjgdfolsfmwemlgjhgigjgitjaaewesfsdfsdogmbnsin&apos; ); // Use a long string consists of random characters.
 $yourls_user_passwords = array(
         &apos;username1&apos; =&gt; &apos;password1&apos;, // Use your own username and password.
@@ -472,6 +478,24 @@ $yourls_user_passwords = array(
 </code></pre><p>5.3 Create a virtual host for YOURLS:</p>
 <pre><code>cat &lt;&lt;EOF | sudo tee -a /etc/httpd/conf.d/yourls.conf
 &lt;VirtualHost *:80&gt;
+ServerAdmin admin@example.com
+DocumentRoot /var/www/html/YOURLS/
+ServerName yourls.example.com
+ServerAlias www.yourls.example.com
+&lt;Directory /var/www/html/YOURLS/&gt;
+Options FollowSymLinks
+AllowOverride All
+Order allow,deny
+allow from all
+&lt;/Directory&gt;
+ErrorLog /var/log/httpd/yourls.example.com-error_log
+CustomLog /var/log/httpd/yourls.example.com-access_log common
+&lt;/VirtualHost&gt;
+EOF
+
+#如果你监控的是其他的端口
+cat &lt;&lt;EOF | sudo tee -a /etc/httpd/conf.d/yourls.conf
+&lt;VirtualHost *:9386&gt;
 ServerAdmin admin@example.com
 DocumentRoot /var/www/html/YOURLS/
 ServerName yourls.example.com
@@ -500,7 +524,25 @@ sudo firewall-cmd --reload
 </code></pre><p>When you need to upgrade the program or install a plug-in, you can revert the strict permissions for that purpose as follows:</p>
 <pre><code>sudo chown -R apache:apache /var/www/html/YOURLS
 </code></pre><p>That concludes our tutorial. Thanks for reading.</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p><strong>PHP PDO问题</strong></p>
+<p> PHP Fatal error:  Class ‘PDO’ not found in /var/www/html/YOURLS/includes/vendor/aura/sql/src/ExtendedPdo.php on line 23</p>
+<p>解决方法：</p>
+<pre><code>yum install php-pdo
+ yum install php-pdo_mysql
 
+ service httpd restart
+</code></pre><p><strong>短链接无法访问</strong></p>
+<p>在/var/www/html/YOURLS根目录下创建.htaccess</p>
+<pre><code># BEGIN YOURLS
+&lt;IfModule mod_rewrite.c&gt;
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ /yourls-loader.php [L]
+&lt;/IfModule&gt;
+# END YOURLS
+</code></pre>
       
     </div>
     
@@ -724,7 +766,7 @@ sudo firewall-cmd --reload
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-Apache-web-server"><span class="nav-number">1.</span> <span class="nav-text">Install Apache web server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装mysql"><span class="nav-number">2.</span> <span class="nav-text">安装mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-PHP-7-1-and-necessary-PHP-7-1-extensions"><span class="nav-number">3.</span> <span class="nav-text">Install PHP 7.1 and necessary PHP 7.1 extensions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-and-configure-YOURLS"><span class="nav-number">4.</span> <span class="nav-text">Install and configure YOURLS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-Apache-virtual-host"><span class="nav-number">5.</span> <span class="nav-text">Create Apache virtual host</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-Install-YOURLS-on-CentOS-7"><span class="nav-number">6.</span> <span class="nav-text">How to Install YOURLS on CentOS 7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prerequisites"><span class="nav-number">7.</span> <span class="nav-text">Prerequisites</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-1-Update-the-system"><span class="nav-number">8.</span> <span class="nav-text">Step 1: Update the system</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-2-Install-a-web-server—Apache"><span class="nav-number">9.</span> <span class="nav-text">Step 2: Install a web server—Apache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-3-Install-MariaDB-10-x"><span class="nav-number">10.</span> <span class="nav-text">Step 3: Install MariaDB 10.x</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-4-Install-PHP-7-1-and-necessary-PHP-7-1-extensions"><span class="nav-number">11.</span> <span class="nav-text">Step 4: Install PHP 7.1 and necessary PHP 7.1 extensions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-5-Install-YOURLS"><span class="nav-number">12.</span> <span class="nav-text">Step 5: Install YOURLS</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-Apache-web-server"><span class="nav-number">1.</span> <span class="nav-text">Install Apache web server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装mysql"><span class="nav-number">2.</span> <span class="nav-text">安装mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-PHP-7-1-and-necessary-PHP-7-1-extensions"><span class="nav-number">3.</span> <span class="nav-text">Install PHP 7.1 and necessary PHP 7.1 extensions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-and-configure-YOURLS"><span class="nav-number">4.</span> <span class="nav-text">Install and configure YOURLS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-Apache-virtual-host"><span class="nav-number">5.</span> <span class="nav-text">Create Apache virtual host</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-Install-YOURLS-on-CentOS-7"><span class="nav-number">6.</span> <span class="nav-text">How to Install YOURLS on CentOS 7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prerequisites"><span class="nav-number">7.</span> <span class="nav-text">Prerequisites</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-1-Update-the-system"><span class="nav-number">8.</span> <span class="nav-text">Step 1: Update the system</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-2-Install-a-web-server—Apache"><span class="nav-number">9.</span> <span class="nav-text">Step 2: Install a web server—Apache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-3-Install-MariaDB-10-x"><span class="nav-number">10.</span> <span class="nav-text">Step 3: Install MariaDB 10.x</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-4-Install-PHP-7-1-and-necessary-PHP-7-1-extensions"><span class="nav-number">11.</span> <span class="nav-text">Step 4: Install PHP 7.1 and necessary PHP 7.1 extensions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-5-Install-YOURLS"><span class="nav-number">12.</span> <span class="nav-text">Step 5: Install YOURLS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题"><span class="nav-number"></span> <span class="nav-text">问题</span></a></div>
             
 
           </div>
@@ -774,7 +816,7 @@ sudo firewall-cmd --reload
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共15.8k字</span>
+  <span class="post-count">博客全站共16.0k字</span>
 </div>
 
         
