@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="墙,网络," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简单介绍Aria2是一个命令行下运行、多协议、多来源下载工具，支持磁力链接、BT种子、HTTP、FTP等下载协议，当然因为它是命令行下载工具，所以我们想下载一个东西还需要去敲命令自然是不方便，于是就有一些人根据Aria2的API开发了一些在线管理面板，可以直接在网页上面添加管理任务。 本教程介绍的是 AriaNg，Github项目：https://github.com/mayswind/AriaN">
+<meta name="keywords" content="墙,网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="离线下载BT磁力链接Aria2在线管理面板--AriaNg">
+<meta property="og:url" content="http://yoursite.com/2018/03/28/离线下载BT磁力链接Aria2在线管理面板--AriaNg/index.html">
+<meta property="og:site_name" content="王赛的博客">
+<meta property="og:description" content="简单介绍Aria2是一个命令行下运行、多协议、多来源下载工具，支持磁力链接、BT种子、HTTP、FTP等下载协议，当然因为它是命令行下载工具，所以我们想下载一个东西还需要去敲命令自然是不方便，于是就有一些人根据Aria2的API开发了一些在线管理面板，可以直接在网页上面添加管理任务。 本教程介绍的是 AriaNg，Github项目：https://github.com/mayswind/AriaN">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://img.doub.pw/wlzy-30-03.png">
+<meta property="og:image" content="https://img.doub.pw/wlzy-30-01.png">
+<meta property="og:image" content="https://img.doub.pw/wlzy-30-02.png">
+<meta property="og:updated_time" content="2018-03-27T17:14:39.626Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="离线下载BT磁力链接Aria2在线管理面板--AriaNg">
+<meta name="twitter:description" content="简单介绍Aria2是一个命令行下运行、多协议、多来源下载工具，支持磁力链接、BT种子、HTTP、FTP等下载协议，当然因为它是命令行下载工具，所以我们想下载一个东西还需要去敲命令自然是不方便，于是就有一些人根据Aria2的API开发了一些在线管理面板，可以直接在网页上面添加管理任务。 本教程介绍的是 AriaNg，Github项目：https://github.com/mayswind/AriaN">
+<meta name="twitter:image" content="https://img.doub.pw/wlzy-30-03.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/28/离线下载BT磁力链接Aria2在线管理面板--AriaNg/"/>
+
+
+
+
+
+  <title>离线下载BT磁力链接Aria2在线管理面板--AriaNg | 王赛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王赛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/离线下载BT磁力链接Aria2在线管理面板--AriaNg/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sai Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王赛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">离线下载BT磁力链接Aria2在线管理面板--AriaNg</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T02:07:18+08:00">
+                2018-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/28/离线下载BT磁力链接Aria2在线管理面板--AriaNg/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/03/28/离线下载BT磁力链接Aria2在线管理面板--AriaNg/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+			
+			
+			  <span id="busuanzi_container_page_pv">&nbsp;&nbsp;|&nbsp;&nbsp;阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+			
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><p>Aria2是一个命令行下运行、多协议、多来源下载工具，支持磁力链接、BT种子、HTTP、FTP等下载协议，当然因为它是命令行下载工具，所以我们想下载一个东西还需要去敲命令自然是不方便，于是就有一些人根据Aria2的API开发了一些在线管理面板，可以直接在网页上面添加管理任务。</p>
+<p>本教程介绍的是 AriaNg，Github项目：<a href="https://github.com/mayswind/AriaNg" target="_blank" rel="noopener">https://github.com/mayswind/AriaNg</a></p>
+<p>Aria2是一个后端(服务端)的程序，而 AriaNg是一个前端(HTML+JS静态)控制面板，不需要和 Aria2(后端/服务端)放在一个服务器或者设备中，你甚至可以只在服务器上面搭建Aria2后端，然后访问别人建好的 AriaNg前端面板，也可以远程操作Aria2后端！<br><img src="https://img.doub.pw/wlzy-30-03.png" alt=""></p>
+<h2 id="安装-Aria2-后端-服务端"><a href="#安装-Aria2-后端-服务端" class="headerlink" title="安装 Aria2(后端/服务端)"></a>安装 Aria2(后端/服务端)</h2><p><strong>一键脚本安装</strong></p>
+<pre><code>wget -N --no-check-certificate https://softs.fun/Bash/aria2.sh &amp;&amp; chmod +x aria2.sh &amp;&amp; bash aria2.sh
+
+# 如果上面这个脚本无法下载，尝试使用备用下载：
+wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/aria2.sh &amp;&amp; chmod +x aria2.sh &amp;&amp; bash aria2.sh
+</code></pre><p><strong>手动安装步骤</strong></p>
+<p>默认已经配置好了 Aria2的配置文件，如果你想要修改，那么你可以输入 vi /root/.aria2/aria2.conf 或者 把这个文件下载到本地修改（有中文注释，# 井号是注释的，不懂的参数不要乱动，默认就好）。</p>
+<p>主要就是下面这两个选项：下载目录(dir)、RPC监听端口(rpc-listen-port)、RPC令牌(rpc-secret)，默认是下面这样：</p>
+<pre><code>下载目录：dir=/usr/local/caddy/www/aria2/Download
+
+RPC监听端口：rpc-listen-port=6800 (默认#注释)
+
+RPC令牌：rpc-secret=doub.io (如果不需要，则修改配置文件在参数前面加上 # 注释即可)
+
+RPC令牌就相当于 Aria2(后端/服务端)远程API连接的授权密码，默认是开启的PRC令牌是 doub.io
+</code></pre><p>正式使用建议更改 PRC监听端口和令牌 ，避免安全隐患！</p>
+<h2 id="Aria2-后端-服务端-使用方法"><a href="#Aria2-后端-服务端-使用方法" class="headerlink" title="Aria2(后端/服务端) 使用方法"></a>Aria2(后端/服务端) 使用方法</h2><p><strong>使用说明</strong></p>
+<pre><code>启动：/etc/init.d/aria2 start
+
+停止：/etc/init.d/aria2 stop
+
+重启：/etc/init.d/aria2 restart
+
+查看状态：/etc/init.d/aria2 status
+
+配置文件：/root/.aria2/aria2.conf （配置文件包含中文注释，但是一些系统可能不支持显示中文）
+
+下载目录：/usr/local/caddy/www/aria2/Download
+</code></pre><h2 id="安装-AriaNg-前端-HTML-JS"><a href="#安装-AriaNg-前端-HTML-JS" class="headerlink" title="安装 AriaNg(前端/HTML+JS)"></a>安装 AriaNg(前端/HTML+JS)</h2><p>AriaNg是一个前端(HTML+JS静态)控制面板，不需要和 Aria2(后端/服务端)放在一个服务器或者设备中，你甚至可以只在服务器上面搭建Aria2后端，然后访问别人建好的 AriaNg前端面板，也可以远程操作Aria2后端！</p>
+<pre><code>Github项目：https://github.com/mayswind/AriaNg
+
+下载地址：https://github.com/mayswind/AriaNg/releases/latest    
+
+AriaNg官方演示页面：http://ariang.mayswind.net/
+</code></pre><p><strong>本地安装（可选步骤，不打算本地安装 AriaNg就跳过）</strong></p>
+<p>AriaNg是一个 HTML+JS 纯静态一个Aria2的Web面板，所以不需要编译任何环境。</p>
+<p>AriaNg的前端面板可以放在你本地电脑上面，下载解压后后直接用浏览器打开 index.html 文件就能使用了。</p>
+<p><strong>服务器安装</strong></p>
+<p>在本地安装 AriaNg的话，只能局域网内访问，想要其他地方访问，还是要在服务器上面安装HTTP服务器。</p>
+<p>这里安装 Caddy 一个很简单的HTTP服务器，也可以使用Nginx/Apache或者LNMP一键包之类的，使用方法自行谷歌。</p>
+<pre><code>wget -N --no-check-certificate https://softs.fun/Bash/caddy_install.sh &amp;&amp; chmod +x caddy_install.sh &amp;&amp; bash caddy_install.sh install http.filemanager
+
+# 如果上面这个脚本无法下载，尝试使用备用下载：
+wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/caddy_install.sh &amp;&amp; chmod +x caddy_install.sh &amp;&amp; bash caddy_install.sh install http.filemanager
+</code></pre><p>安装Caddy成功后，继续新建一个虚拟主机文件夹，</p>
+<pre><code>mkdir /usr/local/caddy/www &amp;&amp; mkdir /usr/local/caddy/www/aria2
+</code></pre><p>写入配置到 Caddy 配置文件，注意下面这五行要一起复制粘贴，不是一行一行复制！</p>
+<pre><code># 以下全部内容是一个整体，是一个命令，全部复制粘贴到SSH软件中并一起执行！
+echo &quot;:9327 {
+ root /usr/local/caddy/www/aria2
+ timeouts none
+ gzip
+ browse
+}&quot; &gt; /usr/local/caddy/Caddyfile
+</code></pre><p><strong>安装 AriaNg</strong></p>
+<pre><code># 新建Aria2下载文件夹 并进入文件夹 #
+mkdir /usr/local/caddy/www/aria2/Download &amp;&amp; cd /usr/local/caddy/www/aria2
+
+# 下载并解压 AriaNg 文件，这段代码会自动检测并下载最新版本 #
+Ver=$(wget --no-check-certificate -qO- &quot;https://github.com/mayswind/AriaNg/releases/latest&quot;|grep &quot;&lt;title&gt;&quot;|sed -r &apos;s/.*AriaNg (.+) · mayswind.*/\1/&apos;)
+# 如果上面自动检测最新版本的代码返回空白或者错误，那么请访问 https://github.com/mayswind/AriaNg/releases/latest 来查看最新版本号。
+# 例如手动获取的版本号是 0.3.0，那么手动执行命令： Ver=&quot;0.3.0&quot; ，然后继续下面步骤即可。
+
+wget -N --no-check-certificate &quot;https://github.com/mayswind/AriaNg/releases/download/${Ver}/aria-ng-${Ver}.zip&quot; &amp;&amp; unzip aria-ng-${Ver}.zip &amp;&amp; rm -rf aria-ng-${Ver}.zip
+
+# 赋予虚拟主机文件夹权限 #
+chmod -R 755 /usr/local/caddy/www/aria2
+</code></pre><p>上面代码都执行完后，就可以启动 Caddy了。</p>
+<pre><code>/etc/init.d/caddy start
+</code></pre><p>如果Caddy 运行正常，那么你打开 <a href="http://vps_ip:9324" target="_blank" rel="noopener">http://vps_ip:9324</a> 即可看到 AriaNg的页面了。</p>
+<p><strong>绑定域名</strong></p>
+<p>现在，AiraNg已经可以通过IP访问了，但是只通过IP访问，不好记，如果你想要用域名的话，这样改：</p>
+<pre><code># 重新写入配置到 Caddy 配置文件，注意下面这五行要一起复制粘贴！toyoo.ml 改成你自己的域名，然后去域名托管商解析你的域名即可 #
+# 以下全部内容是一个整体，是一个命令，全部复制粘贴到SSH软件中并一起执行！
+echo &quot;http://toyoo.ml {
+  root /usr/local/caddy/www/aria2
+  timeouts none
+  gzip
+  browse
+}&quot; &gt; /usr/local/caddy/Caddyfile
+</code></pre><p>上面代码执行完毕后，重启Caddy即可。</p>
+<pre><code>/etc/init.d/caddy restart
+</code></pre><p>启动成功后，尝试访问 <a href="http://域名" target="_blank" rel="noopener">http://域名</a> ，看一看是否成功。</p>
+<h2 id="Caddy-使用方法"><a href="#Caddy-使用方法" class="headerlink" title="Caddy 使用方法"></a>Caddy 使用方法</h2><pre><code>启动：/etc/init.d/caddy start
+
+停止：/etc/init.d/caddy stop
+
+重启：/etc/init.d/caddy restart
+
+查看状态：/etc/init.d/caddy status
+
+Caddy 配置文件：/usr/local/caddy/Caddyfile
+
+Caddy 虚拟主机：/usr/local/caddy/www
+
+AriaNg 虚拟主机文件夹：/usr/local/caddy/www/aria2
+
+AriaNg 下载文件夹：/usr/local/caddy/www/aria2/Download
+</code></pre><h2 id="配置-AriaNg"><a href="#配置-AriaNg" class="headerlink" title="配置 AriaNg"></a>配置 AriaNg</h2><p>进入AriaNg的网页后，默认是英文语言，你可以 点击左侧选项菜单 —— AriaNg Setting ，然后在新页面中 Language选项选择 简体中文，然后刷新页面后即可生效。</p>
+<p>如果你的 Aria2(后端/服务端)还没有运行，请先根据 Aria2使用说明 启动 Aria2(后端/服务端)。</p>
+<p>依然是 左侧选项菜单 ——  AriaNg 设置 —— RPC —— 依次输入/选择下图各选项。</p>
+<pre><code>Aria2 RPC 主机：就是填写你 安装Aria2(后端/服务端)的服务器IP 或者 域名。
+Aria2 RPC 端口：默认 6800 。
+Aria2 RPC 协议：选择 http ，如果你配置了https，那么就选择https。
+Aria2 RPC 密匙：输入你的RPC密匙(令牌)，如果你安装后没有修改配置文件中的RPC密匙(令牌)，那么你这里需要填写 doub.io 。
+</code></pre><p>强烈建议打开 RPC密匙(令牌)来保证安全性。</p>
+<p>设置完毕后，刷新页面即可生效。</p>
+<p>正常情况下，右上角会提示 连接成功，点击左侧选项菜单 —— Aria2 状态，即可看到当前 AriaNg 前端面板连接到的 Aria2(后端/服务端)的信息。<br><img src="https://img.doub.pw/wlzy-30-01.png" alt=""><br><img src="https://img.doub.pw/wlzy-30-02.png" alt=""></p>
+<h2 id="在线下载-观看"><a href="#在线下载-观看" class="headerlink" title="在线下载/观看"></a>在线下载/观看</h2><p>我发现这个 AriaNg前端面板，下载文件后不会显示 HTTP文件下载链接，这个很蛋疼，这是我感觉这个前端面板 唯一一点不完美的地方。</p>
+<p>可以手动拼接来 获得HTTP下载链接，例如我下载了一个名为 100MB.bin 的文件</p>
+<p>那么我只要这样拼接 <a href="http://toyoo.ml/Download/100MB.bin" target="_blank" rel="noopener">http://toyoo.ml/Download/100MB.bin</a> 即可下载文件了，mp4格式的视频也可以这样在线观看。</p>
+<p>上面安装 Caddy的时候，就已经配置了目录列表功能，所以可以通过 <a href="http://ip/Download" target="_blank" rel="noopener">http://ip/Download</a> 来访问以显示 Download 文件夹里面的所有文件了！</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>AriaNg前端面板并不会保存任何设置，所有设置都是 从 Aria2(后端/服务端)的启动参数或者配置文件中获取的。<br><strong>AriaNG 前端访问加密码</strong></p>
+<p>AriaNG只是一个 远程操作Aria2的一个前端面板，所有数据都是保存在浏览器本地的，所以即使你用别人的，或者别人用你的AriaNG前端面板，都不会有影响。</p>
+<p>当然，如果你不想让别人用，那么可以修改Caddy的配置文件实现访问输入密码。</p>
+<p>格式如下：</p>
+<pre><code>basicauth / user passwd
+</code></pre><p>user指的是 用户名，passwd指的是 用户名密码，设置这个后，访问网页就需要输入用户名和密码来验证了！</p>
+<p>注意：用户名和密码不支持特殊符号，必须使用 数字和字母 [a-z][A-z][0-6]<br>修改配置文件后，记得重启 Caddy ！</p>
+<p>配置示例：</p>
+<pre><code># 以下全部内容是一个整体，是一个命令，全部复制粘贴到SSH软件中并一起执行！
+echo &quot;http://toyoo.ml {
+ root /usr/local/caddy/www/aria2
+ basicauth / user passwd
+ timeouts
+ none
+ gzip
+ browse
+ }&quot; &gt; /usr/local/caddy/Caddyfile
+</code></pre><p><strong>启动显示成功，但是实际未运行</strong></p>
+<p>因为 服务脚本判断的问题，只判断了nohub是否运行 Caddy成功，但没有判断 Caddy 是否保持正常运行。</p>
+<p>你可以理解为，nohub成功启动了 Caddy，但是 Caddy因为配置文件错误等原因，启动后又退出了。</p>
+<p>所以这种情况下，你应该去查看启动日志：</p>
+<pre><code>tail -f /tmp/caddy.log
+</code></pre><p><strong>Caddy启动失败，打开 <a href="http://ip" target="_blank" rel="noopener">http://ip</a> 显示的是 It works !</strong></p>
+<p>一些系统会自带 apache2 ，而 apache2 会占用80端口，导致Caddy无法绑定端口，所以只要关掉就好了。</p>
+<pre><code>netstat -lntp
+# 我们可以通过这个命令查看是不是被其他软件占用了 80 端口。
+</code></pre><p>不过 apache2 会默认开机自启动，如果不需要可以关闭自启动或者卸载 apache2 。</p>
+<p>停止 Apache2</p>
+<pre><code>/etc/init.d/apache2 stop
+# 尝试使用上面这个关闭，如果没效果或者提示什么错误无法关闭，那就用下面这个强行关闭进程。
+kill -9 $(ps -ef|grep &quot;apache2&quot;|grep -v &quot;grep&quot;|awk &apos;{print $2}&apos;)
+</code></pre><p>取消开机自启动</p>
+<pre><code>update-rc.d -f apache2 remove
+</code></pre><p>卸载 Apache2</p>
+<pre><code>apt-get remove --purge apache2
+</code></pre><p>关闭 Apache2后，就可以尝试启动 Caddy ，并试试能不能打开网页。</p>
+<pre><code>/etc/init.d/caddy start
+</code></pre><p><strong>Aria2(后端/服务端)启动成功，但是 AriaNg 无法连接</strong></p>
+<p>这个可能是防火墙的问题，开放防火墙端口即可。</p>
+<p>需要开放两个端口，一个是RPC监听端口 6800(默认)，一个是BT监听端口 51413(默认)。</p>
+<p>不清楚端口的话，可以打开配置文件去看 vi /root/.aria2/aria2.conf ，或者查看本地端口监听情况 </p>
+<pre><code>netstat -lntp 
+
+iptables -I INPUT -m state --state NEW -m tcp -p tcp --dport 端口 -j ACCEPT
+iptables -I INPUT -m state --state NEW -m udp -p udp --dport 端口 -j ACCEPT
+
+# 删除防火墙规则，内容一样把 -I 换成 -D 就行了：
+iptables -D INPUT -m state --state NEW -m tcp -p tcp --dport 端口 -j ACCEPT
+iptables -D INPUT -m state --state NEW -m udp -p udp --dport 端口 -j ACCEPT
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Sai Wang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Sai Wang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/墙/" rel="tag"># 墙</a>
+          
+            <a href="/tags/网络/" rel="tag"># 网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/13/windows使用openssl生成ca证书/" rel="next" title="windows使用openssl生成ca证书">
+                <i class="fa fa-chevron-left"></i> windows使用openssl生成ca证书
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Sai Wang" />
+            
+              <p class="site-author-name" itemprop="name">Sai Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wangsai0806" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Github</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1069531172@qq.com" target="_blank" title="Email">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Email</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单介绍"><span class="nav-number">1.</span> <span class="nav-text">简单介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Aria2-后端-服务端"><span class="nav-number">2.</span> <span class="nav-text">安装 Aria2(后端/服务端)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Aria2-后端-服务端-使用方法"><span class="nav-number">3.</span> <span class="nav-text">Aria2(后端/服务端) 使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-AriaNg-前端-HTML-JS"><span class="nav-number">4.</span> <span class="nav-text">安装 AriaNg(前端/HTML+JS)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Caddy-使用方法"><span class="nav-number">5.</span> <span class="nav-text">Caddy 使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-AriaNg"><span class="nav-number">6.</span> <span class="nav-text">配置 AriaNg</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在线下载-观看"><span class="nav-number">7.</span> <span class="nav-text">在线下载/观看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">8.</span> <span class="nav-text">注意事项</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="/js/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sai Wang</span>
+
+  
+</div>
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="http://wangsaisai.cn">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="http://wangsaisai.cn">NexT.Gemini</a> v5.1.4</div>
+
+
+-->
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共18.8k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="180" height="600"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 180px;
+    height: 600px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    var trElement = document.getElementById('hexo-helper-live2d');
+    trElement.parentNode.removeChild(trElement);
+    return;
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/hibiki.model.json", 0.5);});
+})();
+</script>
+
+</body>
+</html>
