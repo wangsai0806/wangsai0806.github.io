@@ -87,14 +87,14 @@
 <meta property="og:site_name" content="王赛的博客">
 <meta property="og:description" content="简单介绍Aria2是一个命令行下运行、多协议、多来源下载工具，支持磁力链接、BT种子、HTTP、FTP等下载协议，当然因为它是命令行下载工具，所以我们想下载一个东西还需要去敲命令自然是不方便，于是就有一些人根据Aria2的API开发了一些在线管理面板，可以直接在网页上面添加管理任务。 本教程介绍的是 AriaNg，Github项目：https://github.com/mayswind/AriaN">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://img.doub.pw/wlzy-30-03.png">
-<meta property="og:image" content="https://img.doub.pw/wlzy-30-01.png">
-<meta property="og:image" content="https://img.doub.pw/wlzy-30-02.png">
-<meta property="og:updated_time" content="2018-03-27T17:18:10.039Z">
+<meta property="og:image" content="https://i.imgur.com/iIVSUt7.png">
+<meta property="og:image" content="https://i.imgur.com/kGnMAGG.png">
+<meta property="og:image" content="https://i.imgur.com/fML1N7P.png">
+<meta property="og:updated_time" content="2018-03-28T05:23:30.376Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="离线下载BT磁力链接Aria2在线管理面板--AriaNg">
 <meta name="twitter:description" content="简单介绍Aria2是一个命令行下运行、多协议、多来源下载工具，支持磁力链接、BT种子、HTTP、FTP等下载协议，当然因为它是命令行下载工具，所以我们想下载一个东西还需要去敲命令自然是不方便，于是就有一些人根据Aria2的API开发了一些在线管理面板，可以直接在网页上面添加管理任务。 本教程介绍的是 AriaNg，Github项目：https://github.com/mayswind/AriaN">
-<meta name="twitter:image" content="https://img.doub.pw/wlzy-30-03.png">
+<meta name="twitter:image" content="https://i.imgur.com/iIVSUt7.png">
 
 
 
@@ -320,7 +320,7 @@
       
         <h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><p>Aria2是一个命令行下运行、多协议、多来源下载工具，支持磁力链接、BT种子、HTTP、FTP等下载协议，当然因为它是命令行下载工具，所以我们想下载一个东西还需要去敲命令自然是不方便，于是就有一些人根据Aria2的API开发了一些在线管理面板，可以直接在网页上面添加管理任务。</p>
 <p>本教程介绍的是 AriaNg，Github项目：<a href="https://github.com/mayswind/AriaNg" target="_blank" rel="noopener">https://github.com/mayswind/AriaNg</a></p>
-<p>Aria2是一个后端(服务端)的程序，而 AriaNg是一个前端(HTML+JS静态)控制面板，不需要和 Aria2(后端/服务端)放在一个服务器或者设备中，你甚至可以只在服务器上面搭建Aria2后端，然后访问别人建好的 AriaNg前端面板，也可以远程操作Aria2后端！<br><img src="https://img.doub.pw/wlzy-30-03.png" alt=""></p>
+<p>Aria2是一个后端(服务端)的程序，而 AriaNg是一个前端(HTML+JS静态)控制面板，不需要和 Aria2(后端/服务端)放在一个服务器或者设备中，你甚至可以只在服务器上面搭建Aria2后端，然后访问别人建好的 AriaNg前端面板，也可以远程操作Aria2后端！<br><img src="https://i.imgur.com/iIVSUt7.png" alt=""></p>
 <h2 id="安装-Aria2-后端-服务端"><a href="#安装-Aria2-后端-服务端" class="headerlink" title="安装 Aria2(后端/服务端)"></a>安装 Aria2(后端/服务端)</h2><p><strong>一键脚本安装</strong></p>
 <pre><code>wget -N --no-check-certificate https://softs.fun/Bash/aria2.sh &amp;&amp; chmod +x aria2.sh &amp;&amp; bash aria2.sh
 
@@ -428,7 +428,7 @@ Aria2 RPC 协议：选择 http ，如果你配置了https，那么就选择https
 Aria2 RPC 密匙：输入你的RPC密匙(令牌)，如果你安装后没有修改配置文件中的RPC密匙(令牌)，那么你这里需要填写 doub.io 。
 </code></pre><p>强烈建议打开 RPC密匙(令牌)来保证安全性。</p>
 <p>设置完毕后，刷新页面即可生效。</p>
-<p>正常情况下，右上角会提示 连接成功，点击左侧选项菜单 —— Aria2 状态，即可看到当前 AriaNg 前端面板连接到的 Aria2(后端/服务端)的信息。<br><img src="https://img.doub.pw/wlzy-30-01.png" alt=""><br><img src="https://img.doub.pw/wlzy-30-02.png" alt=""></p>
+<p>正常情况下，右上角会提示 连接成功，点击左侧选项菜单 —— Aria2 状态，即可看到当前 AriaNg 前端面板连接到的 Aria2(后端/服务端)的信息。<br><img src="https://i.imgur.com/kGnMAGG.png" alt=""><br><img src="https://i.imgur.com/fML1N7P.png" alt=""></p>
 <h2 id="在线下载-观看"><a href="#在线下载-观看" class="headerlink" title="在线下载/观看"></a>在线下载/观看</h2><p>我发现这个 AriaNg前端面板，下载文件后不会显示 HTTP文件下载链接，这个很蛋疼，这是我感觉这个前端面板 唯一一点不完美的地方。</p>
 <p>可以手动拼接来 获得HTTP下载链接，例如我下载了一个名为 100MB.bin 的文件</p>
 <p>那么我只要这样拼接 <a href="http://toyoo.ml/Download/100MB.bin" target="_blank" rel="noopener">http://toyoo.ml/Download/100MB.bin</a> 即可下载文件了，mp4格式的视频也可以这样在线观看。</p>
