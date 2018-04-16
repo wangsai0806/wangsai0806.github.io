@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="服务器,缓存," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一:Redis官方集群方案 Redis ClusterRedis Cluster是一种服务器Sharding技术，3.0版本开始正式提供。 Redis Cluster中，Sharding采用slot(槽)的概念，一共分成16384个槽，这有点儿类pre sharding思路。对于每个进入Redis的键值对，根据key进行散列，分配到这16384个slot中的某一个中。使用的hash算法也比较简单，">
+<meta name="keywords" content="服务器,缓存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis搭建集群">
+<meta property="og:url" content="http://yoursite.com/2018/04/13/Redis搭建集群/index.html">
+<meta property="og:site_name" content="王赛的博客">
+<meta property="og:description" content="一:Redis官方集群方案 Redis ClusterRedis Cluster是一种服务器Sharding技术，3.0版本开始正式提供。 Redis Cluster中，Sharding采用slot(槽)的概念，一共分成16384个槽，这有点儿类pre sharding思路。对于每个进入Redis的键值对，根据key进行散列，分配到这16384个slot中的某一个中。使用的hash算法也比较简单，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/a8XVL4f.jpg">
+<meta property="og:image" content="https://i.imgur.com/o7lVZ5e.png">
+<meta property="og:image" content="https://i.imgur.com/LlYGq3b.png">
+<meta property="og:image" content="https://i.imgur.com/jv3fryV.png">
+<meta property="og:image" content="https://i.imgur.com/U2SDUZD.png">
+<meta property="og:image" content="https://i.imgur.com/MklPlTt.png">
+<meta property="og:updated_time" content="2018-04-16T02:51:06.540Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis搭建集群">
+<meta name="twitter:description" content="一:Redis官方集群方案 Redis ClusterRedis Cluster是一种服务器Sharding技术，3.0版本开始正式提供。 Redis Cluster中，Sharding采用slot(槽)的概念，一共分成16384个槽，这有点儿类pre sharding思路。对于每个进入Redis的键值对，根据key进行散列，分配到这16384个slot中的某一个中。使用的hash算法也比较简单，">
+<meta name="twitter:image" content="https://i.imgur.com/a8XVL4f.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/13/Redis搭建集群/"/>
+
+
+
+
+
+  <title>Redis搭建集群 | 王赛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王赛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/13/Redis搭建集群/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sai Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王赛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Redis搭建集群</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T20:51:55+08:00">
+                2018-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/13/Redis搭建集群/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/04/13/Redis搭建集群/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+			
+			
+			  <span id="busuanzi_container_page_pv">&nbsp;&nbsp;|&nbsp;&nbsp;阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+			
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一-Redis官方集群方案-Redis-Cluster"><a href="#一-Redis官方集群方案-Redis-Cluster" class="headerlink" title="一:Redis官方集群方案 Redis Cluster"></a>一:Redis官方集群方案 Redis Cluster</h1><p>Redis Cluster是一种服务器Sharding技术，3.0版本开始正式提供。<br><img src="https://i.imgur.com/a8XVL4f.jpg" alt=""></p>
+<p>Redis Cluster中，Sharding采用slot(槽)的概念，一共分成16384个槽，这有点儿类pre sharding思路。对于每个进入Redis的键值对，根据key进行散列，分配到这16384个slot中的某一个中。使用的hash算法也比较简单，就是CRC16后16384取模。</p>
+<p>Redis集群中的每个node(节点)负责分摊这16384个slot中的一部分，也就是说，每个slot都对应一个node负责处理。当动态添加或减少node节点时，需要将16384个槽做个再分配，槽中的键值也要迁移。当然，这一过程，在目前实现中，还处于半自动状态，需要人工介入。</p>
+<p>Redis集群，要保证16384个槽对应的node都正常工作，如果某个node发生故障，那它负责的slots也就失效，整个集群将不能工作。</p>
+<p>为了增加集群的可访问性，官方推荐的方案是将node配置成主从结构，即一个master主节点，挂n个slave从节点。这时，如果主节点失效，Redis Cluster会根据选举算法从slave节点中选择一个上升为主节点，整个集群继续对外提供服务。这非常类似前篇文章提到的Redis Sharding场景下服务器节点通过Sentinel监控架构成主从结构，只是Redis Cluster本身提供了故障转移容错的能力。</p>
+<p>Redis Cluster的新节点识别能力、故障判断及故障转移能力是通过集群中的每个node都在和其它nodes进行通信，这被称为集群总线(cluster bus)。它们使用特殊的端口号，即对外服务端口号加10000。例如如果某个node的端口号是6379，那么它与其它nodes通信的端口号是16379。nodes之间的通信采用特殊的二进制协议。</p>
+<p>对客户端来说，整个cluster被看做是一个整体，客户端可以连接任意一个node进行操作，就像操作单一Redis实例一样，当客户端操作的key没有分配到该node上时，Redis会返回转向指令，指向正确的node，这有点儿像浏览器页面的302 redirect跳转。</p>
+<h2 id="1-redis-cluster节点分配"><a href="#1-redis-cluster节点分配" class="headerlink" title="1.redis cluster节点分配"></a>1.redis cluster节点分配</h2><p>现在我们是三个主节点分别是：A, B, C 三个节点，它们可以是一台机器上的三个端口，也可以是三台不同的服务器。那么，采用哈希槽 (hash slot)的方式来分配16384个slot 的话，它们三个节点分别承担的slot 区间是：</p>
+<pre><code>节点A覆盖0－5460;
+节点B覆盖5461－10922;
+节点C覆盖10923－16383.
+</code></pre><p><strong>获取数据：</strong></p>
+<p>如果存入一个值，按照redis cluster哈希槽的算法： CRC16(‘key’)384 = 6782。 那么就会把这个key 的存储分配到 B 上了。同样，当我连接(A,B,C)任何一个节点想获取’key’这个key时，也会这样的算法，然后内部跳转到B节点上获取数据 </p>
+<p><strong>新增一个主节点：</strong></p>
+<p>新增一个节点D，redis cluster的这种做法是从各个节点的前面各拿取一部分slot到D上，我会在接下来的实践中实验。大致就会变成这样：</p>
+<pre><code>节点A覆盖1365-5460
+节点B覆盖6827-10922
+节点C覆盖12288-16383
+节点D覆盖0-1364,5461-6826,10923-12287
+</code></pre><p>同样删除一个节点也是类似，移动完成后就可以删除这个节点了。</p>
+<h2 id="2、Redis-Cluster主从模式"><a href="#2、Redis-Cluster主从模式" class="headerlink" title="2、Redis Cluster主从模式"></a>2、Redis Cluster主从模式</h2><p>redis cluster 为了保证数据的高可用性，加入了主从模式，一个主节点对应一个或多个从节点，主节点提供数据存取，从节点则是从主节点拉取数据备份，当这个主节点挂掉后，就会有这个从节点选取一个来充当主节点，从而保证集群不会挂掉。</p>
+<p>上面那个例子里, 集群有ABC三个主节点, 如果这3个节点都没有加入从节点，如果B挂掉了，我们就无法访问整个集群了。A和C的slot也无法访问。</p>
+<p>所以我们在集群建立的时候，一定要为每个主节点都添加了从节点, 比如像这样, 集群包含主节点A、B、C, 以及从节点A1、B1、C1, 那么即使B挂掉系统也可以继续正确工作。</p>
+<p>B1节点替代了B节点，所以Redis集群将会选择B1节点作为新的主节点，集群将会继续正确地提供服务。 当B重新开启后，它就会变成B1的从节点。</p>
+<p>不过需要注意，如果节点B和B1同时挂了，Redis集群就无法继续正确地提供服务了。</p>
+<h1 id="二：redis集群的搭建"><a href="#二：redis集群的搭建" class="headerlink" title="二：redis集群的搭建"></a>二：redis集群的搭建</h1><p> 集群中至少应该有奇数个节点，所以至少有三个节点，每个节点至少有一个备份节点，所以下面使用6节点（主节点、备份节点由redis-cluster集群确定）。<br> 下面使用redis-3.2.0安装，<a href="http://redis.io/download" target="_blank" rel="noopener">下载地址</a>  </p>
+<h2 id="1、安装redis节点指定端口"><a href="#1、安装redis节点指定端口" class="headerlink" title="1、安装redis节点指定端口"></a>1、安装redis节点指定端口</h2><p>解压redis压缩包，编译安装</p>
+<pre><code>[root@localhost redis-3.2.0]# tar xzf redis-3.2.0.tar.gz  
+[root@localhost redis-3.2.0]# cd redis-3.2.0  
+[root@localhost redis-3.2.0]# make &amp;&amp; make install PREFIX=/usr/ws/redis-cluster
+</code></pre><p> 在redis-cluster下 修改bin文件夹为redis01,复制redis.conf配置文件到redis01文件夹下</p>
+<pre><code>[root@localhost redis-3.2.0]# cd /usr/ws/redis-cluster
+[root@localhost redis-3.2.0]# mv bin/ redis01
+[root@localhost redis-3.2.0]# cp redis.conf /usr/ws/redus-cluster/redis01/  
+[root@localhost redis-3.2.0]# make &amp;&amp; make install PREFIX=/usr/ws/redis-cluster
+</code></pre><p> 配置redis的配置文件redis.conf</p>
+<pre><code>daemonize yes #后台启动
+port 7001 #修改端口号，从7001到7006
+cluster-enabled yes #开启cluster，去掉注释
+cluster-config-file nodes.conf
+cluster-node-timeout 15000
+appendonly yes
+</code></pre><p> 复制六份，修改对应的端口号<br><img src="https://i.imgur.com/o7lVZ5e.png" alt=""></p>
+<h2 id="2、安装redis-trib所需的-ruby脚本"><a href="#2、安装redis-trib所需的-ruby脚本" class="headerlink" title="2、安装redis-trib所需的 ruby脚本"></a>2、安装redis-trib所需的 ruby脚本</h2><p>复制redis解压文件src下的redis-trib.rb文件到redis-cluster目录</p>
+<pre><code>[root@localhost redis-3.2.0]# cp redis-trib.rb /usr/ws/redus-cluster/
+</code></pre><p>安装ruby环境：</p>
+<pre><code>[root@localhost redis-cluster]# yum install ruby  
+[root@localhost redis-cluster]# yum install rubygems  
+</code></pre><p>安装redis-trib.rb运行依赖的ruby的包redis-3.2.2.gem，<a href="https://rubygems.global.ssl.fastly.net/gems/redis-3.2.2.gem" target="_blank" rel="noopener">下载</a></p>
+<pre><code>[root@localhost redis-cluster]# gem install redis-3.2.2.gem  
+</code></pre><h2 id="3、启动所有的redis节点"><a href="#3、启动所有的redis节点" class="headerlink" title="3、启动所有的redis节点"></a>3、启动所有的redis节点</h2><p><strong>启动所有redis脚本</strong></p>
+<pre><code>vi start.sh
+
+#脚本内容
+cd redis01  
+./redis-server redis.conf  
+cd ..  
+cd redis02  
+./redis-server redis.conf  
+cd ..  
+cd redis03  
+./redis-server redis.conf  
+cd ..  
+cd redis04  
+./redis-server redis.conf  
+cd ..  
+cd redis05  
+./redis-server redis.conf  
+cd ..  
+cd redis06  
+./redis-server redis.conf  
+cd ..  
+
+#设置脚本启动权限
+chmod +x start.sh
+#启动redis服务
+./start.sh
+</code></pre><p><strong>查看redis进程启动状态</strong></p>
+<pre><code>[root@localhost redis-cluster]# ps -ef | grep redis  
+</code></pre><p><img src="https://i.imgur.com/LlYGq3b.png" alt=""><br> 可以看到redis的3个节点已经启动成功<br><strong>杀死全部redis脚本</strong></p>
+<pre><code>[root@localhost redis-cluster]# pkill -9 redis  
+</code></pre><h2 id="4、使用redis-trib-rb创建集群"><a href="#4、使用redis-trib-rb创建集群" class="headerlink" title="4、使用redis-trib.rb创建集群"></a>4、使用redis-trib.rb创建集群</h2><pre><code>./redis-trib.rb create --replicas 1 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 
+
+使用create命令 --replicas 1 参数表示为每个主节点创建一个从节点，其他参数是实例的地址集合。
+</code></pre><p><img src="https://i.imgur.com/jv3fryV.png" alt=""><br><img src="https://i.imgur.com/U2SDUZD.png" alt=""><br>上面显示创建成功，有3个主节点，3个从节点，每个节点都是成功连接状态。<br><img src="https://i.imgur.com/MklPlTt.png" alt=""><br>以上集群安装成功了，如果安装未成功报如下错误</p>
+<pre><code>&gt;&gt;&gt; Creating cluster
+[ERR] Sorry, can&apos;t connect to node  ....
+</code></pre><p>需要安装最新的ruby源码，[<a href="https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.1.tar.gz" target="_blank" rel="noopener">下载</a>]</p>
+<pre><code>[root@localhost redis-cluster]# tar -zxvf ruby-2.3.1.tar.gz   
+[root@localhost redis-cluster]# cd    
+[root@localhost redis-cluster]# ./configure --prefix=/usr/local/ruby-2.3.1    
+[root@localhost redis-cluster]# make &amp;&amp; make install       
+[root@localhost redis-cluster]#gem install redis   
+</code></pre><h1 id="三：redis集群的测试"><a href="#三：redis集群的测试" class="headerlink" title="三：redis集群的测试"></a>三：redis集群的测试</h1><h2 id="1、测试存取值"><a href="#1、测试存取值" class="headerlink" title="1、测试存取值"></a>1、测试存取值</h2><pre><code>客户端连接集群redis-cli需要带上 -c ，redis-cli -c -p 端口号
+[root@localhost redis01]# ./redis-cli -c -p 7001  
+127.0.0.1:7001&gt; set name ws  
+-&gt; Redirected to slot [5798] located at 127.0.0.1:7002  
+OK  
+127.0.0.1:7002&gt; get name  
+&quot;ws&quot;  
+127.0.0.1:7002&gt; 
+</code></pre><p> 根据redis-cluster的key值分配，name应该分配到节点7002[5461-10922]上，上面显示redis cluster自动从7001跳转到了7002节点。</p>
+<pre><code>[root@localhost redis06]# ./redis-cli -c -p 7006  
+127.0.0.1:7006&gt; get name  
+-&gt; Redirected to slot [5798] located at 127.0.0.1:7002  
+&quot;ws&quot;  
+127.0.0.1:7002&gt;  
+</code></pre><p>7006位7003的从节点，从上面也是自动跳转至7002获取值，这也是redis cluster的特点，它是去中心化，每个节点都是对等的，连接哪个节点都可以获取和设置数据。</p>
+<h2 id="2、集群节点选举"><a href="#2、集群节点选举" class="headerlink" title="2、集群节点选举"></a>2、集群节点选举</h2><p> 现在模拟将7002节点挂掉，按照redis-cluster原理会选举会将 7002的从节点7005选举为主节点。</p>
+<pre><code>[root@localhost redis-cluster]# ps -ef | grep redis  
+root       7950      1  0 12:50 ?        00:00:28 ./redis-server 127.0.0.1:7001 [cluster]  
+root       7952      1  0 12:50 ?        00:00:29 ./redis-server 127.0.0.1:7002 [cluster]  
+root       7956      1  0 12:50 ?        00:00:29 ./redis-server 127.0.0.1:7003 [cluster]  
+root       7960      1  0 12:50 ?        00:00:29 ./redis-server 127.0.0.1:7004 [cluster]  
+root       7964      1  0 12:50 ?        00:00:29 ./redis-server 127.0.0.1:7005 [cluster]  
+root       7966      1  0 12:50 ?        00:00:29 ./redis-server 127.0.0.1:7006 [cluster]  
+root      11346  10581  0 14:57 pts/2    00:00:00 grep --color=auto redis  
+[root@localhost redis-cluster]# kill 7952  
+</code></pre><p>在查看集群中的7002节点</p>
+<pre><code>[root@localhost redis-cluster]# ./redis-trib.rb check 127.0.0.1:7002  
+[ERR] Sorry, can&apos;t connect to node 127.0.0.1:7002  
+[root@localhost redis-cluster]# ./redis-trib.rb check 127.0.0.1:7005  
+&gt;&gt;&gt; Performing Cluster Check (using node 127.0.0.1:7005)  
+M: a5db243087d8bd423b9285fa8513eddee9bb59a6 127.0.0.1:7005  
+   slots:5461-10922 (5462 slots) master  
+   0 additional replica(s)  
+S: 50ce1ea59106b4c2c6bc502593a6a7a7dabf5041 127.0.0.1:7004  
+   slots: (0 slots) slave  
+   replicates dd19221c404fb2fc4da37229de56bab755c76f2b  
+M: f9886c71e98a53270f7fda961e1c5f730382d48f 127.0.0.1:7003  
+   slots:10923-16383 (5461 slots) master  
+   1 additional replica(s)  
+M: dd19221c404fb2fc4da37229de56bab755c76f2b 127.0.0.1:7001  
+   slots:0-5460 (5461 slots) master  
+   1 additional replica(s)  
+S: 8bb3ede48319b46d0015440a91ab277da9353c8b 127.0.0.1:7006  
+   slots: (0 slots) slave  
+   replicates f9886c71e98a53270f7fda961e1c5f730382d48f  
+[OK] All nodes agree about slots configuration.  
+&gt;&gt;&gt; Check for open slots...  
+&gt;&gt;&gt; Check slots coverage...  
+[OK] All 16384 slots covered.  
+</code></pre><p> 可以看到集群连接不了7002节点，而7005有原来的S转换为M节点，代替了原来的7002节点。我们可以获取name值：</p>
+<pre><code>[root@localhost redis01]# ./redis-cli -c -p 7001  
+127.0.0.1:7001&gt; get name  
+-&gt; Redirected to slot [5798] located at 127.0.0.1:7005  
+&quot;ws&quot;   
+</code></pre><p> 从7001节点连入，自动跳转到7005节点，并且获取name值。 现在我们将7002节点恢复，看是否会自动加入集群中以及充当的M还是S节点。</p>
+<pre><code>[root@localhost redis-cluster]# cd redis02  
+[root@localhost redis02]# ./redis-server redis.conf 
+</code></pre><p>在check一下7002节点</p>
+<pre><code>[root@localhost redis-cluster]# ./redis-trib.rb check 127.0.0.1:7002  
+&gt;&gt;&gt; Performing Cluster Check (using node 127.0.0.1:7002)  
+S: 1f07d76585bfab35f91ec711ac53ab4bc00f2d3a 127.0.0.1:7002  
+   slots: (0 slots) slave  
+   replicates a5db243087d8bd423b9285fa8513eddee9bb59a6  
+M: f9886c71e98a53270f7fda961e1c5f730382d48f 127.0.0.1:7003  
+   slots:10923-16383 (5461 slots) master  
+   1 additional replica(s)  
+M: a5db243087d8bd423b9285fa8513eddee9bb59a6 127.0.0.1:7005  
+   slots:5461-10922 (5462 slots) master  
+   1 additional replica(s)  
+S: 50ce1ea59106b4c2c6bc502593a6a7a7dabf5041 127.0.0.1:7004  
+   slots: (0 slots) slave  
+   replicates dd19221c404fb2fc4da37229de56bab755c76f2b  
+S: 8bb3ede48319b46d0015440a91ab277da9353c8b 127.0.0.1:7006  
+   slots: (0 slots) slave  
+   replicates f9886c71e98a53270f7fda961e1c5f730382d48f  
+M: dd19221c404fb2fc4da37229de56bab755c76f2b 127.0.0.1:7001  
+   slots:0-5460 (5461 slots) master  
+   1 additional replica(s)  
+[OK] All nodes agree about slots configuration.  
+&gt;&gt;&gt; Check for open slots...  
+&gt;&gt;&gt; Check slots coverage...  
+[OK] All 16384 slots covered.  
+[root@localhost redis-cluster]#   
+</code></pre><p>可以看到7002节点变成了a5db243087d8bd423b9285fa8513eddee9bb59a6 7005的从节点。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Sai Wang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Sai Wang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/服务器/" rel="tag"># 服务器</a>
+          
+            <a href="/tags/缓存/" rel="tag"># 缓存</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/28/离线下载BT磁力链接Aria2在线管理面板--AriaNg/" rel="next" title="离线下载BT磁力链接Aria2在线管理面板--AriaNg">
+                <i class="fa fa-chevron-left"></i> 离线下载BT磁力链接Aria2在线管理面板--AriaNg
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Sai Wang" />
+            
+              <p class="site-author-name" itemprop="name">Sai Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wangsai0806" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Github</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1069531172@qq.com" target="_blank" title="Email">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Email</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-Redis官方集群方案-Redis-Cluster"><span class="nav-number">1.</span> <span class="nav-text">一:Redis官方集群方案 Redis Cluster</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-redis-cluster节点分配"><span class="nav-number">1.1.</span> <span class="nav-text">1.redis cluster节点分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、Redis-Cluster主从模式"><span class="nav-number">1.2.</span> <span class="nav-text">2、Redis Cluster主从模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二：redis集群的搭建"><span class="nav-number">2.</span> <span class="nav-text">二：redis集群的搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、安装redis节点指定端口"><span class="nav-number">2.1.</span> <span class="nav-text">1、安装redis节点指定端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、安装redis-trib所需的-ruby脚本"><span class="nav-number">2.2.</span> <span class="nav-text">2、安装redis-trib所需的 ruby脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、启动所有的redis节点"><span class="nav-number">2.3.</span> <span class="nav-text">3、启动所有的redis节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、使用redis-trib-rb创建集群"><span class="nav-number">2.4.</span> <span class="nav-text">4、使用redis-trib.rb创建集群</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三：redis集群的测试"><span class="nav-number">3.</span> <span class="nav-text">三：redis集群的测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、测试存取值"><span class="nav-number">3.1.</span> <span class="nav-text">1、测试存取值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、集群节点选举"><span class="nav-number">3.2.</span> <span class="nav-text">2、集群节点选举</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="/js/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sai Wang</span>
+
+  
+</div>
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="http://wangsaisai.cn">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="http://wangsaisai.cn">NexT.Gemini</a> v5.1.4</div>
+
+
+-->
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共21.5k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="180" height="600"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 180px;
+    height: 600px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    var trElement = document.getElementById('hexo-helper-live2d');
+    trElement.parentNode.removeChild(trElement);
+    return;
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/hibiki.model.json", 0.5);});
+})();
+</script>
+
+</body>
+</html>

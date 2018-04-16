@@ -1,3 +1,4 @@
+http://yoursite.com/2018/04/13/Redis搭建集群/
 http://yoursite.com/2018/03/28/离线下载BT磁力链接Aria2在线管理面板--AriaNg/
 http://yoursite.com/2018/02/13/windows使用openssl生成ca证书/
 http://yoursite.com/2018/02/13/nginx子域名端口转发/
