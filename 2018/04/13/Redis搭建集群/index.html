@@ -88,12 +88,12 @@
 <meta property="og:description" content="一:Redis官方集群方案 Redis ClusterRedis Cluster是一种服务器Sharding技术，3.0版本开始正式提供。 Redis Cluster中，Sharding采用slot(槽)的概念，一共分成16384个槽，这有点儿类pre sharding思路。对于每个进入Redis的键值对，根据key进行散列，分配到这16384个slot中的某一个中。使用的hash算法也比较简单，">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/a8XVL4f.jpg">
-<meta property="og:image" content="https://i.imgur.com/o7lVZ5e.png">
+<meta property="og:image" content="https://i.imgur.com/yrdGCeo.png">
 <meta property="og:image" content="https://i.imgur.com/LlYGq3b.png">
 <meta property="og:image" content="https://i.imgur.com/jv3fryV.png">
 <meta property="og:image" content="https://i.imgur.com/U2SDUZD.png">
 <meta property="og:image" content="https://i.imgur.com/MklPlTt.png">
-<meta property="og:updated_time" content="2018-04-16T02:51:06.540Z">
+<meta property="og:updated_time" content="2018-04-16T08:18:23.937Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis搭建集群">
 <meta name="twitter:description" content="一:Redis官方集群方案 Redis ClusterRedis Cluster是一种服务器Sharding技术，3.0版本开始正式提供。 Redis Cluster中，Sharding采用slot(槽)的概念，一共分成16384个槽，这有点儿类pre sharding思路。对于每个进入Redis的键值对，根据key进行散列，分配到这16384个slot中的某一个中。使用的hash算法也比较简单，">
@@ -348,14 +348,14 @@
 <p>不过需要注意，如果节点B和B1同时挂了，Redis集群就无法继续正确地提供服务了。</p>
 <h1 id="二：redis集群的搭建"><a href="#二：redis集群的搭建" class="headerlink" title="二：redis集群的搭建"></a>二：redis集群的搭建</h1><p> 集群中至少应该有奇数个节点，所以至少有三个节点，每个节点至少有一个备份节点，所以下面使用6节点（主节点、备份节点由redis-cluster集群确定）。<br> 下面使用redis-3.2.0安装，<a href="http://redis.io/download" target="_blank" rel="noopener">下载地址</a>  </p>
 <h2 id="1、安装redis节点指定端口"><a href="#1、安装redis节点指定端口" class="headerlink" title="1、安装redis节点指定端口"></a>1、安装redis节点指定端口</h2><p>解压redis压缩包，编译安装</p>
-<pre><code>[root@localhost redis-3.2.0]# tar xzf redis-3.2.0.tar.gz  
+<pre><code>[root@localhost redis]# tar xzf redis-3.2.0.tar.gz  
 [root@localhost redis-3.2.0]# cd redis-3.2.0  
 [root@localhost redis-3.2.0]# make &amp;&amp; make install PREFIX=/usr/ws/redis-cluster
 </code></pre><p> 在redis-cluster下 修改bin文件夹为redis01,复制redis.conf配置文件到redis01文件夹下</p>
 <pre><code>[root@localhost redis-3.2.0]# cd /usr/ws/redis-cluster
-[root@localhost redis-3.2.0]# mv bin/ redis01
-[root@localhost redis-3.2.0]# cp redis.conf /usr/ws/redus-cluster/redis01/  
-[root@localhost redis-3.2.0]# make &amp;&amp; make install PREFIX=/usr/ws/redis-cluster
+[root@localhost redis-cluster]# mv bin/ redis01
+[root@localhost redis-cluster]# cd -
+[root@localhost redis-3.2.0]# cp redis.conf /usr/ws/redis-cluster/redis01 
 </code></pre><p> 配置redis的配置文件redis.conf</p>
 <pre><code>daemonize yes #后台启动
 port 7001 #修改端口号，从7001到7006
@@ -363,14 +363,16 @@ cluster-enabled yes #开启cluster，去掉注释
 cluster-config-file nodes.conf
 cluster-node-timeout 15000
 appendonly yes
-</code></pre><p> 复制六份，修改对应的端口号<br><img src="https://i.imgur.com/o7lVZ5e.png" alt=""></p>
+</code></pre><p> 复制六份，修改对应的端口号</p>
+<p><img src="https://i.imgur.com/yrdGCeo.png" alt=""></p>
 <h2 id="2、安装redis-trib所需的-ruby脚本"><a href="#2、安装redis-trib所需的-ruby脚本" class="headerlink" title="2、安装redis-trib所需的 ruby脚本"></a>2、安装redis-trib所需的 ruby脚本</h2><p>复制redis解压文件src下的redis-trib.rb文件到redis-cluster目录</p>
-<pre><code>[root@localhost redis-3.2.0]# cp redis-trib.rb /usr/ws/redus-cluster/
+<pre><code>[root@localhost src]# cp redis-trib.rb /usr/ws/redis-cluster/
 </code></pre><p>安装ruby环境：</p>
 <pre><code>[root@localhost redis-cluster]# yum install ruby  
 [root@localhost redis-cluster]# yum install rubygems  
 </code></pre><p>安装redis-trib.rb运行依赖的ruby的包redis-3.2.2.gem，<a href="https://rubygems.global.ssl.fastly.net/gems/redis-3.2.2.gem" target="_blank" rel="noopener">下载</a></p>
-<pre><code>[root@localhost redis-cluster]# gem install redis-3.2.2.gem  
+<pre><code>[root@localhost redis-cluster]#wget https://rubygems.global.ssl.fastly.net/gems/redis-3.2.2.gem
+[root@localhost redis-cluster]# gem install redis-3.2.2.gem  
 </code></pre><h2 id="3、启动所有的redis节点"><a href="#3、启动所有的redis节点" class="headerlink" title="3、启动所有的redis节点"></a>3、启动所有的redis节点</h2><p><strong>启动所有redis脚本</strong></p>
 <pre><code>vi start.sh
 
@@ -402,7 +404,7 @@ chmod +x start.sh
 <pre><code>[root@localhost redis-cluster]# ps -ef | grep redis  
 </code></pre><p><img src="https://i.imgur.com/LlYGq3b.png" alt=""><br> 可以看到redis的3个节点已经启动成功<br><strong>杀死全部redis脚本</strong></p>
 <pre><code>[root@localhost redis-cluster]# pkill -9 redis  
-</code></pre><h2 id="4、使用redis-trib-rb创建集群"><a href="#4、使用redis-trib-rb创建集群" class="headerlink" title="4、使用redis-trib.rb创建集群"></a>4、使用redis-trib.rb创建集群</h2><pre><code>./redis-trib.rb create --replicas 1 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 
+</code></pre><h2 id="4、使用redis-trib-rb创建集群"><a href="#4、使用redis-trib-rb创建集群" class="headerlink" title="4、使用redis-trib.rb创建集群"></a>4、使用redis-trib.rb创建集群</h2><pre><code>./redis-trib.rb create --replicas 1 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006
 
 使用create命令 --replicas 1 参数表示为每个主节点创建一个从节点，其他参数是实例的地址集合。
 </code></pre><p><img src="https://i.imgur.com/jv3fryV.png" alt=""><br><img src="https://i.imgur.com/U2SDUZD.png" alt=""><br>上面显示创建成功，有3个主节点，3个从节点，每个节点都是成功连接状态。<br><img src="https://i.imgur.com/MklPlTt.png" alt=""><br>以上集群安装成功了，如果安装未成功报如下错误</p>
