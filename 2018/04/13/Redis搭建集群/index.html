@@ -93,7 +93,7 @@
 <meta property="og:image" content="https://i.imgur.com/jv3fryV.png">
 <meta property="og:image" content="https://i.imgur.com/U2SDUZD.png">
 <meta property="og:image" content="https://i.imgur.com/MklPlTt.png">
-<meta property="og:updated_time" content="2018-04-19T05:36:54.086Z">
+<meta property="og:updated_time" content="2018-04-19T05:39:28.470Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis搭建集群">
 <meta name="twitter:description" content="一:Redis官方集群方案 Redis ClusterRedis Cluster是一种服务器Sharding技术，3.0版本开始正式提供。 Redis Cluster中，Sharding采用slot(槽)的概念，一共分成16384个槽，这有点儿类pre sharding思路。对于每个进入Redis的键值对，根据key进行散列，分配到这16384个slot中的某一个中。使用的hash算法也比较简单，">
@@ -528,7 +528,15 @@ M: dd19221c404fb2fc4da37229de56bab755c76f2b 127.0.0.1:7001
 <pre><code>Sorry, can&apos;t connect to node 192.168.245.129:7001
 </code></pre><p><strong>2:错误解决：</strong></p>
 <p>修改redis.conf文件,找到bind 127.0.0.1,修改成本地的ip名称,就可以远程使用了。</p>
-
+<p><strong>3:错误显示：</strong></p>
+<pre><code>(error) MOVED 5798 192.168.245.129:7001
+</code></pre><p><strong>3:错误解决：</strong></p>
+<p>每个节点的redis.conf配置文件中，都要允许远程连接。</p>
+<pre><code>cluster-enabled yes #开启cluster集群，去掉注释
+appendonly yes
+protected-mode no  #关闭保护模式（允许远程访问）
+bind 127.0.0.1     #注释内容开启远程访问
+</code></pre>
       
     </div>
     
@@ -806,7 +814,7 @@ M: dd19221c404fb2fc4da37229de56bab755c76f2b 127.0.0.1:7001
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共22.0k字</span>
+  <span class="post-count">博客全站共22.1k字</span>
 </div>
 
         
