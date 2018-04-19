@@ -93,7 +93,7 @@
 <meta property="og:image" content="https://i.imgur.com/jv3fryV.png">
 <meta property="og:image" content="https://i.imgur.com/U2SDUZD.png">
 <meta property="og:image" content="https://i.imgur.com/MklPlTt.png">
-<meta property="og:updated_time" content="2018-04-17T06:33:54.699Z">
+<meta property="og:updated_time" content="2018-04-19T05:36:54.086Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis搭建集群">
 <meta name="twitter:description" content="一:Redis官方集群方案 Redis ClusterRedis Cluster是一种服务器Sharding技术，3.0版本开始正式提供。 Redis Cluster中，Sharding采用slot(槽)的概念，一共分成16384个槽，这有点儿类pre sharding思路。对于每个进入Redis的键值对，根据key进行散列，分配到这16384个slot中的某一个中。使用的hash算法也比较简单，">
@@ -404,9 +404,10 @@ chmod +x start.sh
 ./start.sh
 </code></pre><p><strong>查看redis进程启动状态</strong></p>
 <pre><code>[root@localhost redis-cluster]# ps -ef | grep redis  
-</code></pre><p><img src="https://i.imgur.com/LlYGq3b.png" alt=""><br> 可以看到redis的3个节点已经启动成功<br><strong>杀死全部redis脚本</strong></p>
+</code></pre><p><img src="https://i.imgur.com/LlYGq3b.png" alt=""><br> 可以看到redis的3个节点已经启动成功</p>
+<p><strong>杀死全部redis脚本</strong></p>
 <pre><code>[root@localhost redis-cluster]# pkill -9 redis  
-</code></pre><h2 id="4、使用redis-trib-rb创建集群"><a href="#4、使用redis-trib-rb创建集群" class="headerlink" title="4、使用redis-trib.rb创建集群"></a>4、使用redis-trib.rb创建集群</h2><pre><code>./redis-trib.rb create --replicas 1 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006
+</code></pre><h2 id="4、使用redis-trib-rb创建单台服务器集群"><a href="#4、使用redis-trib-rb创建单台服务器集群" class="headerlink" title="4、使用redis-trib.rb创建单台服务器集群"></a>4、使用redis-trib.rb创建单台服务器集群</h2><pre><code>./redis-trib.rb create --replicas 1 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006
 
 使用create命令 --replicas 1 参数表示为每个主节点创建一个从节点，其他参数是实例的地址集合。
 </code></pre><p><img src="https://i.imgur.com/jv3fryV.png" alt=""><br><img src="https://i.imgur.com/U2SDUZD.png" alt=""><br>上面显示创建成功，有3个主节点，3个从节点，每个节点都是成功连接状态。<br><img src="https://i.imgur.com/MklPlTt.png" alt=""><br>以上集群安装成功了，如果安装未成功报如下错误</p>
@@ -418,7 +419,23 @@ chmod +x start.sh
 [root@localhost redis-cluster]# ./configure --prefix=/usr/local/ruby-2.3.1    
 [root@localhost redis-cluster]# make &amp;&amp; make install       
 [root@localhost redis-cluster]#gem install redis   
-</code></pre><h1 id="三：redis集群的测试"><a href="#三：redis集群的测试" class="headerlink" title="三：redis集群的测试"></a>三：redis集群的测试</h1><h2 id="1、测试存取值"><a href="#1、测试存取值" class="headerlink" title="1、测试存取值"></a>1、测试存取值</h2><pre><code>客户端连接集群redis-cli需要带上 -c ，redis-cli -c -p 端口号
+</code></pre><h2 id="5、使用redis-trib-rb创建多台服务器集群"><a href="#5、使用redis-trib-rb创建多台服务器集群" class="headerlink" title="5、使用redis-trib.rb创建多台服务器集群"></a>5、使用redis-trib.rb创建多台服务器集群</h2><p>分别在192.168.245.128和192.168.245.129搭建redis集群,192.168.245.128上面配置9个节点，192.168.245.128上面配置6个节点；设置3个主节点、12个从节点，一共15个节点。</p>
+<pre><code>#--replicas 4  代表没个主节点有4个从节点
+./redis-trib.rb create --replicas 4 \
+ 192.168.245.128:9324 192.168.245.128:9325 192.168.245.128:9326 192.168.245.128:9327 \
+ 192.168.245.128:9328 192.168.245.128:9329 192.168.245.128:9330 192.168.245.128:9331 \
+ 192.168.245.128:9332 192.168.245.129:7001 192.168.245.129:7002 \
+ 192.168.245.129:7003 192.168.245.129:7004 192.168.245.129:7005 \
+ 192.168.245.129:7006
+</code></pre><p>注：每个节点的redis.conf配置文件中，都要允许远程连接。</p>
+<pre><code>cluster-enabled yes #开启cluster集群，去掉注释
+appendonly yes
+protected-mode no  #关闭保护模式（允许远程访问）
+bind 127.0.0.1     #注释内容开启远程访问
+</code></pre><h1 id="三：redis集群的测试"><a href="#三：redis集群的测试" class="headerlink" title="三：redis集群的测试"></a>三：redis集群的测试</h1><h2 id="1、测试存取值"><a href="#1、测试存取值" class="headerlink" title="1、测试存取值"></a>1、测试存取值</h2><pre><code>启动集群测试连接（支持远程连接）&lt;-c:代表集群;-h:代表IP;-p:代表端口;&gt;
+[root@localhost redis01]# ./redis-cli -c -h 192.168.245.129 -p 7003
+
+客户端连接集群redis-cli需要带上 -c ，redis-cli -c -p 端口号
 [root@localhost redis01]# ./redis-cli -c -p 7001  
 127.0.0.1:7001&gt; set name ws  
 -&gt; Redirected to slot [5798] located at 127.0.0.1:7002  
@@ -739,7 +756,7 @@ M: dd19221c404fb2fc4da37229de56bab755c76f2b 127.0.0.1:7001
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-Redis官方集群方案-Redis-Cluster"><span class="nav-number">1.</span> <span class="nav-text">一:Redis官方集群方案 Redis Cluster</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-redis-cluster节点分配"><span class="nav-number">1.1.</span> <span class="nav-text">1.redis cluster节点分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、Redis-Cluster主从模式"><span class="nav-number">1.2.</span> <span class="nav-text">2、Redis Cluster主从模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二：redis集群的搭建"><span class="nav-number">2.</span> <span class="nav-text">二：redis集群的搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、安装redis节点指定端口"><span class="nav-number">2.1.</span> <span class="nav-text">1、安装redis节点指定端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、安装redis-trib所需的-ruby脚本"><span class="nav-number">2.2.</span> <span class="nav-text">2、安装redis-trib所需的 ruby脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、启动所有的redis节点"><span class="nav-number">2.3.</span> <span class="nav-text">3、启动所有的redis节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、使用redis-trib-rb创建集群"><span class="nav-number">2.4.</span> <span class="nav-text">4、使用redis-trib.rb创建集群</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三：redis集群的测试"><span class="nav-number">3.</span> <span class="nav-text">三：redis集群的测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、测试存取值"><span class="nav-number">3.1.</span> <span class="nav-text">1、测试存取值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、集群节点选举"><span class="nav-number">3.2.</span> <span class="nav-text">2、集群节点选举</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四：错误解析"><span class="nav-number">4.</span> <span class="nav-text">四：错误解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、创建集群"><span class="nav-number">4.1.</span> <span class="nav-text">一、创建集群</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-Redis官方集群方案-Redis-Cluster"><span class="nav-number">1.</span> <span class="nav-text">一:Redis官方集群方案 Redis Cluster</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-redis-cluster节点分配"><span class="nav-number">1.1.</span> <span class="nav-text">1.redis cluster节点分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、Redis-Cluster主从模式"><span class="nav-number">1.2.</span> <span class="nav-text">2、Redis Cluster主从模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二：redis集群的搭建"><span class="nav-number">2.</span> <span class="nav-text">二：redis集群的搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、安装redis节点指定端口"><span class="nav-number">2.1.</span> <span class="nav-text">1、安装redis节点指定端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、安装redis-trib所需的-ruby脚本"><span class="nav-number">2.2.</span> <span class="nav-text">2、安装redis-trib所需的 ruby脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、启动所有的redis节点"><span class="nav-number">2.3.</span> <span class="nav-text">3、启动所有的redis节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、使用redis-trib-rb创建单台服务器集群"><span class="nav-number">2.4.</span> <span class="nav-text">4、使用redis-trib.rb创建单台服务器集群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、使用redis-trib-rb创建多台服务器集群"><span class="nav-number">2.5.</span> <span class="nav-text">5、使用redis-trib.rb创建多台服务器集群</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三：redis集群的测试"><span class="nav-number">3.</span> <span class="nav-text">三：redis集群的测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、测试存取值"><span class="nav-number">3.1.</span> <span class="nav-text">1、测试存取值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、集群节点选举"><span class="nav-number">3.2.</span> <span class="nav-text">2、集群节点选举</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四：错误解析"><span class="nav-number">4.</span> <span class="nav-text">四：错误解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、创建集群"><span class="nav-number">4.1.</span> <span class="nav-text">一、创建集群</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -789,7 +806,7 @@ M: dd19221c404fb2fc4da37229de56bab755c76f2b 127.0.0.1:7001
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共21.7k字</span>
+  <span class="post-count">博客全站共22.0k字</span>
 </div>
 
         
