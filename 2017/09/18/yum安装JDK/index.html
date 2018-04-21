@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="博客，文章," />
+  <meta name="keywords" content="博客,文章," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1.查看yum库中都有哪些jdk版本(暂时只发现了openjdk)[root@localhost ~]# yum search java|grep jdkldapjdk-javadoc.x86_64 : Javadoc for ldapjdkjava-1.6.0-openjdk.x86_64 : OpenJDK Runtime Environmentjava-1.6.0-openjdk-demo.">
-<meta name="keywords" content="博客，文章">
+<meta name="description" content="1.查看yum库中都有哪些jdk版本(暂时只发现了openjdk) [root@localhost ~]# yum search java|grep jdk ldapjdk-javadoc.x86_64 : Javadoc for ldapjdk java-1.6.0-openjdk.x86_64 : OpenJDK Runtime Environment java-1.6.0-openjdk-d">
+<meta name="keywords" content="博客,文章">
 <meta property="og:type" content="article">
 <meta property="og:title" content="yum安装JDK">
 <meta property="og:url" content="http://yoursite.com/2017/09/18/yum安装JDK/index.html">
 <meta property="og:site_name" content="王赛的博客">
-<meta property="og:description" content="1.查看yum库中都有哪些jdk版本(暂时只发现了openjdk)[root@localhost ~]# yum search java|grep jdkldapjdk-javadoc.x86_64 : Javadoc for ldapjdkjava-1.6.0-openjdk.x86_64 : OpenJDK Runtime Environmentjava-1.6.0-openjdk-demo.">
+<meta property="og:description" content="1.查看yum库中都有哪些jdk版本(暂时只发现了openjdk) [root@localhost ~]# yum search java|grep jdk ldapjdk-javadoc.x86_64 : Javadoc for ldapjdk java-1.6.0-openjdk.x86_64 : OpenJDK Runtime Environment java-1.6.0-openjdk-d">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-19T12:11:24.529Z">
+<meta property="og:updated_time" content="2018-04-21T16:26:11.318Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="yum安装JDK">
-<meta name="twitter:description" content="1.查看yum库中都有哪些jdk版本(暂时只发现了openjdk)[root@localhost ~]# yum search java|grep jdkldapjdk-javadoc.x86_64 : Javadoc for ldapjdkjava-1.6.0-openjdk.x86_64 : OpenJDK Runtime Environmentjava-1.6.0-openjdk-demo.">
+<meta name="twitter:description" content="1.查看yum库中都有哪些jdk版本(暂时只发现了openjdk) [root@localhost ~]# yum search java|grep jdk ldapjdk-javadoc.x86_64 : Javadoc for ldapjdk java-1.6.0-openjdk.x86_64 : OpenJDK Runtime Environment java-1.6.0-openjdk-d">
 
 
 
@@ -336,18 +336,45 @@
       
 
       
-        <p>1.查看yum库中都有哪些jdk版本(暂时只发现了openjdk)<br>[root@localhost ~]# yum search java|grep jdk<br>ldapjdk-javadoc.x86_64 : Javadoc for ldapjdk<br>java-1.6.0-openjdk.x86_64 : OpenJDK Runtime Environment<br>java-1.6.0-openjdk-demo.x86_64 : OpenJDK Demos<br>java-1.6.0-openjdk-devel.x86_64 : OpenJDK Development Environment<br>java-1.6.0-openjdk-javadoc.x86_64 : OpenJDK API Documentation<br>java-1.6.0-openjdk-src.x86_64 : OpenJDK Source Bundle<br>java-1.7.0-openjdk.x86_64 : OpenJDK Runtime Environment<br>java-1.7.0-openjdk-demo.x86_64 : OpenJDK Demos<br>java-1.7.0-openjdk-devel.x86_64 : OpenJDK Development Environment<br>java-1.7.0-openjdk-javadoc.noarch : OpenJDK API Documentation<br>java-1.7.0-openjdk-src.x86_64 : OpenJDK Source Bundle<br>java-1.8.0-openjdk.x86_64 : OpenJDK Runtime Environment<br>java-1.8.0-openjdk-demo.x86_64 : OpenJDK Demos<br>java-1.8.0-openjdk-devel.x86_64 : OpenJDK Development Environment<br>java-1.8.0-openjdk-headless.x86_64 : OpenJDK Runtime Environment<br>java-1.8.0-openjdk-javadoc.noarch : OpenJDK API Documentation<br>java-1.8.0-openjdk-src.x86_64 : OpenJDK Source Bundle<br>ldapjdk.x86_64 : The Mozilla LDAP Java SDK</p>
-<p>2.选择版本,进行安装</p>
-<p>//选择1.8版本进行安装—java<br>[root@localhost ~]# yum install java-1.8.0-openjdk</p>
-<p>//选择1.8版本进行安装—javac、javah、javap</p>
-<p>[root@localhost ~]# yum install java-1.8.0-devel<br>//安装完之后，默认的安装目录是在: /usr/lib/jvm/java-1.8.0-openjdk.x86_64</p>
-<p>3.设置环境变量</p>
-<p>[root@localhost ~]# vi /etc/profile</p>
-<p>在profile文件中添加如下内容</p>
-<p>#set java environment<br>JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk.x86_64<br>JRE_HOME=$JAVA_HOME/jre<br>CLASS_PATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib<br>PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin<br>export JAVA_HOME JRE_HOME CLASS_PATH PATH</p>
-<p>让修改生效</p>
-<p>[root@localhost java]# source /etc/profile</p>
+        <p>1.查看yum库中都有哪些jdk版本(暂时只发现了openjdk)</p>
+<pre><code>[root@localhost ~]# yum search java|grep jdk
+ldapjdk-javadoc.x86_64 : Javadoc for ldapjdk
+java-1.6.0-openjdk.x86_64 : OpenJDK Runtime Environment
+java-1.6.0-openjdk-demo.x86_64 : OpenJDK Demos
+java-1.6.0-openjdk-devel.x86_64 : OpenJDK Development Environment
+java-1.6.0-openjdk-javadoc.x86_64 : OpenJDK API Documentation
+java-1.6.0-openjdk-src.x86_64 : OpenJDK Source Bundle
+java-1.7.0-openjdk.x86_64 : OpenJDK Runtime Environment
+java-1.7.0-openjdk-demo.x86_64 : OpenJDK Demos
+java-1.7.0-openjdk-devel.x86_64 : OpenJDK Development Environment
+java-1.7.0-openjdk-javadoc.noarch : OpenJDK API Documentation
+java-1.7.0-openjdk-src.x86_64 : OpenJDK Source Bundle
+java-1.8.0-openjdk.x86_64 : OpenJDK Runtime Environment
+java-1.8.0-openjdk-demo.x86_64 : OpenJDK Demos
+java-1.8.0-openjdk-devel.x86_64 : OpenJDK Development Environment
+java-1.8.0-openjdk-headless.x86_64 : OpenJDK Runtime Environment
+java-1.8.0-openjdk-javadoc.noarch : OpenJDK API Documentation
+java-1.8.0-openjdk-src.x86_64 : OpenJDK Source Bundle
+ldapjdk.x86_64 : The Mozilla LDAP Java SDK
+</code></pre><p>2.选择版本,进行安装</p>
+<pre><code>//选择1.8版本进行安装---java
+[root@localhost ~]# yum install java-1.8.0-openjdk
 
+//选择1.8版本进行安装---javac、javah、javap
+[root@localhost ~]# yum install java-1.8.0-devel
+</code></pre><p>安装完之后，默认的安装目录是在: /usr/lib/jvm/java-1.8.0-openjdk.x86_64</p>
+<p>3.设置环境变量</p>
+<pre><code>[root@localhost ~]# vi /etc/profile
+</code></pre><p>在profile文件中添加如下内容</p>
+<pre><code>#set java environment
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk.x86_64
+JRE_HOME=$JAVA_HOME/jre
+CLASS_PATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
+PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+export JAVA_HOME JRE_HOME CLASS_PATH PATH
+</code></pre><p>让修改生效</p>
+<pre><code>[root@localhost java]# source /etc/profile
+</code></pre>
       
     </div>
     
@@ -393,7 +420,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/博客，文章/" rel="tag"># 博客，文章</a>
+            <a href="/tags/博客/" rel="tag"># 博客</a>
+          
+            <a href="/tags/文章/" rel="tag"># 文章</a>
           
         </div>
       
@@ -497,7 +526,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -519,7 +548,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>

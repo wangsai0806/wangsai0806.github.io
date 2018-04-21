@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="设置root密码输入命令:su root 输入密码： 切换用户输入命令:su root 输入密码：hostname 永久修改主机名输入命令:vi /etc/sysconfig/network NETWORKING=yes HOSTNAME=localhost.localdomain 修改HOSTNAME值 设置系统时间与网络时间同步 安装ntpdate工具  yum -y install ntp">
+<meta name="description" content="设置root密码输入命令:su root 输入密码： 切换用户输入命令:su root 输入密码： 永久修改主机名输入命令:vi /etc/sysconfig/network NETWORKING=yes  HOSTNAME=localhost.localdomain 修改HOSTNAME值 设置系统时间与网络时间同步1.安装ntpdate工具 yum -y install ntp ntpdate">
 <meta name="keywords" content="技术">
 <meta property="og:type" content="article">
 <meta property="og:title" content="liunx基础">
 <meta property="og:url" content="http://yoursite.com/2017/10/20/liunx基础/index.html">
 <meta property="og:site_name" content="王赛的博客">
-<meta property="og:description" content="设置root密码输入命令:su root 输入密码： 切换用户输入命令:su root 输入密码：hostname 永久修改主机名输入命令:vi /etc/sysconfig/network NETWORKING=yes HOSTNAME=localhost.localdomain 修改HOSTNAME值 设置系统时间与网络时间同步 安装ntpdate工具  yum -y install ntp">
+<meta property="og:description" content="设置root密码输入命令:su root 输入密码： 切换用户输入命令:su root 输入密码： 永久修改主机名输入命令:vi /etc/sysconfig/network NETWORKING=yes  HOSTNAME=localhost.localdomain 修改HOSTNAME值 设置系统时间与网络时间同步1.安装ntpdate工具 yum -y install ntp ntpdate">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-24T11:31:12.446Z">
+<meta property="og:updated_time" content="2018-04-21T16:23:42.786Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="liunx基础">
-<meta name="twitter:description" content="设置root密码输入命令:su root 输入密码： 切换用户输入命令:su root 输入密码：hostname 永久修改主机名输入命令:vi /etc/sysconfig/network NETWORKING=yes HOSTNAME=localhost.localdomain 修改HOSTNAME值 设置系统时间与网络时间同步 安装ntpdate工具  yum -y install ntp">
+<meta name="twitter:description" content="设置root密码输入命令:su root 输入密码： 切换用户输入命令:su root 输入密码： 永久修改主机名输入命令:vi /etc/sysconfig/network NETWORKING=yes  HOSTNAME=localhost.localdomain 修改HOSTNAME值 设置系统时间与网络时间同步1.安装ntpdate工具 yum -y install ntp ntpdate">
 
 
 
@@ -317,28 +317,23 @@
         <h2 id="设置root密码"><a href="#设置root密码" class="headerlink" title="设置root密码"></a>设置root密码</h2><p>输入命令:su root</p>
 <p>输入密码：</p>
 <h2 id="切换用户"><a href="#切换用户" class="headerlink" title="切换用户"></a>切换用户</h2><p>输入命令:su root</p>
-<p>输入密码：<br>hostname</p>
+<p>输入密码：</p>
 <h2 id="永久修改主机名"><a href="#永久修改主机名" class="headerlink" title="永久修改主机名"></a>永久修改主机名</h2><p>输入命令:vi /etc/sysconfig/network</p>
-<p>NETWORKING=yes</p>
-<p>HOSTNAME=localhost.localdomain</p>
-<p>修改HOSTNAME值</p>
-<h2 id="设置系统时间与网络时间同步"><a href="#设置系统时间与网络时间同步" class="headerlink" title="设置系统时间与网络时间同步"></a>设置系统时间与网络时间同步</h2><ol>
-<li>安装ntpdate工具</li>
-</ol>
-<p>yum -y install ntp ntpdate</p>
-<ol>
-<li>设置系统时间与网络时间同步</li>
-</ol>
-<p>ntpdate time.windows.com</p>
-<ol>
-<li>将系统时间写入硬件时间</li>
-</ol>
-<p>hwclock –systohc</p>
-<p>4.强制系统时间写入CMOS中防止重启失效</p>
-<p>hwclock -w或clock -w</p>
-<p>5：设置shiqu</p>
-<p>vi /etc/sysconfig/clock   #编辑时间配置文件</p>
-<p>6：其他命令</p>
+<pre><code>NETWORKING=yes
+
+HOSTNAME=localhost.localdomain
+</code></pre><p>修改HOSTNAME值</p>
+<h2 id="设置系统时间与网络时间同步"><a href="#设置系统时间与网络时间同步" class="headerlink" title="设置系统时间与网络时间同步"></a>设置系统时间与网络时间同步</h2><p>1.安装ntpdate工具</p>
+<pre><code>yum -y install ntp ntpdate
+</code></pre><p>2.设置系统时间与网络时间同步</p>
+<pre><code>ntpdate time.windows.com
+</code></pre><p>3.将系统时间写入硬件时间</p>
+<pre><code>hwclock --systohc
+</code></pre><p>4.强制系统时间写入CMOS中防止重启失效</p>
+<pre><code>hwclock -w或clock -w
+</code></pre><p>5：设置shiqu</p>
+<pre><code>vi /etc/sysconfig/clock   #编辑时间配置文件
+</code></pre><p>6：其他命令</p>
 <p>查看系统时间的命令： #date</p>
 <p>设置系统时间的命令： #date –set（月/日/年 时：分：秒）</p>
 <p>例：#date –set “10/11/10 10:15”</p>
@@ -503,7 +498,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -525,7 +520,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
