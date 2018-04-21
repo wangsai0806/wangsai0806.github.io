@@ -4,6 +4,25 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/02/13/nginx%E5%AD%90%E5%9F%9F%E5%90%8D%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/</loc>
+    <lastmod>2018-04-21T15:36:56.354Z</lastmod>
+    <data>
+        <display>
+        <title>nginx子域名端口转发</title>
+        <pubTime>2018-02-13T03:27:37.000Z</pubTime>
+        
+        <tag>服务器</tag>
+         
+        <tag>nginx</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/08/18/CentOS%E5%AE%89%E8%A3%85MySql/</loc>
     <lastmod>2018-04-21T15:02:51.926Z</lastmod>
     <data>
@@ -38,23 +57,6 @@
         <tag>技术</tag>
          
         <tag>问题</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2018/02/13/nginx%E5%AD%90%E5%9F%9F%E5%90%8D%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/</loc>
-    <lastmod>2018-04-21T14:25:28.653Z</lastmod>
-    <data>
-        <display>
-        <title>nginx子域名端口转发</title>
-        <pubTime>2018-02-13T03:27:37.000Z</pubTime>
-        
-        <tag>nginx，服务器</tag>
          
          
            
@@ -226,21 +228,6 @@
         <display>
         <title>eclipse 安装 findbugs</title>
         <pubTime>2018-01-11T12:02:45.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2018/01/11/SpringCloud-%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AF%87-%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0%EF%BC%88Eureka%EF%BC%89/</loc>
-    <lastmod>2018-01-11T04:58:51.271Z</lastmod>
-    <data>
-        <display>
-        <title>SpringCloud 教程 | 第一篇: 服务的注册与发现（Eureka）</title>
-        <pubTime>2018-01-11T04:55:25.000Z</pubTime>
         
          
            

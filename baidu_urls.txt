@@ -8,7 +8,6 @@ http://yoursite.com/2018/02/02/CentOS-install-yourls-短链接/
 http://yoursite.com/2018/02/02/windows安装yourls短链接/
 http://yoursite.com/2018/01/12/window安装sonar代码检测/
 http://yoursite.com/2018/01/11/eclipse-安装-findbugs/
-http://yoursite.com/2018/01/11/SpringCloud-教程-第一篇-服务的注册与发现（Eureka）/
 http://yoursite.com/2018/01/04/Spring-Boot配置文件详解二/
 http://yoursite.com/2018/01/04/Spring-Boot基础项目搭建一/
 http://yoursite.com/2017/11/01/CentOS安装Hadoop集群/
