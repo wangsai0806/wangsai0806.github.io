@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="王赛的博客">
 <meta property="og:description" content="一：ERROR 1045 (28000)问题： ERROR 1045 (28000): Access denied for user &amp;apos;root&amp;apos;@&amp;apos;localhost&amp;apos; (using password: YES) 或 ERROR 1045 (28000): Access denied for user &amp;apos;root&amp;apos;@&amp;apos;loca">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-25T09:00:04.400Z">
+<meta property="og:updated_time" content="2018-04-21T14:55:26.263Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS安装MySql遇到的问题">
 <meta name="twitter:description" content="一：ERROR 1045 (28000)问题： ERROR 1045 (28000): Access denied for user &amp;apos;root&amp;apos;@&amp;apos;localhost&amp;apos; (using password: YES) 或 ERROR 1045 (28000): Access denied for user &amp;apos;root&amp;apos;@&amp;apos;loca">
@@ -398,6 +398,45 @@ configure: error: Unable to use libevent (libevent check failed)
 mysqli.default_socket = /var/lib/mysql/mysql.sock  //修改配置
 
 3、/etc/init.d/php-fpm restart
+</code></pre><h2 id="七：MySQL-1006-Can’t-create-database-error"><a href="#七：MySQL-1006-Can’t-create-database-error" class="headerlink" title="七：MySQL: 1006 - Can’t create database error"></a>七：MySQL: 1006 - Can’t create database error</h2><p><strong>问题</strong></p>
+<pre><code>MySQL: 1006 - Can&apos;t create database &apos;***&apos; (errno: 28)
+</code></pre><p><strong>原因</strong></p>
+<pre><code>一般是mysql用户没有目录权限的问题。
+</code></pre><p><strong>解决</strong></p>
+<pre><code>找到mysql的文件名录，我的是/usr/lib/mysql
+find -name *.frm   #会查询出来所有的mysql数据库的表文件
+
+例如：
+/var/lib/mysql/jszs/W_ROLE.frm
+/var/lib/mysql/jszs/W_USER_ROLE.frm
+/var/lib/mysql/jszs/W_User_organization.frm
+/var/lib/mysql/jszs/W_User.frm
+/var/lib/mysql/jszs/W_User_Party.frm
+/var/lib/mysql/jszs/W_Permission.frm
+/var/lib/mysql/jszs/W_Role_permission.frm
+/var/lib/mysql/jszs/dictionary.frm
+/var/lib/mysql/jszs/W_organization.frm
+
+/var/lib/mysql     #这个就是mysql的储存文件目录
+
+#查询是否有文件目录的权限
+ls -ld /usr/lib/mysql
+
+如果显示：
+drwxr-xr-x 6 root root 4096 Dec 11 08:57 /usr/lib/mysql
+则说明mysql用户没有操作权限，需要用chown指令授权：
+chown -R mysql:mysql  /usr/lib/mysql
+
+然后记得重启服务器！
+</code></pre><p><strong>问题</strong></p>
+<pre><code>MySQL: 1006 - Can&apos;t create database &apos;***&apos; (errno: 13)
+</code></pre><p><strong>原因</strong></p>
+<pre><code>服务器磁盘空间满了
+</code></pre><p><strong>解决</strong></p>
+<pre><code>查看磁盘控件
+df -h
+删除一些不用的文件
+rm -rf 你要删除的文件
 </code></pre>
       
     </div>
@@ -632,7 +671,7 @@ mysqli.default_socket = /var/lib/mysql/mysql.sock  //修改配置
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一：ERROR-1045-28000"><span class="nav-number">1.</span> <span class="nav-text">一：ERROR 1045 (28000)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一：MySQL-library-not-found"><span class="nav-number">2.</span> <span class="nav-text">一：MySQL library not found</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二：Not-found-NET-SNMP-library"><span class="nav-number">3.</span> <span class="nav-text">二：Not found NET-SNMP library</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三：Not-found-curl-Library"><span class="nav-number">4.</span> <span class="nav-text">三：Not found curl Library</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四：Unable-to-use-libevent"><span class="nav-number">5.</span> <span class="nav-text">四：Unable to use libevent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五：about-always-populate-raw-post-data-must-be-set-1"><span class="nav-number">6.</span> <span class="nav-text">五：about always-populate-raw-post-data must be set -1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六：Error-connecting-to-database"><span class="nav-number">7.</span> <span class="nav-text">六：Error connecting to database</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一：ERROR-1045-28000"><span class="nav-number">1.</span> <span class="nav-text">一：ERROR 1045 (28000)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一：MySQL-library-not-found"><span class="nav-number">2.</span> <span class="nav-text">一：MySQL library not found</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二：Not-found-NET-SNMP-library"><span class="nav-number">3.</span> <span class="nav-text">二：Not found NET-SNMP library</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三：Not-found-curl-Library"><span class="nav-number">4.</span> <span class="nav-text">三：Not found curl Library</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四：Unable-to-use-libevent"><span class="nav-number">5.</span> <span class="nav-text">四：Unable to use libevent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五：about-always-populate-raw-post-data-must-be-set-1"><span class="nav-number">6.</span> <span class="nav-text">五：about always-populate-raw-post-data must be set -1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六：Error-connecting-to-database"><span class="nav-number">7.</span> <span class="nav-text">六：Error connecting to database</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七：MySQL-1006-Can’t-create-database-error"><span class="nav-number">8.</span> <span class="nav-text">七：MySQL: 1006 - Can’t create database error</span></a></li></ol></div>
             
 
           </div>
@@ -682,7 +721,7 @@ mysqli.default_socket = /var/lib/mysql/mysql.sock  //修改配置
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共22.1k字</span>
+  <span class="post-count">博客全站共22.6k字</span>
 </div>
 
         

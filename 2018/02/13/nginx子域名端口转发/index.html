@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="王赛的博客">
 <meta property="og:description" content="随着服务器上配置的服务越来越多,只想输入域名访问,不想加上端口。准备用nginx监听80和443端口,将所有的域名请求转发到对应的服务模块 一：下载nginx#下载解压包 wget http://nginx.org/download/nginx-1.10.2.tar.gz #安装编译工具 yum install -y pcre pcre-devel openssl openssl-devel gc">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-13T04:45:05.292Z">
+<meta property="og:updated_time" content="2018-04-21T14:25:28.653Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx子域名端口转发">
 <meta name="twitter:description" content="随着服务器上配置的服务越来越多,只想输入域名访问,不想加上端口。准备用nginx监听80和443端口,将所有的域名请求转发到对应的服务模块 一：下载nginx#下载解压包 wget http://nginx.org/download/nginx-1.10.2.tar.gz #安装编译工具 yum install -y pcre pcre-devel openssl openssl-devel gc">
@@ -326,6 +326,8 @@ cd nginx-1.10.2
 ./configure --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module
 #编译
 make &amp;&amp; make install
+#启动服务
+/usr/local/nginx/sbin/nginx
 </code></pre><h2 id="三：修改Nginx配置"><a href="#三：修改Nginx配置" class="headerlink" title="三：修改Nginx配置"></a>三：修改Nginx配置</h2><pre><code>#为了解决没有www账户的问题
 user  nobody;
 worker_processes  1;
@@ -686,7 +688,7 @@ http {
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共22.1k字</span>
+  <span class="post-count">博客全站共22.6k字</span>
 </div>
 
         
