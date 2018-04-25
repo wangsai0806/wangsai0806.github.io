@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="设置root密码输入命令:su root 输入密码： 切换用户输入命令:su root 输入密码： 永久修改主机名输入命令:vi /etc/sysconfig/network NETWORKING=yes  HOSTNAME=localhost.localdomain 修改HOSTNAME值 设置系统时间与网络时间同步1.安装ntpdate工具 yum -y install ntp ntpdate">
+<meta name="description" content="CentOS设计环境变量方法一（暂时生效） 直接运行命令export PATH=$PATH:/usr/local/MATLAB/R2013a/bin ，使用这种方法，只会对当前回话生效，也就是说每当登出或注销系统以后，PATH 设置就会失效，只是临时生效。 export PATH=$PATH:/usr/local/java/bin 方法二（只对当前登陆用户生效，永久生效） 执行 vim ~/.ba">
 <meta name="keywords" content="技术">
 <meta property="og:type" content="article">
 <meta property="og:title" content="liunx基础">
 <meta property="og:url" content="http://yoursite.com/2017/10/20/liunx基础/index.html">
 <meta property="og:site_name" content="王赛的博客">
-<meta property="og:description" content="设置root密码输入命令:su root 输入密码： 切换用户输入命令:su root 输入密码： 永久修改主机名输入命令:vi /etc/sysconfig/network NETWORKING=yes  HOSTNAME=localhost.localdomain 修改HOSTNAME值 设置系统时间与网络时间同步1.安装ntpdate工具 yum -y install ntp ntpdate">
+<meta property="og:description" content="CentOS设计环境变量方法一（暂时生效） 直接运行命令export PATH=$PATH:/usr/local/MATLAB/R2013a/bin ，使用这种方法，只会对当前回话生效，也就是说每当登出或注销系统以后，PATH 设置就会失效，只是临时生效。 export PATH=$PATH:/usr/local/java/bin 方法二（只对当前登陆用户生效，永久生效） 执行 vim ~/.ba">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-21T16:23:42.786Z">
+<meta property="og:updated_time" content="2018-04-25T11:37:13.698Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="liunx基础">
-<meta name="twitter:description" content="设置root密码输入命令:su root 输入密码： 切换用户输入命令:su root 输入密码： 永久修改主机名输入命令:vi /etc/sysconfig/network NETWORKING=yes  HOSTNAME=localhost.localdomain 修改HOSTNAME值 设置系统时间与网络时间同步1.安装ntpdate工具 yum -y install ntp ntpdate">
+<meta name="twitter:description" content="CentOS设计环境变量方法一（暂时生效） 直接运行命令export PATH=$PATH:/usr/local/MATLAB/R2013a/bin ，使用这种方法，只会对当前回话生效，也就是说每当登出或注销系统以后，PATH 设置就会失效，只是临时生效。 export PATH=$PATH:/usr/local/java/bin 方法二（只对当前登陆用户生效，永久生效） 执行 vim ~/.ba">
 
 
 
@@ -314,7 +314,28 @@
       
 
       
-        <h2 id="设置root密码"><a href="#设置root密码" class="headerlink" title="设置root密码"></a>设置root密码</h2><p>输入命令:su root</p>
+        <h2 id="CentOS设计环境变量"><a href="#CentOS设计环境变量" class="headerlink" title="CentOS设计环境变量"></a>CentOS设计环境变量</h2><p><strong>方法一（暂时生效）</strong></p>
+<p>直接运行命令export PATH=$PATH:/usr/local/MATLAB/R2013a/bin ，使用这种方法，只会对当前回话生效，也就是说每当登出或注销系统以后，PATH 设置就会失效，只是临时生效。</p>
+<pre><code>export PATH=$PATH:/usr/local/java/bin
+</code></pre><p><strong>方法二（只对当前登陆用户生效，永久生效）</strong></p>
+<p>执行 vim ~/.bash_profile 修改文件中 PATH 一行，将 /usr/local/java 加入到 PATH=$PATH:$HOME/bin 一行之后（注意以冒号分隔），保存文件并退出，执行 source ~/.bash_profile 使其生效，这种方法只对当前登陆用户生效。</p>
+<pre><code>vim ~/.bash_profile
+
+HOME = /usr/local/java
+PATH=$PATH:$HOME/bin
+export PATH
+
+source ~/.bash_profile
+</code></pre><p><strong>方法三（对所有系统用户生效，永久生效）</strong></p>
+<p>修改 /etc/profile 文件，在文件末尾加上如下两行代码<br>PATH=$PATH:/usr/local/java/bin<br>export PATH 最后执行命令 source /etc/profile 或执行点命令 ./profile 使其修改生效。</p>
+<pre><code>vim /etc/profile
+
+HOME = /usr/local/java
+PATH=$PATH:$HOME/bin
+export PATH
+
+source ~/.bash_profile
+</code></pre><h2 id="设置root密码"><a href="#设置root密码" class="headerlink" title="设置root密码"></a>设置root密码</h2><p>输入命令:su root</p>
 <p>输入密码：</p>
 <h2 id="切换用户"><a href="#切换用户" class="headerlink" title="切换用户"></a>切换用户</h2><p>输入命令:su root</p>
 <p>输入密码：</p>
@@ -569,7 +590,7 @@ HOSTNAME=localhost.localdomain
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#设置root密码"><span class="nav-number">1.</span> <span class="nav-text">设置root密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#切换用户"><span class="nav-number">2.</span> <span class="nav-text">切换用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#永久修改主机名"><span class="nav-number">3.</span> <span class="nav-text">永久修改主机名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置系统时间与网络时间同步"><span class="nav-number">4.</span> <span class="nav-text">设置系统时间与网络时间同步</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CentOS设计环境变量"><span class="nav-number">1.</span> <span class="nav-text">CentOS设计环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置root密码"><span class="nav-number">2.</span> <span class="nav-text">设置root密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#切换用户"><span class="nav-number">3.</span> <span class="nav-text">切换用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#永久修改主机名"><span class="nav-number">4.</span> <span class="nav-text">永久修改主机名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置系统时间与网络时间同步"><span class="nav-number">5.</span> <span class="nav-text">设置系统时间与网络时间同步</span></a></li></ol></div>
             
 
           </div>
@@ -619,7 +640,7 @@ HOSTNAME=localhost.localdomain
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共22.6k字</span>
+  <span class="post-count">博客全站共23.0k字</span>
 </div>
 
         

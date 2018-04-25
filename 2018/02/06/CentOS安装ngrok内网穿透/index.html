@@ -88,7 +88,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/Rh96Xtl.png">
 <meta property="og:image" content="https://i.imgur.com/SQFoJ3k.png">
-<meta property="og:updated_time" content="2018-04-21T16:28:50.730Z">
+<meta property="og:updated_time" content="2018-04-25T13:39:51.705Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CentOS安装ngrok内网穿透">
 <meta name="twitter:description" content="一:下载源码mkdir ngrok #创建名称为ngrok的目录 apt-get update #更新包管理器 apt-get install git  #安装git git clone https://github.com/inconshreveable/ngrok.git  #将ngrok源代码克隆回本地 二：安装Go语言开发环境yum install golang -y  #安装go语言 三">
@@ -347,18 +347,40 @@ GOOS=windows GOARCH=386 make release-client
 GOOS=linux GOARCH=386 make release-server
 #linux客户端
 GOOS=linux GOARCH=386 make release-client
+#mac客户端
+GOOS=darwin GOARCH=amd64 make  release-client
 </code></pre><p>生成完成后，在工作目录的bin文件夹下，产生对应的文件。以编译windows平台为例，会产生“ngrok.exe”与“ngrokd.exe”这两个文件，前者客户端，后者需要运行在公网服务器上。</p>
 <p>因为项目中引用了一些外部资源，生成会耗费一些时间，对网络也有一定的要求，太慢会中短</p>
-<h2 id="七：启动ngrok服务端"><a href="#七：启动ngrok服务端" class="headerlink" title="七：启动ngrok服务端"></a>七：启动ngrok服务端</h2><pre><code>./ngrokd -domain ngrok.wangsai.net.cn
+<h2 id="七：启动ngrok服务端"><a href="#七：启动ngrok服务端" class="headerlink" title="七：启动ngrok服务端"></a>七：启动ngrok服务端</h2><pre><code>前台启动服务
+./ngrokd -domain ngrok.wangsai.net.cn -httpAddr :8080 -httpsAddr :8443
+后台启动服务
+nohup ./ngrokd -domain ngrok.wangsai.net.cn -httpAddr :8080 -httpsAddr :8443 &amp;
 </code></pre><h2 id="八-配置客户端"><a href="#八-配置客户端" class="headerlink" title="八:配置客户端"></a>八:配置客户端</h2><p>拷贝生成的ngrok.exe到本地计算机，并新建配置文件ngrok.cfg，内容为：</p>
 <pre><code>#默认的代理端口为4443
 server_addr: &quot;ngrok.wangsai.net.cn:4443&quot;
 trust_host_root_certs: false
 
 #启动客户端
-ngrok.exe -subdomain ws -config=ngrok.cfg 8080
+ngrok.exe -subdomain ws -proto=http -config=ngrok.cfg 8080
 #-subdomain ws    代表ngrok.wangsai.net.cn:4443的前置域名
 #8080            代表本地的对外端口
+</code></pre><h2 id="nginx-ngrok实现内网穿透"><a href="#nginx-ngrok实现内网穿透" class="headerlink" title="nginx+ngrok实现内网穿透"></a>nginx+ngrok实现内网穿透</h2><p>因为80端口被nginx占用，决定使用nginx+ngrok实现内网穿透，让所有的流量都通过nginx的80端口，然后转发到ngrok上面，下面是我的nginx的配置文件</p>
+<pre><code>server {
+    listen       80;
+    server_name  ws.ngrok.52wss.com;
+    location / {
+             proxy_pass http://ws.ngrok.52wss.com:8080;
+             proxy_redirect off;
+             client_max_body_size 10m; 
+             client_body_buffer_size 128k;
+             proxy_connect_timeout 90; 
+             proxy_read_timeout 90; 
+             proxy_buffer_size 4k;  
+             proxy_buffers 6 128k;
+             proxy_busy_buffers_size 256k;
+             proxy_temp_file_write_size 256k;
+        }
+}
 </code></pre>
       
     </div>
@@ -583,7 +605,7 @@ ngrok.exe -subdomain ws -config=ngrok.cfg 8080
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-下载源码"><span class="nav-number">1.</span> <span class="nav-text">一:下载源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二：安装Go语言开发环境"><span class="nav-number">2.</span> <span class="nav-text">二：安装Go语言开发环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-更改ngrok域名"><span class="nav-number">3.</span> <span class="nav-text">三:更改ngrok域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四：为域名生成证书"><span class="nav-number">4.</span> <span class="nav-text">四：为域名生成证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五：拷贝证书到指定位置"><span class="nav-number">5.</span> <span class="nav-text">五：拷贝证书到指定位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六：编译"><span class="nav-number">6.</span> <span class="nav-text">六：编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七：启动ngrok服务端"><span class="nav-number">7.</span> <span class="nav-text">七：启动ngrok服务端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八-配置客户端"><span class="nav-number">8.</span> <span class="nav-text">八:配置客户端</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-下载源码"><span class="nav-number">1.</span> <span class="nav-text">一:下载源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二：安装Go语言开发环境"><span class="nav-number">2.</span> <span class="nav-text">二：安装Go语言开发环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-更改ngrok域名"><span class="nav-number">3.</span> <span class="nav-text">三:更改ngrok域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四：为域名生成证书"><span class="nav-number">4.</span> <span class="nav-text">四：为域名生成证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五：拷贝证书到指定位置"><span class="nav-number">5.</span> <span class="nav-text">五：拷贝证书到指定位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六：编译"><span class="nav-number">6.</span> <span class="nav-text">六：编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七：启动ngrok服务端"><span class="nav-number">7.</span> <span class="nav-text">七：启动ngrok服务端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八-配置客户端"><span class="nav-number">8.</span> <span class="nav-text">八:配置客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx-ngrok实现内网穿透"><span class="nav-number">9.</span> <span class="nav-text">nginx+ngrok实现内网穿透</span></a></li></ol></div>
             
 
           </div>
@@ -633,7 +655,7 @@ ngrok.exe -subdomain ws -config=ngrok.cfg 8080
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共22.6k字</span>
+  <span class="post-count">博客全站共23.0k字</span>
 </div>
 
         

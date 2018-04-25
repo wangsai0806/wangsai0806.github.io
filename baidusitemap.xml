@@ -5,12 +5,29 @@
     
   <url>
     <loc>http://yoursite.com/2018/02/06/CentOS%E5%AE%89%E8%A3%85ngrok%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</loc>
-    <lastmod>2018-04-21T16:28:50.730Z</lastmod>
+    <lastmod>2018-04-25T13:39:51.705Z</lastmod>
     <data>
         <display>
         <title>CentOS安装ngrok内网穿透</title>
         <pubTime>2018-02-06T07:23:26.000Z</pubTime>
         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2017/10/20/liunx%E5%9F%BA%E7%A1%80/</loc>
+    <lastmod>2018-04-25T11:37:13.698Z</lastmod>
+    <data>
+        <display>
+        <title>liunx基础</title>
+        <pubTime>2017-10-20T07:19:21.000Z</pubTime>
+        
+        <tag>技术</tag>
+         
          
            
         </display>
@@ -135,23 +152,6 @@
              
               <breadCrumb title="Github" url="http://yoursite.com/categories/Github/"/>
           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2017/10/20/liunx%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2018-04-21T16:23:42.786Z</lastmod>
-    <data>
-        <display>
-        <title>liunx基础</title>
-        <pubTime>2017-10-20T07:19:21.000Z</pubTime>
-        
-        <tag>技术</tag>
-         
-         
-           
         </display>
     </data>
     </url>
