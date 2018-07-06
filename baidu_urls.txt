@@ -1,3 +1,6 @@
+http://yoursite.com/2018/07/04/小程序图片上传-前台-后台SpringBoot/
+http://yoursite.com/2018/06/09/Java反射属性解读/
+http://yoursite.com/2018/06/01/finalize方法总结、GC执行finalize的过程/
 http://yoursite.com/2018/04/13/Redis搭建集群/
 http://yoursite.com/2018/03/28/离线下载BT磁力链接Aria2在线管理面板--AriaNg/
 http://yoursite.com/2018/02/13/windows使用openssl生成ca证书/
