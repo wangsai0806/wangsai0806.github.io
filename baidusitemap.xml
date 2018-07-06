@@ -4,6 +4,44 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/07/06/AspectJ%E5%88%87%E5%85%A5%E7%82%B9%E8%AF%AD%E6%B3%95%E8%AF%A6%E8%A7%A3/</loc>
+    <lastmod>2018-07-06T08:17:40.741Z</lastmod>
+    <data>
+        <display>
+        <title>AspectJ切入点语法详解</title>
+        <pubTime>2018-07-06T06:14:07.000Z</pubTime>
+        
+        <tag>aop</tag>
+         
+        <tag>java</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2018/07/06/SpringBoot%E9%85%8D%E7%BD%AEapplication.propertierde%E7%9A%84%E5%AE%8C%E6%95%B4%E7%9A%84%E5%B1%9E%E6%80%A7%E5%88%97%E8%A1%A8/</loc>
+    <lastmod>2018-07-06T06:11:18.279Z</lastmod>
+    <data>
+        <display>
+        <title>的完整的属性列表</title>
+        <pubTime>2018-07-06T06:09:33.000Z</pubTime>
+        
+        <tag>java</tag>
+         
+        <tag>springboot</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/07/04/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0-%E5%89%8D%E5%8F%B0-%E5%90%8E%E5%8F%B0SpringBoot/</loc>
     <lastmod>2018-07-04T09:26:41.085Z</lastmod>
     <data>
@@ -137,9 +175,9 @@
         <title>CentOS修改IP地址</title>
         <pubTime>2017-10-31T05:54:32.000Z</pubTime>
         
-        <tag>运维</tag>
-         
         <tag>技术</tag>
+         
+        <tag>运维</tag>
          
          
            
@@ -258,9 +296,9 @@
         <title>CentOS安装MySql</title>
         <pubTime>2017-08-18T02:49:54.000Z</pubTime>
         
-        <tag>数据库</tag>
-         
         <tag>技术</tag>
+         
+        <tag>数据库</tag>
          
          
            
@@ -280,9 +318,9 @@
         <title>CentOS安装MySql遇到的问题</title>
         <pubTime>2017-10-25T01:59:59.000Z</pubTime>
         
-        <tag>数据库</tag>
-         
         <tag>技术</tag>
+         
+        <tag>数据库</tag>
          
         <tag>问题</tag>
          
@@ -469,9 +507,9 @@
         <title>CentOS安装Hadoop集群</title>
         <pubTime>2017-11-01T03:06:21.000Z</pubTime>
         
-        <tag>大数据</tag>
-         
         <tag>运维</tag>
+         
+        <tag>大数据</tag>
          
          
            

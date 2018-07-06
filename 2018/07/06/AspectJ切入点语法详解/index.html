@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="java,spring,分布式," />
+  <meta name="keywords" content="aop,java," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="简介spring boot 它的设计目的就是为例简化开发，开启了各种自动装配，你不想写各种配置文件，引入相关的依赖就能迅速搭建起一个web工程。它采用的是建立生产就绪的应用程序观点，优先于配置的惯例。 工程目录创建完工程，工程的目录结构如下： - src     -main         -java             -package                 -Springboot">
-<meta name="keywords" content="java,spring,分布式">
+<meta name="description" content="AspectJ切入点语法详解切入点指示符用来指示切入点表达式目的，，在Spring AOP中目前只有执行方法这一个连接点，Spring AOP支持的AspectJ切入点指示符如下： execution：用于匹配方法执行的连接点； within：用于匹配指定类型内的方法执行； this：用于匹配当前AOP代理对象类型的执行方法；注意是AOP代理对象的类型匹配，这样就可能包括引入接口也类型匹配； ta">
+<meta name="keywords" content="aop,java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring Boot基础项目搭建(一)">
-<meta property="og:url" content="http://yoursite.com/2018/01/04/Spring-Boot基础项目搭建一/index.html">
+<meta property="og:title" content="AspectJ切入点语法详解">
+<meta property="og:url" content="http://yoursite.com/2018/07/06/AspectJ切入点语法详解/index.html">
 <meta property="og:site_name" content="王赛的博客">
-<meta property="og:description" content="简介spring boot 它的设计目的就是为例简化开发，开启了各种自动装配，你不想写各种配置文件，引入相关的依赖就能迅速搭建起一个web工程。它采用的是建立生产就绪的应用程序观点，优先于配置的惯例。 工程目录创建完工程，工程的目录结构如下： - src     -main         -java             -package                 -Springboot">
+<meta property="og:description" content="AspectJ切入点语法详解切入点指示符用来指示切入点表达式目的，，在Spring AOP中目前只有执行方法这一个连接点，Spring AOP支持的AspectJ切入点指示符如下： execution：用于匹配方法执行的连接点； within：用于匹配指定类型内的方法执行； this：用于匹配当前AOP代理对象类型的执行方法；注意是AOP代理对象的类型匹配，这样就可能包括引入接口也类型匹配； ta">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-04T05:28:51.210Z">
+<meta property="og:updated_time" content="2018-07-06T08:17:40.741Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring Boot基础项目搭建(一)">
-<meta name="twitter:description" content="简介spring boot 它的设计目的就是为例简化开发，开启了各种自动装配，你不想写各种配置文件，引入相关的依赖就能迅速搭建起一个web工程。它采用的是建立生产就绪的应用程序观点，优先于配置的惯例。 工程目录创建完工程，工程的目录结构如下： - src     -main         -java             -package                 -Springboot">
+<meta name="twitter:title" content="AspectJ切入点语法详解">
+<meta name="twitter:description" content="AspectJ切入点语法详解切入点指示符用来指示切入点表达式目的，，在Spring AOP中目前只有执行方法这一个连接点，Spring AOP支持的AspectJ切入点指示符如下： execution：用于匹配方法执行的连接点； within：用于匹配指定类型内的方法执行； this：用于匹配当前AOP代理对象类型的执行方法；注意是AOP代理对象的类型匹配，这样就可能包括引入接口也类型匹配； ta">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/04/Spring-Boot基础项目搭建一/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/07/06/AspectJ切入点语法详解/"/>
 
 
 
 
 
-  <title>Spring Boot基础项目搭建(一) | 王赛的博客</title>
+  <title>AspectJ切入点语法详解 | 王赛的博客</title>
   
 
 
@@ -234,7 +234,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/04/Spring-Boot基础项目搭建一/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/06/AspectJ切入点语法详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sai Wang">
@@ -251,7 +251,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Spring Boot基础项目搭建(一)</h1>
+          <h1 class="post-title" itemprop="name headline">AspectJ切入点语法详解</h1>
         
 
         <div class="post-meta">
@@ -263,8 +263,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-04T13:20:23+08:00">
-                2018-01-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-06T14:14:07+08:00">
+                2018-07-06
               </time>
             
 
@@ -282,8 +282,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/01/04/Spring-Boot基础项目搭建一/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/01/04/Spring-Boot基础项目搭建一/" itemprop="commentsCount"></span>
+                <a href="/2018/07/06/AspectJ切入点语法详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/07/06/AspectJ切入点语法详解/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -314,28 +314,23 @@
       
 
       
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>spring boot 它的设计目的就是为例简化开发，开启了各种自动装配，你不想写各种配置文件，引入相关的依赖就能迅速搭建起一个web工程。它采用的是建立生产就绪的应用程序观点，优先于配置的惯例。</p>
-<h2 id="工程目录"><a href="#工程目录" class="headerlink" title="工程目录"></a>工程目录</h2><p>创建完工程，工程的目录结构如下：</p>
-<pre><code>- src
-    -main
-        -java
-            -package
-                -SpringbootApplication
-        -resouces
-            - statics
-            - templates
-            - application.yml
-    -test
-- pom
+        <h2 id="AspectJ切入点语法详解"><a href="#AspectJ切入点语法详解" class="headerlink" title="AspectJ切入点语法详解"></a>AspectJ切入点语法详解</h2><p>切入点指示符用来指示切入点表达式目的，，在Spring AOP中目前只有执行方法这一个连接点，Spring AOP支持的AspectJ切入点指示符如下：</p>
+<p>execution：用于匹配方法执行的连接点；</p>
+<p>within：用于匹配指定类型内的方法执行；</p>
+<p>this：用于匹配当前AOP代理对象类型的执行方法；注意是AOP代理对象的类型匹配，这样就可能包括引入接口也类型匹配；</p>
+<p>target：用于匹配当前目标对象类型的执行方法；注意是目标对象的类型匹配，这样就不包括引入接口也类型匹配；</p>
+<p>args：用于匹配当前执行的方法传入的参数为指定类型的执行方法；</p>
+<p>@within：用于匹配所以持有指定注解类型内的方法；</p>
+<p>@target：用于匹配当前目标对象类型的执行方法，其中目标对象持有指定的注解；</p>
+<p>@args：用于匹配当前执行的方法传入的参数持有指定注解的执行；</p>
+<p>@annotation：用于匹配当前执行方法持有指定注解的方法；</p>
+<p>bean：Spring AOP扩展的，AspectJ没有对于指示符，用于匹配特定名称的Bean对象的执行方法；</p>
+<p>reference pointcut：表示引用其他命名切入点，只有@ApectJ风格支持，Schema风格不支持。</p>
+<pre><code>AspectJ切入点支持的切入点指示符还有： call、get、set、preinitialization、staticinitialization、initialization、handler、adviceexecution、withincode、cflow、cflowbelow、if、@this、@withincode；但Spring AOP目前不支持这些指示符，使用这些指示符将抛出IllegalArgumentException异常。这些指示符Spring AOP可能会在以后进行扩展。
+</code></pre><h2 id="命名及匿名切入点"><a href="#命名及匿名切入点" class="headerlink" title="命名及匿名切入点"></a>命名及匿名切入点</h2><p>命名切入点可以被其他切入点引用，而匿名切入点是不可以的。</p>
+<pre><code>只有@AspectJ支持命名切入点，而Schema风格不支持命名切入点。
+</code></pre><p>如下所示，@AspectJ使用如下方式引用命名切入点：</p>
 
-
-pom文件为基本的依赖管理文件
-resouces 资源文件 
-statics 静态资源
-templates 模板资源
-application.yml 配置文件
-SpringbootApplication程序的入口。
-</code></pre>
       
     </div>
     
@@ -381,11 +376,9 @@ SpringbootApplication程序的入口。
       
         <div class="post-tags">
           
+            <a href="/tags/aop/" rel="tag"># aop</a>
+          
             <a href="/tags/java/" rel="tag"># java</a>
-          
-            <a href="/tags/spring/" rel="tag"># spring</a>
-          
-            <a href="/tags/分布式/" rel="tag"># 分布式</a>
           
         </div>
       
@@ -398,8 +391,8 @@ SpringbootApplication程序的入口。
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/01/CentOS安装Hadoop集群/" rel="next" title="CentOS安装Hadoop集群">
-                <i class="fa fa-chevron-left"></i> CentOS安装Hadoop集群
+              <a href="/2018/07/06/SpringBoot配置application.propertierde的完整的属性列表/" rel="next" title="的完整的属性列表">
+                <i class="fa fa-chevron-left"></i> 的完整的属性列表
               </a>
             
           </div>
@@ -407,10 +400,6 @@ SpringbootApplication程序的入口。
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/04/Spring-Boot配置文件详解二/" rel="prev" title="Spring Boot配置文件详解(二)">
-                Spring Boot配置文件详解(二) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -569,7 +558,7 @@ SpringbootApplication程序的入口。
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工程目录"><span class="nav-number">2.</span> <span class="nav-text">工程目录</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#AspectJ切入点语法详解"><span class="nav-number">1.</span> <span class="nav-text">AspectJ切入点语法详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命名及匿名切入点"><span class="nav-number">2.</span> <span class="nav-text">命名及匿名切入点</span></a></li></ol></div>
             
 
           </div>

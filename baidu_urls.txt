@@ -1,3 +1,5 @@
+http://yoursite.com/2018/07/06/AspectJ切入点语法详解/
+http://yoursite.com/2018/07/06/SpringBoot配置application.propertierde的完整的属性列表/
 http://yoursite.com/2018/07/04/小程序图片上传-前台-后台SpringBoot/
 http://yoursite.com/2018/06/09/Java反射属性解读/
 http://yoursite.com/2018/06/01/finalize方法总结、GC执行finalize的过程/
