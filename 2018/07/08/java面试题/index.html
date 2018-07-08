@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="面试题," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.什么是线程局部变量？ 线程局部变量是局限于线程内部的变量，属于线程自身所有，不在多个线程间共享。 Java 提供 ThreadLocal 类来支持线程局部变量，是一种实现线程安全的方式。 但是在管理环境下（如 web 服务器）使用线程局部变量的时候要特别小心，在这种情况下，工作线程的生命周期比任何应用变量的生命周期都要长。 任何线程局部变量一旦在工作完成后没有释放，Java 应用就存在内存泄露">
+<meta name="keywords" content="面试题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java面试题">
+<meta property="og:url" content="http://yoursite.com/2018/07/08/java面试题/index.html">
+<meta property="og:site_name" content="王赛的博客">
+<meta property="og:description" content="1.什么是线程局部变量？ 线程局部变量是局限于线程内部的变量，属于线程自身所有，不在多个线程间共享。 Java 提供 ThreadLocal 类来支持线程局部变量，是一种实现线程安全的方式。 但是在管理环境下（如 web 服务器）使用线程局部变量的时候要特别小心，在这种情况下，工作线程的生命周期比任何应用变量的生命周期都要长。 任何线程局部变量一旦在工作完成后没有释放，Java 应用就存在内存泄露">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-08T03:53:24.780Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java面试题">
+<meta name="twitter:description" content="1.什么是线程局部变量？ 线程局部变量是局限于线程内部的变量，属于线程自身所有，不在多个线程间共享。 Java 提供 ThreadLocal 类来支持线程局部变量，是一种实现线程安全的方式。 但是在管理环境下（如 web 服务器）使用线程局部变量的时候要特别小心，在这种情况下，工作线程的生命周期比任何应用变量的生命周期都要长。 任何线程局部变量一旦在工作完成后没有释放，Java 应用就存在内存泄露">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/08/java面试题/"/>
+
+
+
+
+
+  <title>java面试题 | 王赛的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王赛的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/08/java面试题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sai Wang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王赛的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java面试题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-08T10:05:10+08:00">
+                2018-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/08/java面试题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/07/08/java面试题/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+			
+			
+			  <span id="busuanzi_container_page_pv">&nbsp;&nbsp;|&nbsp;&nbsp;阅读量 <span id="busuanzi_value_page_pv"></span> 次</span>
+			
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>1.什么是线程局部变量？</strong></p>
+<pre><code>线程局部变量是局限于线程内部的变量，属于线程自身所有，不在多个线程间共享。
+Java 提供 ThreadLocal 类来支持线程局部变量，是一种实现线程安全的方式。
+但是在管理环境下（如 web 服务器）使用线程局部变量的时候要特别小心，在这种情况下，工作线程的生命周期比任何应用变量的生命周期都要长。
+任何线程局部变量一旦在工作完成后没有释放，Java 应用就存在内存泄露的风险。
+</code></pre><p><strong>2.Java 中 sleep 方法和 wait 方法的区别？</strong></p>
+<pre><code>虽然两者都是用来暂停当前运行的线程，但是 sleep() 实际上只是短暂停顿，因为它不会释放锁。
+而 wait() 意味着条件等待，这就是为什么该方法要释放锁，因为只有这样，其他等待的线程才能在满足条件时获取到该锁。
+</code></pre><p><strong>3.我们能将 int 强制转换为 byte 类型的变量吗？如果该值大于 byte 类型的范围，将会出现什么现象？</strong></p>
+<pre><code>我们可以做强制转换，但是 Java 中 int 是 32 位的，而 byte 是 8 位的。
+如果强制转化是，int 类型的高 24 位将会被丢弃，byte 类型的范围是从 -128 到 128。
+</code></pre><p><strong>4.Java 中 ++ 操作符是线程安全的吗？</strong></p>
+<pre><code>不是线程安全的操作。它涉及到多个指令，如读取变量值，增加，然后存储回内存，这个过程可能会出现多个线程交差。
+</code></pre><p><strong>5.能在不进行强制转换的情况下将一个 double 值赋值给 long 类型的变量吗？</strong></p>
+<pre><code>不行，你不能在没有强制类型转换的前提下将一个 double 值赋值给 long 类型的变量，
+因为 double 类型的范围比 long 类型更广，所以必须要进行强制转换。
+</code></pre><p><strong>6.3乘0.1 == 0.3 将会返回什么？true 还是 false？</strong></p>
+<pre><code>false，因为有些浮点数不能完全精确的表示出来。
+</code></pre><p><strong>7.int 和 Integer 哪个会占用更多的内存？</strong></p>
+<pre><code>Integer 对象会占用更多的内存。Integer 是一个对象，需要存储对象的元数据。
+但是 int 是一个原始类型的数据，所以占用的空间更少。
+</code></pre><p><strong>8.我们能在 Switch 中使用 String 吗？</strong></p>
+<pre><code>从 Java 7 开始，我们可以在 switch case 中使用字符串，但这仅仅是一个语法糖。
+内部实现在 switch 中使用字符串的 hash code。
+</code></pre><p><strong>9.Java 中的构造器链是什么？</strong></p>
+<pre><code>当你从一个构造器中调用另一个构造器，就是Java 中的构造器链。
+这种情况只在重载了类的构造器的时候才会出现。
+</code></pre><p><strong>10.64 位 JVM 中，int 的长度是多数？</strong></p>
+<pre><code>Java 中，int 类型变量的长度是一个固定值，与平台无关，都是 32 位或者 4 个字节。
+意思就是说，在 32 位 和 64 位 的Java 虚拟机中，int 类型的长度是相同的。
+</code></pre><p><strong>11.Serial 与 Parallel GC之间的不同之处？</strong></p>
+<pre><code>Serial 与 Parallel 在GC执行的时候都会引起 stop-the-world。
+它们之间主要不同 serial 收集器是默认的复制收集器，执行 GC 的时候只有一个线程，
+而 parallel 收集器使用多个 GC 线程来执行。
+</code></pre><p><strong>12.Java 中 WeakReference 与 SoftReference的区别？</strong></p>
+<pre><code>虽然 WeakReference（弱引用） 与 SoftReference（软引用） 都有利于提高 GC 和 内存的效率，但是 WeakReference ，一旦失去最后一个强引用，就会被 GC 回收，而软引用虽然不能阻止被回收，但是可以延迟到 JVM 内存不足的时候。
+</code></pre><p><strong>13.WeakHashMap 是怎么工作的？</strong></p>
+<pre><code>WeakHashMap的工作与正常的HashMap类似，但是使用弱引用作为 key，意思就是当 key 对象没有任何引用时，key/value 将会被回收。
+</code></pre><p><strong>14.JRE、JDK、JVM 及 JIT 之间有什么不同？</strong></p>
+<pre><code>JRE 代表 Java 运行时（Java run-time），是运行 Java 引用所必须的。
+JDK 代表 Java 开发工具（Java development kit），是 Java 程序的开发工具，如 Java 编译器，它也包含 JRE。
+JVM 代表 Java 虚拟机（Java virtual machine），它的责任是运行 Java 应用。
+JIT 代表即时编译（Just In Time compilation），当代码执行的次数超过一定的阈值时，会将 Java 字节码转换为本地代码，
+    如主要的热点代码会被准换为本地代码，这样有利大幅度提高 Java 应用的性能。
+</code></pre><p><strong>15.解释 Java 堆空间及 GC？</strong></p>
+<pre><code>当通过 Java 命令启动 Java 进程的时候，会为它分配内存。
+内存的一部分用于创建堆空间，当程序中创建对象的时候，就从对空间中分配内存。
+GC 是 JVM 内部的一个进程，回收无效对象的内存用于将来的分配。
+</code></pre><p><strong>16.你能保证 GC 执行吗？</strong></p>
+<pre><code>不能，虽然你可以调用 System.gc() 或者 Runtime.gc()，但是没有办法保证 GC 的执行。
+</code></pre><p><strong>17.怎么获取 Java 程序使用的内存？堆使用的百分比？</strong></p>
+<pre><code>通过 java.lang.Runtime 类中与内存相关方法来获取剩余的内存，总内存及最大堆内存。
+通过这些方法你也可以获取到堆使用的百分比及堆内存的剩余空间。
+
+Runtime.freeMemory() 方法返回剩余空间的字节数，
+Runtime.totalMemory() 方法总内存的字节数，
+Runtime.maxMemory() 返回最大内存的字节数。
+</code></pre><p><strong>18.Java 中堆和栈有什么区别？</strong></p>
+<pre><code>JVM 中堆和栈属于不同的内存区域，使用目的也不同。
+栈常用于保存方法帧和局部变量，而对象总是在堆上分配。
+栈通常都比堆小，也不会在多个线程之间共享，而堆被整个 JVM 的所有线程共享。
+</code></pre><p><strong>19.a==b和a.equals(b)有什么区别？</strong></p>
+<pre><code>如果 a 和 b 都是对象，则 a==b 是比较两个对象的引用，只有当 a 和 b 指向的是堆中的同一个对象才会返回 true，
+而 a.equals(b) 是进行逻辑比较，所以通常需要重写该方法来提供逻辑一致性的比较。
+例如，String 类重写 equals() 方法，所以可以用于两个不同对象，但是包含的字母相同的比较。
+</code></pre><p><strong>20.a.hashCode() 有什么用？与 a.equals(b) 有什么关系？</strong></p>
+<pre><code>hashCode() 方法是相应对象整型的 hash 值。
+它常用于基于 hash 的集合类，如 Hashtable、HashMap、LinkedHashMap等等。它与 equals() 方法关系特别紧密。
+根据 Java 规范，两个使用 equal() 方法来判断相等的对象，必须具有相同的 hash code。
+</code></pre><p><strong>21.final、finalize 和 finally 的不同之处？</strong></p>
+<pre><code>final 是一个修饰符，可以修饰变量、方法和类。如果 final 修饰变量，意味着该变量的值在初始化后不能被改变。
+finalize 方法是在对象被回收之前调用的方法，给对象自己最后一个复活的机会，但是什么时候调用 finalize 没有保证。
+    finalize只会被调用一次，并且不一定被调用。
+finally 是一个关键字，与 try 和 catch 一起用于异常的处理。finally 块一定会被执行，无论在 try 块中是否有发生异常。
+</code></pre><p><strong>22.Java 中的编译期常量是什么？使用它又什么风险？</strong></p>
+<pre><code>公共静态不可变（public static final ）变量也就是我们所说的编译期常量，这里的 public 可选的。
+实际上这些变量在编译时会被替换掉，因为编译器知道这些变量的值，并且知道这些变量在运行时不能改变。
+这种方式存在的一个问题是你使用了一个内部的或第三方库中的公有编译时常量，但是这个值后面被其他人改变了，但是你的客户端仍然在使用老的值，甚至你已经部署了一个新的jar。
+为了避免这种情况，当你在更新依赖 JAR 文件时，确保重新编译你的程序。
+</code></pre><p><strong>23.poll() 方法和 remove() 方法的区别？</strong></p>
+<pre><code>poll() 和 remove() 都是从队列中取出一个元素；
+poll() 在获取元素失败的时候会返回空。
+remove() 失败的时候会抛出异常。
+</code></pre><p><strong>24.Java 中怎么打印数组？</strong></p>
+<pre><code>可以使用 Arrays.toString() 和 Arrays.deepToString() 方法来打印数组。
+由于数组没有实现 toString() 方法，所以如果将数组传递给 System.out.println() 方法，将无法打印出数组的内容，但是 Arrays.toString() 可以打印每个元素。
+</code></pre><p><strong>25.能自己写一个容器类，然后使用 for-each 循环码？</strong></p>
+<pre><code>可以，你可以写一个自己的容器类。
+如果你想使用 Java 中增强的循环来遍历，你只需要实现 Iterable 接口。
+如果你实现 Collection 接口，默认就具有该属性。
+</code></pre><p><strong>26.java当中的四种引用？</strong></p>
+<pre><code>强引用，软引用，弱引用，虚引用
+
+强引用：如果一个对象具有强引用，它就不会被垃圾回收器回收。
+       即使当前内存空间不足，JVM也不会回收它，而是抛出 OutOfMemoryError 错误，使程序异常终止。
+       如果想中断强引用和某个对象之间的关联，可以显式地将引用赋值为null，这样一来的话，JVM在合适的时间就会回收该对象。
+
+软引用：在使用软引用时，如果内存的空间足够，软引用就能继续被使用，而不会被垃圾回收器回收，只有在内存不足时，软引用才会被垃圾回收器回收。
+
+弱引用：具有弱引用的对象拥有的生命周期更短暂。
+       因为当 JVM 进行垃圾回收，一旦发现弱引用对象，无论当前内存空间是否充足，都会将弱引用回收。
+       不过由于垃圾回收器是一个优先级较低的线程，所以并不一定能迅速发现弱引用对象。
+
+虚引用：顾名思义，就是形同虚设，如果一个对象仅持有虚引用，那么它相当于没有引用，在任何时候都可能被垃圾回收器回收。
+</code></pre><p><strong>27.深拷贝和浅拷贝的区别是什么?</strong></p>
+<pre><code>浅拷贝：被复制对象的所有变量都含有与原来的对象相同的值，而所有的对其他对象的引用仍然指向原来的对象。
+       换言之，浅拷贝仅仅复制所考虑的对象，而不复制它所引用的对象。
+
+深拷贝：被复制对象的所有变量都含有与原来的对象相同的值，而那些引用其他对象的变量将指向被复制过的新对象，而不再是原有的那些被引用的对象。
+       换言之，深拷贝把要复制的对象所引用的对象都复制了一遍。
+</code></pre><p><strong>28.synchronized和ReentrantLock的区别?</strong></p>
+<pre><code>synchronized是和if、else、for、while一样的关键字，ReentrantLock是类，这是二者的本质区别。
+既然ReentrantLock是类，那么它就提供了比synchronized更多更灵活的特性，可以被继承、可以有方法、可以有各种各样的类变量，ReentrantLock比synchronized的扩展性体现在几点上： 
+（1）ReentrantLock可以对获取锁的等待时间进行设置，这样就避免了死锁 
+（2）ReentrantLock可以获取各种锁的信息 
+（3）ReentrantLock可以灵活地实现多路通知 
+另外，二者的锁机制其实也是不一样的:ReentrantLock底层调用的是Unsafe的park方法加锁，synchronized操作的应该是对象头中mark word。
+</code></pre><p><strong>29.FutureTask是什么?</strong></p>
+<pre><code>FutureTask表示一个异步运算的任务。FutureTask里面可以传入一个Callable的具体实现类，可以对这个异步运算的任务的结果进行等待获取、判断是否已经完成、取消任务等操作。
+当然，由于FutureTask也是Runnable接口的实现类，所以FutureTask也可以放入线程池中。
+</code></pre><p><strong>30.一个线程如果出现了运行时异常怎么办?</strong></p>
+<pre><code>如果这个异常没有被捕获的话，这个线程就停止执行了。
+另外重要的一点是：如果这个线程持有某个某个对象的监视器，那么这个对象监视器会被立即释放。
+</code></pre><p><strong>31.Java当中有哪几种锁?</strong></p>
+<pre><code>自旋锁: 自旋锁在JDK1.6之后就默认开启了。
+       基于之前的观察，共享数据的锁定状态只会持续很短的时间，为了这一小段时间而去挂起和恢复线程有点浪费，
+       所以这里就做了一个处理，让后面请求锁的那个线程在稍等一会，但是不放弃处理器的执行时间，看看持有锁的线程能否快速释放。
+       为了让线程等待，所以需要让线程执行一个忙循环也就是自旋操作。
+       在jdk6之后，引入了自适应的自旋锁，也就是等待的时间不再固定了，而是由上一次在同一个锁上的自旋时间及锁的拥有者状态来决定。
+
+偏向锁: 在JDK1.之后引入的一项锁优化，目的是消除数据在无竞争情况下的同步原语。进一步提升程序的运行性能。 
+       偏向锁就是偏心的偏，意思是这个锁会偏向第一个获得他的线程，如果接下来的执行过程中，改锁没有被其他线程获取，则持有偏向锁的线程将永远不需要再进行同步。
+       偏向锁可以提高带有同步但无竞争的程序性能，也就是说他并不一定总是对程序运行有利，如果程序中大多数的锁都是被多个不同的线程访问，那偏向模式就是多余的，在具体问题具体分析的前提下，可以考虑是否使用偏向锁。
+
+轻量级锁: 为了减少获得锁和释放锁所带来的性能消耗，引入了“偏向锁”和“轻量级锁”，
+        所以在Java SE1.6里锁一共有四种状态，无锁状态，偏向锁状态，轻量级锁状态和重量级锁状态，它会随着竞争情况逐渐升级。
+        锁可以升级但不能降级，意味着偏向锁升级成轻量级锁后不能降级成偏向锁。
+乐观锁：乐观锁认为竞争不总是会发生，因此它不需要持有锁，将比较-替换这两个动作作为一个原子操作尝试去修改内存中的变量，如果失败则表示发生冲突，那么就应该有相应的重试逻辑。
+
+悲观锁：悲观锁认为竞争总是会发生，因此每次对某资源进行操作时，都会持有一个独占的锁，就像synchronized，不管三七二十一，直接上了锁就操作资源了。
+</code></pre><p><strong>32.如果你提交任务时，线程池队列已满，这时会发生什么？</strong></p>
+<pre><code>1.如果你使用的LinkedBlockingQueue，也就是无界队列的话，没关系，继续添加任务到阻塞队列中等待执行，
+因为LinkedBlockingQueue可以近乎认为是一个无穷大的队列，可以无限存放任务；
+2.如果你使用的是有界队列比方说ArrayBlockingQueue的话，任务首先会被添加到ArrayBlockingQueue中，
+ArrayBlockingQueue满了，则会使用拒绝策略RejectedExecutionHandler处理满了的任务，默认是AbortPolicy。
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Sai Wang 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Sai Wang 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/面试题/" rel="tag"># 面试题</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/07/安卓APP打开另一个APP完整逻辑实现/" rel="next" title="安卓APP打开另一个APP完整逻辑实现">
+                <i class="fa fa-chevron-left"></i> 安卓APP打开另一个APP完整逻辑实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Sai Wang" />
+            
+              <p class="site-author-name" itemprop="name">Sai Wang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wangsai0806" target="_blank" title="Github">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Github</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:1069531172@qq.com" target="_blank" title="Email">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Email</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="/js/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sai Wang</span>
+
+  
+</div>
+
+<!--
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="http://blog.wangsaisai.cn">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="http://blog.wangsaisai.cn">NexT.Gemini</a> v5.1.4</div>
+
+
+-->
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共50.1k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="180" height="600"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 180px;
+    height: 600px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    var trElement = document.getElementById('hexo-helper-live2d');
+    trElement.parentNode.removeChild(trElement);
+    return;
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/hibiki.model.json", 0.5);});
+})();
+</script>
+
+</body>
+</html>

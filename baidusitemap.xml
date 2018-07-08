@@ -4,6 +4,23 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/07/08/java%E9%9D%A2%E8%AF%95%E9%A2%98/</loc>
+    <lastmod>2018-07-08T03:53:24.780Z</lastmod>
+    <data>
+        <display>
+        <title>java面试题</title>
+        <pubTime>2018-07-08T02:05:10.000Z</pubTime>
+        
+        <tag>面试题</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/07/07/%E5%AE%89%E5%8D%93APP%E6%89%93%E5%BC%80%E5%8F%A6%E4%B8%80%E4%B8%AAAPP%E5%AE%8C%E6%95%B4%E9%80%BB%E8%BE%91%E5%AE%9E%E7%8E%B0/</loc>
     <lastmod>2018-07-07T11:40:37.292Z</lastmod>
     <data>
@@ -211,9 +228,9 @@
         <title>CentOS修改IP地址</title>
         <pubTime>2017-10-31T05:54:32.000Z</pubTime>
         
-        <tag>技术</tag>
-         
         <tag>运维</tag>
+         
+        <tag>技术</tag>
          
          
            
@@ -543,9 +560,9 @@
         <title>CentOS安装Hadoop集群</title>
         <pubTime>2017-11-01T03:06:21.000Z</pubTime>
         
-        <tag>运维</tag>
-         
         <tag>大数据</tag>
+         
+        <tag>运维</tag>
          
          
            
