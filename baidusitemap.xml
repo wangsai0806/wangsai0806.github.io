@@ -4,6 +4,21 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/07/14/Markdown%E6%95%99%E7%A8%8B/</loc>
+    <lastmod>2018-07-14T03:55:53.088Z</lastmod>
+    <data>
+        <display>
+        <title>Markdown教程</title>
+        <pubTime>2018-07-14T03:52:54.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/07/08/java%E9%9D%A2%E8%AF%95%E9%A2%98/</loc>
     <lastmod>2018-07-08T03:53:24.780Z</lastmod>
     <data>
@@ -349,9 +364,9 @@
         <title>CentOS安装MySql</title>
         <pubTime>2017-08-18T02:49:54.000Z</pubTime>
         
-        <tag>技术</tag>
-         
         <tag>数据库</tag>
+         
+        <tag>技术</tag>
          
          
            
@@ -371,9 +386,9 @@
         <title>CentOS安装MySql遇到的问题</title>
         <pubTime>2017-10-25T01:59:59.000Z</pubTime>
         
-        <tag>技术</tag>
-         
         <tag>数据库</tag>
+         
+        <tag>技术</tag>
          
         <tag>问题</tag>
          
