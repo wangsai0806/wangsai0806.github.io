@@ -4,6 +4,21 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/07/16/nginx%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/</loc>
+    <lastmod>2018-07-16T05:32:23.123Z</lastmod>
+    <data>
+        <display>
+        <title>nginx的负载均衡</title>
+        <pubTime>2018-07-16T05:10:47.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/07/14/Markdown%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2018-07-14T03:55:53.088Z</lastmod>
     <data>
@@ -243,9 +258,9 @@
         <title>CentOS修改IP地址</title>
         <pubTime>2017-10-31T05:54:32.000Z</pubTime>
         
-        <tag>运维</tag>
-         
         <tag>技术</tag>
+         
+        <tag>运维</tag>
          
          
            
@@ -364,9 +379,9 @@
         <title>CentOS安装MySql</title>
         <pubTime>2017-08-18T02:49:54.000Z</pubTime>
         
-        <tag>数据库</tag>
-         
         <tag>技术</tag>
+         
+        <tag>数据库</tag>
          
          
            
@@ -386,9 +401,9 @@
         <title>CentOS安装MySql遇到的问题</title>
         <pubTime>2017-10-25T01:59:59.000Z</pubTime>
         
-        <tag>数据库</tag>
-         
         <tag>技术</tag>
+         
+        <tag>数据库</tag>
          
         <tag>问题</tag>
          
@@ -575,9 +590,9 @@
         <title>CentOS安装Hadoop集群</title>
         <pubTime>2017-11-01T03:06:21.000Z</pubTime>
         
-        <tag>大数据</tag>
-         
         <tag>运维</tag>
+         
+        <tag>大数据</tag>
          
          
            

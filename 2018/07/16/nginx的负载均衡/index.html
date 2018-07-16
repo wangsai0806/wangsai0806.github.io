@@ -79,14 +79,19 @@
 
 
 
+<meta name="description" content="一.Nginx简介Nginx是一款高性能的http 服务器/反向代理服务器及电子邮件（IMAP/POP3）代理服务器。由俄罗斯的程序设计师Igor Sysoev所开发，官方测试nginx能够支支撑5万并发链接，并且cpu、内存等资源消耗却非常低，运行非常稳定。 二.Nginx应用场景1、http服务器。Nginx是一个http服务可以独立提供http服务。可以做网页静态服务器。2、虚拟主机。可以实">
 <meta property="og:type" content="article">
-<meta property="og:title" content="VM安装CentOS系统">
-<meta property="og:url" content="http://yoursite.com/2017/10/20/VM安装CentOS系统/index.html">
+<meta property="og:title" content="nginx的负载均衡">
+<meta property="og:url" content="http://yoursite.com/2018/07/16/nginx的负载均衡/index.html">
 <meta property="og:site_name" content="王赛的博客">
+<meta property="og:description" content="一.Nginx简介Nginx是一款高性能的http 服务器/反向代理服务器及电子邮件（IMAP/POP3）代理服务器。由俄罗斯的程序设计师Igor Sysoev所开发，官方测试nginx能够支支撑5万并发链接，并且cpu、内存等资源消耗却非常低，运行非常稳定。 二.Nginx应用场景1、http服务器。Nginx是一个http服务可以独立提供http服务。可以做网页静态服务器。2、虚拟主机。可以实">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-20T06:06:14.445Z">
+<meta property="og:image" content="https://i.imgur.com/wkSFvom.png">
+<meta property="og:updated_time" content="2018-07-16T05:32:23.123Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="VM安装CentOS系统">
+<meta name="twitter:title" content="nginx的负载均衡">
+<meta name="twitter:description" content="一.Nginx简介Nginx是一款高性能的http 服务器/反向代理服务器及电子邮件（IMAP/POP3）代理服务器。由俄罗斯的程序设计师Igor Sysoev所开发，官方测试nginx能够支支撑5万并发链接，并且cpu、内存等资源消耗却非常低，运行非常稳定。 二.Nginx应用场景1、http服务器。Nginx是一个http服务可以独立提供http服务。可以做网页静态服务器。2、虚拟主机。可以实">
+<meta name="twitter:image" content="https://i.imgur.com/wkSFvom.png">
 
 
 
@@ -116,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/10/20/VM安装CentOS系统/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/07/16/nginx的负载均衡/"/>
 
 
 
 
 
-  <title>VM安装CentOS系统 | 王赛的博客</title>
+  <title>nginx的负载均衡 | 王赛的博客</title>
   
 
 
@@ -230,7 +235,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/20/VM安装CentOS系统/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/16/nginx的负载均衡/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sai Wang">
@@ -247,7 +252,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">VM安装CentOS系统</h1>
+          <h1 class="post-title" itemprop="name headline">nginx的负载均衡</h1>
         
 
         <div class="post-meta">
@@ -259,8 +264,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-20T14:06:14+08:00">
-                2017-10-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-16T13:10:47+08:00">
+                2018-07-16
               </time>
             
 
@@ -278,8 +283,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/10/20/VM安装CentOS系统/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2017/10/20/VM安装CentOS系统/" itemprop="commentsCount"></span>
+                <a href="/2018/07/16/nginx的负载均衡/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/07/16/nginx的负载均衡/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -310,7 +315,87 @@
       
 
       
-        
+        <h1 id="一-Nginx简介"><a href="#一-Nginx简介" class="headerlink" title="一.Nginx简介"></a>一.Nginx简介</h1><p>Nginx是一款高性能的http 服务器/反向代理服务器及电子邮件（IMAP/POP3）代理服务器。由俄罗斯的程序设计师Igor Sysoev所开发，官方测试nginx能够支支撑5万并发链接，并且cpu、内存等资源消耗却非常低，运行非常稳定。</p>
+<h1 id="二-Nginx应用场景"><a href="#二-Nginx应用场景" class="headerlink" title="二.Nginx应用场景"></a>二.Nginx应用场景</h1><p>1、http服务器。Nginx是一个http服务可以独立提供http服务。可以做网页静态服务器。<br>2、虚拟主机。可以实现在一台服务器虚拟出多个网站。例如个人网站使用的虚拟主机。<br>3、反向代理，负载均衡。当网站的访问量达到一定程度后，单台服务器不能满足用户的请求时，需要用多台服务器集群可以使用nginx做反向代理。并且多台服务器可以平均分担负载，不会因为某台服务器负载高宕机而某台服务器闲置的情况。</p>
+<h1 id="三-负载均衡策略"><a href="#三-负载均衡策略" class="headerlink" title="三.负载均衡策略"></a>三.负载均衡策略</h1><p>今天的实验主要是nginx来作为负载均衡服务器，同时实验中需要用nginx作为web服务器。</p>
+<p>负载均衡策略主要是以下三种：</p>
+<pre><code>1.轮循             每个请求逐个分发到后端服务器
+2.加权轮循         按照分配的权重将请求分发到后端服务器
+   3.ip hash         轮询的基础上，保持一个客户端多次请求分发到一台后端服务器上
+</code></pre><p><strong>实验环境：</strong></p>
+<p>三台虚拟机：</p>
+<pre><code>192.168.100.3      （负载均衡器）      nginx-test01
+192.168.100.4    （web服务器）    nginx-test02
+192.168.100.5    （web服务器）    nginx-test03
+</code></pre><p>操作系统：centos 7.3</p>
+<p>具体操作：</p>
+<pre><code>1.现在每台虚拟机上安装nginx，先下载安装包，然后逐个安装。
+tar zvxf nginx-1.8.1.tar.gz     解压缩安装包
+cd nginx-1.8.1                     进入解压目录
+./configure--prefix=/usr/local/nginx--user=nginx--group=nginx --with-http_stub_status_module --with-http_ssl_module 编译
+make &amp;&amp; make install             安装
+</code></pre><p>编译过程中，可能因为环境的不同缺少部分包，需手动yum安装</p>
+<pre><code>yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel
+</code></pre><p><strong>开始设置负载均衡</strong></p>
+<p>编辑负载均衡服务器的主配置文件</p>
+<pre><code>vim /usr/local/nginx/conf/nginx.conf
+</code></pre><p><img src="https://i.imgur.com/wkSFvom.png" alt=""></p>
+<pre><code>worker_processes 2; #设置值和CPU核心数一致
+error_log /usr/local/webserver/nginx/logs/nginx_error.log crit; #日志位置和日志级别
+worker_rlimit_nofile 65535;
+events{
+  use epoll;
+  worker_connections 65535;
+}
+http{
+  include mime.types;
+  default_type application/octet-stream;
+  log_format main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;
+               &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;
+               &apos;&quot;$http_user_agent&quot; $http_x_forwarded_for&apos;;
+  sendfile on;
+  keepalive_timeout on;
+
+  #定义后端服务器组
+  upstream nginx-test{
+    server 192.168.0.4;
+    server 192.168.0.5;
+  }
+
+  #下面是server虚拟主机的配置
+  server{
+        listen 80;#监听端口
+        server_name localhost;#域名
+        index index.html index.htm index.php;
+        root /usr/local/webserver/nginx/html;#站点目录
+          location /{
+          proxy_pass http://nginx-test;
+        }
+  }
+}
+</code></pre><p>在http里面，server外面定义后端服务器组用来做负载均衡（负载均衡可以将自身也作为web服务器轮询）。在server中引用定义的后端服务器组。</p>
+<p>仅仅是作为普通轮询直接填写后端服务器IP地址即可，如果需要按照不同服务器的性能分配不同的权重，可在服务器后面加上权重。或者设置为IP hash。如下图：<br>加入权重的配置。保证充分利用服务器的性能。</p>
+<pre><code>#定义后端服务器组
+upstream nginx-test{
+    #设置权重为1,最大重试次数,超时时间
+    server 192.168.0.4 weight=1 max_fails=2 fail_timeout=30s;
+    #设置权重为2
+    server 192.168.0.5 weight=2;
+    #备份,其他服务器宕机后启用
+    server 192.168.0.3 backup;
+}
+</code></pre><p><strong>IP hash的配置</strong></p>
+<p>保证在短时间内,同一个客户端的请求不被分配到其他的nginx-server上</p>
+<pre><code>upstream nginx-test{
+    ip_hash;
+    server 192.168.0.4;
+    server 192.168.0.5;
+    server 192.168.0.3;
+}
+</code></pre><p>保证在短时间内,同一个客户端的请求不被分配到其他的nginx-server上</p>
+<p>保存退出，重新加载nginx。</p>
+<pre><code>nginx –s reload
+</code></pre>
       
     </div>
     
@@ -363,8 +448,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/19/hexo设置主题/" rel="next" title="hexo设置主题">
-                <i class="fa fa-chevron-left"></i> hexo设置主题
+              <a href="/2018/07/14/Markdown教程/" rel="next" title="Markdown教程">
+                <i class="fa fa-chevron-left"></i> Markdown教程
               </a>
             
           </div>
@@ -372,10 +457,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/20/liunx基础/" rel="prev" title="liunx基础">
-                liunx基础 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -434,8 +515,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -515,6 +605,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-Nginx简介"><span class="nav-number">1.</span> <span class="nav-text">一.Nginx简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-Nginx应用场景"><span class="nav-number">2.</span> <span class="nav-text">二.Nginx应用场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-负载均衡策略"><span class="nav-number">3.</span> <span class="nav-text">三.负载均衡策略</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
