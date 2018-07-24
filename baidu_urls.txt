@@ -1,3 +1,4 @@
+http://yoursite.com/2018/07/24/pip设置镜像/
 http://yoursite.com/2018/07/17/Oracle中针对中文进行排序/
 http://yoursite.com/2018/07/16/nginx的负载均衡/
 http://yoursite.com/2018/07/14/Markdown教程/
