@@ -86,10 +86,12 @@
 <meta property="og:site_name" content="王赛的博客">
 <meta property="og:description" content="在oracle 9i之前,对中文的排序，是默认按2进制编码来进行排序的. 9i时增加了几种新的选择: 按中文拼音进行排序:SCHINESE_PINYIN_M 按中文部首进行排序:SCHINESE_RADICAL_M 按中文笔画进行排序:SCHINESE_STROKE_M 而oracle 9i是对中文的排序是默认按拼音排序(并不是指NLS_SORT = SCHINESE_PINYIN_M,而是说SQ">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-17T06:52:23.630Z">
+<meta property="og:image" content="https://i.imgur.com/qAndVci.jpg">
+<meta property="og:updated_time" content="2018-08-04T11:42:46.917Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Oracle中针对中文进行排序">
 <meta name="twitter:description" content="在oracle 9i之前,对中文的排序，是默认按2进制编码来进行排序的. 9i时增加了几种新的选择: 按中文拼音进行排序:SCHINESE_PINYIN_M 按中文部首进行排序:SCHINESE_RADICAL_M 按中文笔画进行排序:SCHINESE_STROKE_M 而oracle 9i是对中文的排序是默认按拼音排序(并不是指NLS_SORT = SCHINESE_PINYIN_M,而是说SQ">
+<meta name="twitter:image" content="https://i.imgur.com/qAndVci.jpg">
 
 
 
@@ -330,7 +332,8 @@ SELECT * FROM TEAM ORDER BY NLSSORT(排序字段名,&apos;NLS_SORT = SCHINESE_RA
 <p>以下是oracle文档中的原文:</p>
 <pre><code>Note:
 Setting NLS_SORT to anything other than BINARY causes a sort to use a full table scan, regardless of the path chosen by the optimizer. BINARY is the exception because indexes are built according to a binary order of keys. Thus the optimizer can use an index to satisfy the ORDER BY clause when NLS_SORT is set to BINARY. If NLS_SORT is set to any linguistic sort, the optimizer must include a full table scan and a full sort in the execution plan.
-</code></pre>
+</code></pre><h2 id="微信公众号，欢迎扫码关注"><a href="#微信公众号，欢迎扫码关注" class="headerlink" title="微信公众号，欢迎扫码关注"></a>微信公众号，欢迎扫码关注</h2><p><img src="https://i.imgur.com/qAndVci.jpg" alt=""></p>
+
       
     </div>
     
@@ -454,8 +457,17 @@ Setting NLS_SORT to anything other than BINARY causes a sort to use a full table
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -474,7 +486,7 @@ Setting NLS_SORT to anything other than BINARY causes a sort to use a full table
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -536,6 +548,22 @@ Setting NLS_SORT to anything other than BINARY causes a sort to use a full table
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号，欢迎扫码关注"><span class="nav-number">1.</span> <span class="nav-text">微信公众号，欢迎扫码关注</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -579,7 +607,7 @@ Setting NLS_SORT to anything other than BINARY causes a sort to use a full table
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共52.4k字</span>
+  <span class="post-count">博客全站共52.7k字</span>
 </div>
 
         

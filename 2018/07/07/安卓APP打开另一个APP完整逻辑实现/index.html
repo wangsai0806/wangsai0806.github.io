@@ -90,7 +90,8 @@
 <meta property="og:image" content="https://i.imgur.com/mejL8lE.gif">
 <meta property="og:image" content="https://i.imgur.com/TBw2ImK.gif">
 <meta property="og:image" content="https://i.imgur.com/CHIUePa.png">
-<meta property="og:updated_time" content="2018-07-07T11:40:37.292Z">
+<meta property="og:image" content="https://i.imgur.com/qAndVci.jpg">
+<meta property="og:updated_time" content="2018-08-04T11:50:08.030Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="安卓APP打开另一个APP完整逻辑实现">
 <meta name="twitter:description" content="一、概述先说说需求拉起另一个APP是为了方便统一使用管理，有些公司APP较多，部分人只需要用到部分APP，需要用到时就下载。市面上比较流行的解决办法，第一个就是现在说的新开发一个管理型APP，其他APP需要时再下载，运用时拉起，一个APP拉起另一个APP的需求，负责接收数据跨登录部分。另一个就是插件化，直接将多个APP合成一个APP，这个感兴趣也可以了解一下。 二、效果图图是偷的  三、需求分析1">
@@ -462,7 +463,8 @@ Handler handler = new Handler() {
         }
     }
 };
-</code></pre>
+</code></pre><h2 id="微信公众号，欢迎扫码关注"><a href="#微信公众号，欢迎扫码关注" class="headerlink" title="微信公众号，欢迎扫码关注"></a>微信公众号，欢迎扫码关注</h2><p><img src="https://i.imgur.com/qAndVci.jpg" alt=""></p>
+
       
     </div>
     
@@ -621,7 +623,7 @@ Handler handler = new Handler() {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -692,7 +694,7 @@ Handler handler = new Handler() {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、概述"><span class="nav-number">1.</span> <span class="nav-text">一、概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、效果图"><span class="nav-number">2.</span> <span class="nav-text">二、效果图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、需求分析"><span class="nav-number">3.</span> <span class="nav-text">三、需求分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、原理与实现"><span class="nav-number">4.</span> <span class="nav-text">四、原理与实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-先说A拉起B可实现的几种方法"><span class="nav-number">4.1.</span> <span class="nav-text">1.先说A拉起B可实现的几种方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-判断B应用是否安装"><span class="nav-number">4.2.</span> <span class="nav-text">2.判断B应用是否安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-判断B应用是否在后台运行并直接打开"><span class="nav-number">4.3.</span> <span class="nav-text">3.判断B应用是否在后台运行并直接打开</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-B应用接受传值跨登录操作"><span class="nav-number">4.4.</span> <span class="nav-text">4.B应用接受传值跨登录操作</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、概述"><span class="nav-number">1.</span> <span class="nav-text">一、概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、效果图"><span class="nav-number">2.</span> <span class="nav-text">二、效果图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、需求分析"><span class="nav-number">3.</span> <span class="nav-text">三、需求分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、原理与实现"><span class="nav-number">4.</span> <span class="nav-text">四、原理与实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-先说A拉起B可实现的几种方法"><span class="nav-number">4.1.</span> <span class="nav-text">1.先说A拉起B可实现的几种方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-判断B应用是否安装"><span class="nav-number">4.2.</span> <span class="nav-text">2.判断B应用是否安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-判断B应用是否在后台运行并直接打开"><span class="nav-number">4.3.</span> <span class="nav-text">3.判断B应用是否在后台运行并直接打开</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-B应用接受传值跨登录操作"><span class="nav-number">4.4.</span> <span class="nav-text">4.B应用接受传值跨登录操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号，欢迎扫码关注"><span class="nav-number">4.5.</span> <span class="nav-text">微信公众号，欢迎扫码关注</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -742,7 +744,7 @@ Handler handler = new Handler() {
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共52.4k字</span>
+  <span class="post-count">博客全站共52.7k字</span>
 </div>
 
         

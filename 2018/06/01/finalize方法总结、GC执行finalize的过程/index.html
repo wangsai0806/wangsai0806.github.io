@@ -88,7 +88,8 @@
 <meta property="og:description" content="1. finalize的作用finalize()是Object的protected方法，子类可以覆盖该方法以实现资源清理工作，GC在回收对象之前调用该方法。 finalize()与C++中的析构函数不是对应的。C++中的析构函数调用的时机是确定的（对象离开作用域或delete掉），但Java中的finalize的调用具有不确定性 不建议用finalize方法完成“非内存资源”的清理工作，但建议用于">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/Zk0v9D6.gif">
-<meta property="og:updated_time" content="2018-06-01T05:54:22.837Z">
+<meta property="og:image" content="https://i.imgur.com/qAndVci.jpg">
+<meta property="og:updated_time" content="2018-08-04T11:46:16.647Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="finalize方法总结、GC执行finalize的过程">
 <meta name="twitter:description" content="1. finalize的作用finalize()是Object的protected方法，子类可以覆盖该方法以实现资源清理工作，GC在回收对象之前调用该方法。 finalize()与C++中的析构函数不是对应的。C++中的析构函数调用的时机是确定的（对象离开作用域或delete掉），但Java中的finalize的调用具有不确定性 不建议用finalize方法完成“非内存资源”的清理工作，但建议用于">
@@ -376,7 +377,8 @@ unreachable：对象不可通过上面两种途径可达
         SAVE_HOOK = this;  
     }  
 }  
-</code></pre>
+</code></pre><h2 id="微信公众号，欢迎扫码关注"><a href="#微信公众号，欢迎扫码关注" class="headerlink" title="微信公众号，欢迎扫码关注"></a>微信公众号，欢迎扫码关注</h2><p><img src="https://i.imgur.com/qAndVci.jpg" alt=""></p>
+
       
     </div>
     
@@ -537,7 +539,7 @@ unreachable：对象不可通过上面两种途径可达
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -608,7 +610,7 @@ unreachable：对象不可通过上面两种途径可达
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-finalize的作用"><span class="nav-number">1.</span> <span class="nav-text">1. finalize的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-finalize的问题"><span class="nav-number">2.</span> <span class="nav-text">2. finalize的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-finalize的执行过程-生命周期"><span class="nav-number">3.</span> <span class="nav-text">3. finalize的执行过程(生命周期)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-一些代码示例"><span class="nav-number">4.</span> <span class="nav-text">4. 一些代码示例</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-finalize的作用"><span class="nav-number">1.</span> <span class="nav-text">1. finalize的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-finalize的问题"><span class="nav-number">2.</span> <span class="nav-text">2. finalize的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-finalize的执行过程-生命周期"><span class="nav-number">3.</span> <span class="nav-text">3. finalize的执行过程(生命周期)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-一些代码示例"><span class="nav-number">4.</span> <span class="nav-text">4. 一些代码示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微信公众号，欢迎扫码关注"><span class="nav-number">5.</span> <span class="nav-text">微信公众号，欢迎扫码关注</span></a></li></ol></div>
             
 
           </div>
@@ -658,7 +660,7 @@ unreachable：对象不可通过上面两种途径可达
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共52.4k字</span>
+  <span class="post-count">博客全站共52.7k字</span>
 </div>
 
         
