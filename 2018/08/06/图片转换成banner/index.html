@@ -79,14 +79,17 @@
 
 
 
+<meta name="description" content="1：将图片转换成ASCII /**   * @param path         图片路径   */   public static void createAsciiPic(final String path) {       final String base = &amp;quot;@#&amp;amp;$%*o!;.&amp;quot;;// 字符串由复杂到简单       try {           fin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图片转换成banner">
 <meta property="og:url" content="http://yoursite.com/2018/08/06/图片转换成banner/index.html">
 <meta property="og:site_name" content="王赛的博客">
+<meta property="og:description" content="1：将图片转换成ASCII /**   * @param path         图片路径   */   public static void createAsciiPic(final String path) {       final String base = &amp;quot;@#&amp;amp;$%*o!;.&amp;quot;;// 字符串由复杂到简单       try {           fin">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-06T13:10:01.094Z">
+<meta property="og:updated_time" content="2018-09-04T07:55:31.713Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="图片转换成banner">
+<meta name="twitter:description" content="1：将图片转换成ASCII /**   * @param path         图片路径   */   public static void createAsciiPic(final String path) {       final String base = &amp;quot;@#&amp;amp;$%*o!;.&amp;quot;;// 字符串由复杂到简单       try {           fin">
 
 
 
@@ -310,7 +313,70 @@
       
 
       
-        
+        <p>1：将图片转换成ASCII</p>
+<pre><code>/** 
+ * @param path         图片路径 
+ */  
+public static void createAsciiPic(final String path) {  
+    final String base = &quot;@#&amp;$%*o!;.&quot;;// 字符串由复杂到简单  
+    try {  
+        final BufferedImage image = ImageIO.read(new File(path));  
+        for (int y = 0; y &lt; image.getHeight(); y += 2) {  
+            for (int x = 0; x &lt; image.getWidth(); x++) {  
+                final int pixel = image.getRGB(x, y);  
+                final int r = (pixel &amp; 0xff0000) &gt;&gt; 16, g = (pixel &amp; 0xff00) &gt;&gt; 8, b = pixel &amp; 0xff;  
+                final float gray = 0.299f * r + 0.578f * g + 0.114f * b;  
+                final int index = Math.round(gray * (base.length() + 1) / 255);  
+                System.out.print(index &gt;= base.length() ? &quot; &quot; : String.valueOf(base.charAt(index)));  
+            }  
+            System.out.println();  
+        }  
+    } catch (final IOException e) {  
+        e.printStackTrace();  
+    }  
+}  
+
+
+/**
+ * @param path         图片路径
+ * @param outPath   banner图片输出地址
+ */
+public static void createAsciiPic(final String inPath, String outPath) {
+    //用于输出字符画的字符串,已经大致按灰度从高到低排好,原文采用70个字符,但是灰度排序度差,效果不好
+    final String base = &quot;@#&amp;$%*o!;.&quot;;// 字符串由复杂到简单
+    try {
+        final BufferedImage image = ImageIO.read(new File(inPath));
+        final FileWriter fw = new FileWriter(outPath, true);
+        final BufferedWriter bw = new BufferedWriter(fw);
+        //#因为字符的宽和高是不相等的,所以用两倍宽,大致与高相等了
+        for (int y = 0; y &lt; image.getHeight(); y += 20) {
+            for (int x = 0; x &lt; image.getWidth(); x += 10) {
+                //获得一个指定图像区域的ARGB数据并且存储在一个提供的整形数组里，
+                //每一个像素的值存储成一个16进制的格式，最高位包含了alpha 通道，并且也分别保存了图像的R,G,B值。
+                //alpha 通道指明了像素的透明度的问题，其中0x00代表的是全透明，0XFF代表的是不透明！
+                //在默认RGB颜色模型中返回整数像素
+                final int pixel = image.getRGB(x, y);
+                //获取RGB数值,R:红色;G:绿色;B:蓝色 
+                final int r = (pixel &amp; 0xff0000) &gt;&gt; 16, g = (pixel &amp; 0xff00) &gt;&gt; 8, b = pixel &amp; 0xff;
+                //#计算灰度值的公式
+                final float gray = 0.299f * r + 0.578f * g + 0.114f * b;
+                //把一个数字舍入为最接近的整数(四舍五入)
+                final int index = Math.round(gray * (base.length() + 1) / 255);
+                //#按灰度值映射到字符串中的字符
+                String str = index &gt;= base.length() ? &quot; &quot; : String.valueOf(base.charAt(index));
+                System.out.print(str);
+                bw.write(str);
+            }
+            System.out.println();
+            bw.write(&quot;\n&quot;);
+        }
+        bw.close();
+        fw.close();
+    } catch (final IOException e) {
+        e.printStackTrace();
+    }
+}
+</code></pre>
       
     </div>
     
@@ -559,7 +625,7 @@
 </div>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共52.9k字</span>
+  <span class="post-count">博客全站共53.5k字</span>
 </div>
 
         
