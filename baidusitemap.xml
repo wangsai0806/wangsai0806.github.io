@@ -4,6 +4,40 @@
 
     
   <url>
+    <loc>http://yoursite.com/2018/09/04/SpringBoot%E8%AF%BB%E5%8F%96yml%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/</loc>
+    <lastmod>2018-09-04T07:50:23.544Z</lastmod>
+    <data>
+        <display>
+        <title>SpringBoot读取yml配置文件</title>
+        <pubTime>2018-09-04T06:46:22.000Z</pubTime>
+        
+        <tag>java</tag>
+         
+        <tag>springboot</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2018/08/06/%E5%9B%BE%E7%89%87%E8%BD%AC%E6%8D%A2%E6%88%90banner/</loc>
+    <lastmod>2018-08-06T13:10:01.094Z</lastmod>
+    <data>
+        <display>
+        <title>图片转换成banner</title>
+        <pubTime>2018-08-06T13:10:01.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2018/01/04/Spring-Boot%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%A6%E8%A7%A3%E4%BA%8C/</loc>
     <lastmod>2018-08-04T11:53:02.108Z</lastmod>
     <data>
@@ -242,9 +276,9 @@
         <title>AspectJ切入点语法详解</title>
         <pubTime>2018-07-06T06:14:07.000Z</pubTime>
         
-        <tag>java</tag>
-         
         <tag>aop</tag>
+         
+        <tag>java</tag>
          
          
            
@@ -320,9 +354,9 @@
         <title>CentOS安装MySql</title>
         <pubTime>2017-08-18T02:49:54.000Z</pubTime>
         
-        <tag>数据库</tag>
-         
         <tag>技术</tag>
+         
+        <tag>数据库</tag>
          
          
            
@@ -342,9 +376,9 @@
         <title>CentOS安装MySql遇到的问题</title>
         <pubTime>2017-10-25T01:59:59.000Z</pubTime>
         
-        <tag>数据库</tag>
-         
         <tag>技术</tag>
+         
+        <tag>数据库</tag>
          
         <tag>问题</tag>
          
